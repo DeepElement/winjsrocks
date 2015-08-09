@@ -1,4 +1,5 @@
-var assert = require('assert'),
+var common = require('../common'),
+  assert = require('assert'),
   should = require('should');
 
 describe('Integration', function() {
