@@ -1,0 +1,4 @@
+
+
+// Helpers
+require("./helper/class");
