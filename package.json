@@ -1,0 +1,47 @@
+{
+  "author": {
+    "name": "Todd Morrison",
+    "email": "todd@deepelement.com",
+    "url": "http://www.deepelement.com"
+  },
+  "name": "winjs-rocks",
+  "private": false,
+  "description": "API Generator for Browserify projects",
+  "version": "0.0.1",
+  "keywords": [
+    "winjs",
+    "commonjs",
+    "javascript framework",
+    "cross-platform"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DeepElement/winjs-rocks.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "homepage": "https://github.com/DeepElement/winjs-rocks",
+  "bin": {
+    "node-som": "./bin/index.js"
+  },
+  "main": "./bin/index",
+  "dependencies": {
+    "async": "^1.4.2",
+    "glob": "^5.0.14"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.1",
+    "mocha": "^2.2.5",
+    "run-sequence": "^1.1.2",
+    "should": "^7.0.3"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
