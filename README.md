@@ -1,4 +1,4 @@
-# WinJS-Rocks!
+# WinJS-Rocks! (http://winjs.rocks & http://winjsrocks.com)
 
 A framework based on WinJS for building cross platform apps.
 
