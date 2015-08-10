@@ -1,6 +1,7 @@
-# WinJS-Rocks! (http://winjs.rocks & http://winjsrocks.com)
+# WinJS-Rocks! 
 
 A framework based on WinJS for building cross platform apps.
+(http://winjs.rocks & http://winjsrocks.com)
 
 [![Build Status](https://travis-ci.org/DeepElement/winjs-rocks.svg?branch=master)](https://travis-ci.org/DeepElement/winjs-rocks)
 
