@@ -13,7 +13,7 @@ exports.configure = function(options, done) {
 
 exports.load = function(options, done) {
 
-  console.log(SDK.Config.get("view"));
+  console.log(config.get("view"));
 
   if (done)
     return done();
