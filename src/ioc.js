@@ -26,26 +26,32 @@ exports.override = function(key, clazz) {
   return _container.override(key, clazz);
 };
 
-exports.registerService = function(key, clazz){
+exports.registerService = function(key, clazz) {
   return _container.register(_servicePrefix + key, clazz, 'application');
 };
 
-exports.registerProvider = function(key, clazz){
+exports.registerProvider = function(key, clazz) {
   return _container.register(_providerPrefix + key, clazz, 'request');
 };
 
-exports.registerViewModel = function(key, clazz){
+exports.registerViewModel = function(key, clazz) {
   return _container.register(_viewModelPrefix + key, clazz, 'application');
 }
 
-exports.getProvider = function(key){
+exports.getProvider = function(key) {
   return _container.get(_providerPrefix + key);
 }
 
-exports.getService = function(key){
+exports.getService = function(key) {
   return _container.get(_servicePrefix + key);
 }
 
-exports.getViewModel = function(key){
+exports.getViewModel = function(key) {
   return _container.get(_viewModelPrefix + key);
+}
+
+exports.getServiceKeys = function() {
+  return exports.getRegisteredKeys().filter(function(key){
+    return key.indexOf(_servicePrefix) == 0;
+  });
 }

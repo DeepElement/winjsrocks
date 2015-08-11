@@ -61,7 +61,6 @@ var resolve = function(path) {
 exports.file = function(path, callback) {
     exports.loadFile(path,
         function(err, respObj) {
-          console.log(respObj);
             if (err)
                 return callback(err);
             _.extend(store, respObj);
