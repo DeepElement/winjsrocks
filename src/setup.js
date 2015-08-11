@@ -1,4 +1,9 @@
-
-
-// Helpers
-require("./helper/class");
+require('./ioc');
+require('./model/base');
+require('./provider/base');
+require('./service/base');
+require('./view/base');
+require('./view/control');
+require('./view/page');
+require('./view-model/base');
+require('./view-model/item');

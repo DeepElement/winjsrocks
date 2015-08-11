@@ -17,10 +17,12 @@
     "type": "git",
     "url": "git@github.com:DeepElement/winjs-rocks.git"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://opensource.org/licenses/MIT"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "homepage": "https://github.com/DeepElement/winjs-rocks",
   "bin": {
     "node-som": "./bin/index.js"
@@ -29,6 +31,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "glob": "^5.0.14",
+    "momentr": "0.0.1",
     "winjs": "^4.1.0"
   },
   "devDependencies": {

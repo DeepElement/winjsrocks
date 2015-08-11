@@ -1,4 +1,3 @@
-require('winjs');
 require('./runtime');
 require('./setup');
 
