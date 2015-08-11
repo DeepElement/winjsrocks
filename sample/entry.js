@@ -1,1 +1,0 @@
-var SDK = require('../src');

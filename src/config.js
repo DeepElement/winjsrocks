@@ -61,6 +61,7 @@ var resolve = function(path) {
 exports.file = function(path, callback) {
     exports.loadFile(path,
         function(err, respObj) {
+          console.log(respObj);
             if (err)
                 return callback(err);
             _.extend(store, respObj);
@@ -70,7 +71,7 @@ exports.file = function(path, callback) {
 
 exports.loadFile = function(path, callback) {
     var result = null;
-    var networkProvider = ioc.get("networkProvider");
+    var networkProvider = ioc.getProvider("network");
 
     async.waterfall([
             function(done) {
