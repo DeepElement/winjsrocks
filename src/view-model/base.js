@@ -12,4 +12,5 @@ var staticMembers = {
 
 };
 
-module.exports = WinJS.Class.define(_constructor, instanceMembers, staticMembers);
+module.exports = WinJS.Class.define(_constructor,
+  instanceMembers, staticMembers);

@@ -32,6 +32,7 @@
     "async": "^1.4.2",
     "glob": "^5.0.14",
     "momentr": "0.0.1",
+    "request": "^2.60.0",
     "winjs": "^4.1.0"
   },
   "devDependencies": {
