@@ -1,10 +1,21 @@
 var gulp = require('gulp'),
-  mocha = require('gulp-mocha');
+  mocha = require('gulp-mocha'),
+  async = require('async'),
+  source = require('vinyl-source-stream'),
+  browserify = require('browserify');
 
 gulp.task('default', function() {
   // place code for your default task here
 });
 
+gulp.task('sample-build', function() {
+  var b = browserify({
+    entries: './sample/entry.js'
+  });
+  return b.bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./sample/'));
+});
 
 gulp.task("test", function() {
   return gulp.src('test/**/*.js', {

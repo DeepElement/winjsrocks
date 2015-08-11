@@ -1,6 +1,3 @@
-require('./runtime');
-require('./setup');
-
 exports.load = function(options, done) {
   if(done)
     return done();
