@@ -1,7 +1,8 @@
 var ioc = require('../ioc'),
     base = require('./base'),
     async = require('async'),
-    aop = require('../helper/aop');
+    aop = require('../helper/aop'),
+    WinJS = require("winjs");
 
 var _constructor = function(options) {
     this._registery = {};

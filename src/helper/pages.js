@@ -1,4 +1,4 @@
-export.define = function(template, viewInstance) {
+exports.define = function(template, viewInstance) {
     var baseMembers = {
         dispose: function() {
 
@@ -29,4 +29,4 @@ export.define = function(template, viewInstance) {
     var basePageClassDef = WinJS.Pages.define(template, {});
     WinJS.Pages._viewmap[template] = viewInstance;
     return viewInstance;
-}
+};
