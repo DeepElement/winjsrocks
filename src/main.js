@@ -51,7 +51,7 @@ exports.load = function(options, done) {
   async.each(ioc.getServiceKeys(),
     function(key, keyCb) {
       var serviceInstance = ioc.get(key);
-      serviceInstance.start({}, keyCb);
+      serviceInstance.start({}).done(keyCb);
     },
     function(err) {
       if (err)
@@ -67,7 +67,7 @@ exports.unload = function(options, done) {
   async.each(ioc.getServiceKeys(),
     function(key, keyCb) {
       var serviceInstance = ioc.get(key);
-      serviceInstance.stop({}, keyCb);
+      serviceInstance.stop({}).done(keyCb);
     },
     function(err) {
       if (err)
@@ -80,7 +80,7 @@ exports.pause = function(options, done) {
   async.each(ioc.getServiceKeys(),
     function(key, keyCb) {
       var serviceInstance = ioc.get(key);
-      serviceInstance.pause({}, keyCb);
+      serviceInstance.pause({}).done(keyCb);
     },
     function(err) {
       if (err)
@@ -93,7 +93,7 @@ exports.resume = function(options, done) {
   async.each(ioc.getServiceKeys(),
     function(key, keyCb) {
       var serviceInstance = ioc.get(key);
-      serviceInstance.resume({}, keyCb);
+      serviceInstance.resume({}).done(keyCb);
     },
     function(err) {
       if (err)

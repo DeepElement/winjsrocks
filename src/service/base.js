@@ -5,24 +5,22 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-  start: function(options, callback) {
-    if (callback)
-      return callback();
+  start: function(options) {
+    return WinJS.Promise.as();
   },
-  onApplicationReady: function(){
+
+  onApplicationReady: function() {
     // called when all services have loaded
   },
-  stop: function(options, callback) {
-    if (callback)
-      return callback();
+
+  stop: function(options) {
+    return WinJS.Promise.as();
   },
-  pause: function(options, callback) {
-    if (callback)
-      return callback();
+  pause: function(options) {
+    return WinJS.Promise.as();
   },
-  resume: function(options, callback) {
-    if (callback)
-      return callback();
+  resume: function(options) {
+    return WinJS.Promise.as();
   }
 };
 

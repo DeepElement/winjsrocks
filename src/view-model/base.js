@@ -5,7 +5,7 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-
+  
 };
 
 var staticMembers = {

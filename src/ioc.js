@@ -4,6 +4,7 @@ var _validScopes = ["request", "application", "session"];
 
 var _viewModelPrefix = "viewModel_",
   _servicePrefix = "service_",
+  _viewPrefix = "view_",
   _providerPrefix = "provider_";
 
 exports.getRegisteredKeys = function() {
@@ -34,8 +35,12 @@ exports.registerProvider = function(key, clazz) {
   return _container.register(_providerPrefix + key, clazz, 'request');
 };
 
-exports.registerViewModel = function(key, clazz) {
-  return _container.register(_viewModelPrefix + key, clazz, 'application');
+exports.registerView = function(key, clazz) {
+  return _container.register(_viewPrefix + key, clazz, 'request');
+};
+
+exports.registerViewModel = function(key, clazz, value) {
+  _container.register(_viewModelPrefix + key, clazz, 'application');
 }
 
 exports.getProvider = function(key) {
@@ -51,7 +56,7 @@ exports.getViewModel = function(key) {
 }
 
 exports.getServiceKeys = function() {
-  return exports.getRegisteredKeys().filter(function(key){
+  return exports.getRegisteredKeys().filter(function(key) {
     return key.indexOf(_servicePrefix) == 0;
   });
 }

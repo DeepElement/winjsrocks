@@ -11,6 +11,8 @@ exports["underscore"]=require("underscore");
 exports["winjs"]=require("winjs");
 
 a(exports,'config', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/config.js')) 
+a(exports,'helper.aop', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/helper/aop.js')) 
+a(exports,'helper.window', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/helper/window.js')) 
 a(exports,'ioc', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/ioc.js')) 
 a(exports,'main', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/main.js')) 
 a(exports,'model.base', require('/home/toddpi314/sources/deepelement/winjs-rocks-sample/node_modules/winjs-rocks/src/model/base.js')) 

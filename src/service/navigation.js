@@ -1,13 +1,137 @@
 var WinJS = require('winjs'),
-  base = require('./base');
+  ioc = require('../ioc'),
+  config = require('../config'),
+  base = require('./base'),
+  util = require("util");
 
 var _constructor = function(options) {
-
+  this._onNavigatingBinding = this._onNavigating.bind(this);
+  this._onNavigatedBinding = this._onNavigated.bind(this);
+  this._onResizedBinding = this._onResized.bind(this);
+  this._onNavigateMessageBinding = this._onNavigateMessage.bind(this);
+  this._lastNavigationPromise = WinJS.Promise.as();
+  this.MessageService = ioc.getService("message");
+  this._element = document.createElement("div");
 };
 
 var instanceMembers = {
-  onApplicationReady: function(){
-    base.prototype.onApplicationReady.call(this);
+  start: function() {
+    var that = this;
+    return base.prototype.start.apply(this, arguments).then(function() {
+      WinJS.Navigation.addEventListener("navigating",
+        that._onNavigatingBinding);
+      WinJS.Navigation.addEventListener("navigated",
+        that._onNavigatedBinding);
+      that.MessageService.register("onNavigateMessage", that._onNavigateMessage);
+      window.addEventListener("resize", that._onResizedBinding);
+    });
+  },
+
+  _onNavigateMessage: function(type, args) {
+    var viewKey = args.viewKey;
+    var state = args.state;
+
+    var viewTemplateUri = config.get("ui:view:template-uri");
+    if (viewTemplateUri) {
+      var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
+      var viewModelUri = config.get("ui:view:view-model-uri");
+      if (viewModelUri) {
+        var actualViewModelUri = util.format(viewModelUri, viewKey);
+        var viewModelDef = require(actualViewModelUri);
+        ioc.registerViewModel(viewModelDef, "request");
+        var viewCodeUri = config.get("ui:view:code-uri"));
+        if(viewCodeUri){
+          var actualViewCodeUri = util.format(viewCodeUri, viewKey);
+          var viewDef = require(actualViewCodeUri);
+          ioc.registerView(viewDef, "request");
+          WinJS.Navigation.navigate(actualViewTemplateUri, state);
+        }
+      }
+    }
+  },
+
+  _onNavigating: function(args) {
+    var newElement = this.createDefaultPageElement();
+    this._element.appendChild(newElement);
+    this._lastNavigationPromise.cancel();
+    var that = this;
+
+    // TODO: archive the old view/viewModel
+
+    this._lastNavigationPromise = WinJS.Promise.as().then(function() {
+      return WinJS.UI.Pages.render(args.detail.location,
+        newElement,
+        args.detail.state);
+    });
+    args.detail.setPromise(this._lastNavigationPromise);
+
+    this.MessageService.send("onNavigatingMessage", args);
+  },
+
+  _onNavigated: function() {
+    this.MessageService.send("onNavigatedMessage");
+  },
+
+  _onResized: function() {
+    var view = this.getView();
+    if (view && view.updateLayout)
+      view.updateLayout();
+  },
+
+  getRootElement: function() {
+    return this._element;
+  },
+
+  setRootElement: function(val) {
+    this._element = val;
+  },
+
+  createDefaultPageElement: function() {
+    var element = document.createElement("div");
+    element.setAttribute("dir", window.getComputedStyle(this._element, null).direction);
+    element.style.position = "absolute";
+    element.style.visibility = "hidden";
+    element.style.width = "100%";
+    element.style.height = "100%";
+    WinJS.Utilities.addClass(element, "hidden");
+    return element;
+  },
+
+  getView: function() {
+    var viewElem = this.getViewElement();
+    if (viewElem && viewElem.winControl)
+      return viewElem.winControl
+    return false;
+  },
+
+  getViewElement: function() {
+    return this._element.firstElementChild;
+  },
+
+  getViewModel: function() {
+    var view = this.getView();
+    if (view) {
+      var viewModel = view.getViewModel();
+      if (viewModel)
+        return viewModel;
+    }
+    return null;
+  },
+
+  stop: function() {
+    var that = this;
+    return base.prototype.start.apply(this, arguments)
+      .then(function() {
+        WinJS.Navigation.removeEventListener("navigating",
+          that._onNavigatingBinding);
+        WinJS.Navigation.removeEventListener("navigated",
+          that._onNavigatedBinding);
+        that.MessageService.register("onNavigateMessage", that._onNavigateMessage);
+        window.removeEventListener("resize", that._onResizedBinding);
+
+        if (this._element)
+          WinJS.Utilities.disposeSubTree(this._element);
+      });
   }
 };
 
