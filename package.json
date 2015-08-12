@@ -28,7 +28,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "glob": "^5.0.14",
-    "momentr": "0.0.1",
+    "momentr": "0.0.2",
     "request": "^2.60.0",
     "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3",

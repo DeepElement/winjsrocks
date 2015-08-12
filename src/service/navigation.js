@@ -35,8 +35,8 @@ var instanceMembers = {
         var viewTemplateUri = config.get("ui:view:template-uri");
         if (viewTemplateUri) {
             var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
-            var viewInstance = ioc.getView(viewKey);
-            pagesHelper.define(actualViewTemplateUri, viewInstance);
+            var viewClassDef = ioc.getViewDef(viewKey);
+            ioc.override(viewKey, pagesHelper.define(actualViewTemplateUri, viewClassDef));
             WinJS.Navigation.navigate(actualViewTemplateUri, state);
         }
     },

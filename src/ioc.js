@@ -59,6 +59,10 @@ exports.getView = function(key){
     return _container.get(_viewPrefix + key);
 }
 
+exports.getViewDef = function(key){
+  return _container.def(_viewPrefix + key).type;
+}
+
 exports.getServiceKeys = function() {
   return exports.getRegisteredKeys().filter(function(key) {
     return key.indexOf(_servicePrefix) == 0;

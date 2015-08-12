@@ -59,7 +59,8 @@ exports.load = function(options, done) {
             if (err)
                 return done(err);
 
-            aop.notifyServices('applicationReady');
+            var MessageService = ioc.getService("message");
+            MessageService.send("applicationReady");
 
             return done();
         });
