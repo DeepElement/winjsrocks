@@ -38,13 +38,8 @@ exports.loadResource = function(url, type, callback) {
       link.type = "text/css";
       link.rel = "stylesheet";
       link.media = "screen,print";
-
-      if (link.readyState)
-        link.onreadystatechange = callback;
-      else
-        link.onload = callback;
-
       head.appendChild(link);
+      return callback();
       break;
   }
 };

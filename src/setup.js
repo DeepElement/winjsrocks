@@ -11,4 +11,6 @@ require('./view-model/base');
 require('./view-model/item');
 
 ioc.registerProvider("network", require('./provider/network'));
+
 ioc.registerService("navigation", require('./service/navigation'));
+ioc.registerService("message", require('./service/message'));

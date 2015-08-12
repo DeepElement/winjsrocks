@@ -39,8 +39,8 @@ exports.registerView = function(key, clazz) {
   return _container.register(_viewPrefix + key, clazz, 'request');
 };
 
-exports.registerViewModel = function(key, clazz, value) {
-  _container.register(_viewModelPrefix + key, clazz, 'application');
+exports.registerViewModel = function(key, clazz) {
+  _container.register(_viewModelPrefix + key, clazz, 'request');
 }
 
 exports.getProvider = function(key) {
@@ -53,6 +53,10 @@ exports.getService = function(key) {
 
 exports.getViewModel = function(key) {
   return _container.get(_viewModelPrefix + key);
+}
+
+exports.getView = function(key){
+    return _container.get(_viewPrefix + key);
 }
 
 exports.getServiceKeys = function() {

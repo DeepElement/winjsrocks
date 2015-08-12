@@ -6,7 +6,7 @@ exports.notifyServices = function(method, args, done) {
     function(key, keyCb) {
       var serviceInstance = ioc.get(key);
       if (serviceInstance["on" + method.capitalizeFirstLetter()])
-        serviceInstance["on" + method.capitalizeFirstLetter()](args);
+        serviceInstance["on" + method.capitalizeFirstLetter()].apply(serviceInstance, args);
     },
     function(err) {
       if (done) {
