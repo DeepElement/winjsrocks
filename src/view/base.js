@@ -1,6 +1,7 @@
 var WinJS = require('winjs');
 
 var _constructor = function(options) {
+  this._super.apply(this, arguments);
   this._viewModel = options.viewModel;
 };
 

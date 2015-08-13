@@ -32,7 +32,7 @@ describe('Unit', function() {
                 baseViewDef.prototype._super = pageClassDef;
                 var pageClassDeriveDef = WinJS.Class.derive(pageClassDef, baseViewDef, baseViewDef.prototype);
                 WinJS.UI.Pages._viewMap[absTemplateUri] = pageClassDeriveDef;
-                
+
                 var pageClassInstance = new WinJS.UI.Pages._viewMap[absTemplateUri]()
                 pageClassInstance.init();
                 pageClassInstance.ready();
