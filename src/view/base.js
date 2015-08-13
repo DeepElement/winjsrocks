@@ -1,23 +1,29 @@
-var WinJS = require('winjs');
+var WinJS = require('winjs'),
+    mixins = require('../helper/mixins');
 
-var _constructor = function(options) {
-  this._super.apply(this, arguments);
-  this._viewModel = options.viewModel;
+var _constructor = function(element, options) {
+    this._super.apply(this, arguments);
+
+    this._viewModel = options;
 };
 
 var instanceMembers = {
-  getAnimationElements: function(){
-    return [];
-  },
+    ready: function(element, options) {
+        console.log("override");
+    },
 
-  getViewModel : function(){
-    return this._viewModel;
-  },
+    getAnimationElements: function() {
+        return [];
+    },
 
-  /* Generally called on Window Resize */
-  updateLayout: function(){
+    getViewModel: function() {
+        return this._viewModel;
+    },
 
-  }
+    /* Generally called on Window Resize */
+    updateLayout: function() {
+
+    }
 };
 
 var staticMembers = {
@@ -25,4 +31,6 @@ var staticMembers = {
 };
 
 module.exports = WinJS.Class.define(_constructor,
-  instanceMembers, staticMembers);
+    instanceMembers, staticMembers);
+WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
+WinJS.Class.mix(module.exports, mixins.notify);

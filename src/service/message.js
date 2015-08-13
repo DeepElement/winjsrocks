@@ -5,7 +5,7 @@ var ioc = require('../ioc'),
     WinJS = require("winjs");
 
 var _constructor = function(options) {
-    this.base.call(this, arguments);
+    base.call(this, arguments);
     this._registery = {};
 }
 

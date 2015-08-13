@@ -3,7 +3,7 @@ var WinJS = require('winjs'),
   request = require('request');
 
 var _constructor = function(options) {
-
+  base.call(this, arguments);
 };
 
 var instanceMembers = {

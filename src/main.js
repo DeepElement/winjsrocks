@@ -7,8 +7,6 @@ var config = require('./config'),
   aop = require('./helper/aop'),
   ioc = require('./ioc');
 
-var globalMessageHooks = [];
-
 exports.configure = function(options, done) {
   async.waterfall([
       function(cb) {
@@ -111,9 +109,3 @@ exports.resume = function(options, done) {
       return done();
     });
 };
-
-exports.hooks = function(handlers) {
-  var MessageService = WinJSRocks.ioc.getService("message");
-  for (var handler in handlers)
-    MessageService.register(handler, handlers[handler]);
-}
