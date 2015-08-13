@@ -6,7 +6,9 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-
+    ready: function() {
+        base.prototype.ready.apply(this, arguments);
+    }
 };
 
 var staticMembers = {

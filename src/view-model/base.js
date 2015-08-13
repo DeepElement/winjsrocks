@@ -6,13 +6,13 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-    key: {
-        get: function(){
-            return this._key;
-        },
-        set: function(val){
-            this._key = val;
-        }
+    get key() {
+        return this._key;
+    },
+
+    set key(val) {
+        console.log(val);
+        this._key = val;
     }
 };
 

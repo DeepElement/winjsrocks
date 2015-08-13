@@ -8,8 +8,12 @@ var _constructor = function(element, options) {
 };
 
 var instanceMembers = {
-    ready: function(element, options) {
-        console.log("override");
+    ready: function() {
+        this._super.prototype.ready.apply(this, arguments);
+    },
+
+    bindingReady: function(){
+
     },
 
     getAnimationElements: function() {

@@ -1,4 +1,5 @@
 require('./runtime');
+require('./winjs.shim');
 require('./setup');
 
 var config = require('./config'),
