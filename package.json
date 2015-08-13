@@ -49,6 +49,7 @@
     "run-sequence": "^1.1.2",
     "should": "^7.0.3",
     "sinon": "^1.15.4",
+    "uuid": "^2.0.1",
     "vinyl-source-stream": "^1.1.0",
     "xmlhttprequest": "^1.7.0"
   },
