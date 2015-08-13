@@ -10,7 +10,6 @@ describe('Unit', function() {
                 // arrange
                 var WinJS = require('winjs');
 
-
                 function abs(uri) {
                     var a = document.createElement("a");
                     a.href = uri;
@@ -42,13 +41,5 @@ describe('Unit', function() {
                 (pageClassInstance instanceof pageClassDef).should.be.ok();
             });
         });
-    });
-
-    describe('WinJS.Class.define', function() {
-        // TODO:
-    });
-
-    describe('WinJS.Class.derive', function() {
-        // TODO:
     });
 });

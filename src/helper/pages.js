@@ -1,3 +1,5 @@
+var WinJS = require('winjs');
+
 /*
   This method 'crams' the View base class into the WinJS.Pages api
   Recommendations on improving at https://github.com/winjs/winjs/issues/1343
