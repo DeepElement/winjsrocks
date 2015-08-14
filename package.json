@@ -55,6 +55,6 @@
   },
   "scripts": {
     "test": "gulp test",
-    "preinstall": "gulp dist"
+    "postinstall": "gulp dist"
   }
 }
