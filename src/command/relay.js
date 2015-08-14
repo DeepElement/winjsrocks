@@ -3,7 +3,7 @@ var WinJS = require('winjs'),
 
 // RelayCommand Constructor
 // ----------------------
-function RelayCommand(payload, key) {
+function _constructor(payload, key) {
     var _self = this;
     _self._key = key;
     _self._internalExecute = payload || function() {};
