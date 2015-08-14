@@ -55,7 +55,6 @@
   },
   "scripts": {
     "test": "gulp test",
-    "preinstall": "npm install",
-    "postinstall": "gulp dist"
+    "build": "gulp dist"
   }
 }
