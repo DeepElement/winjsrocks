@@ -17,6 +17,7 @@ after_success:
 before_deploy:
 - npm install
 deploy:
+  skip_cleanup: true
   provider: npm
   email: todd@deepelement.com
   api_key:
@@ -24,4 +25,3 @@ deploy:
   on:
     repo: DeepElement/winjs-rocks
     branch: stable
-  skip_cleanup: true
