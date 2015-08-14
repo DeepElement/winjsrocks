@@ -54,7 +54,7 @@
     "xmlhttprequest": "^1.7.0"
   },
   "scripts": {
-    "test": "mocha",
-    "prepublish": "./node_modules/gulp/bin/gulp.js dist"
+    "test": "./node_modules/gulp/bin/gulp.js test",
+    "postinstall": "./node_modules/gulp/bin/gulp.js dist"
   }
 }
