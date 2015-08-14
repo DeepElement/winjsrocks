@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "author": {
         "name": "Todd Morrison",
         "email": "todd@deepelement.com",
@@ -56,29 +55,5 @@
         "test": "gulp test",
         "prepublish": "npm install -dev --ignore-scripts",
         "postinstall": "gulp dist"
-=======
-  "author": {
-    "name": "Todd Morrison",
-    "email": "todd@deepelement.com",
-    "url": "http://www.deepelement.com"
-  },
-  "name": "winjs-rocks",
-  "private": false,
-  "description": "WinJS-based MVVM architecture for cross-platform apps",
-  "version": "0.0.72",
-  "keywords": [
-    "winjs",
-    "commonjs",
-    "javascript framework"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:DeepElement/winjs-rocks.git"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
->>>>>>> origin/stable
     }
 }
