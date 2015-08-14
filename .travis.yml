@@ -14,7 +14,7 @@ deploy:
     secure: OqVXUM0OFMtBsSKN+CleqK8FK/6VVL16D0M8xeMEN7MN4F6OgxCQ4y9hZehdSxs18tpuVu0JiEkRJuNpTXw25SLuArPXRcPEAKmFxd1yH3DaAg38+JNyneFMEcJbcsc2Ke+wbXGtIwuaKZ+2pUJwSzuuURfT8p5PtkoIUrtKSfHVWpzosS12eaghnwaCRVBT509oNINSO0DNoM9/uxkN9XyPYB0PIBBejGy43aXOfz5kSs0wKonQnD3DvDeVrWKJUcSl0S+DvgjJzp5uNuOh9Xtzf7ACo6AyBaTRJyA7mwMuod+BTZzM5CFHZlYFYlG4B+QSFMm8AtXNRURhdo1qjjSeUM8wdAtYfAaIUXvSDjCMTlhnNYm+ZodUe/0b38bH3IhizcxDMFdxPe8G5FYzbAqTdNk8uOfFYG1HOpOWQy9fHp9FP0r+u7UWczbcnQ+ClmdagMR7qh9yUbZwNAuB9nsrTjy6GCvC81bb28mzzQ2pGi9DFj53wIB0YPzxe8v7AxZMi0ErngKSwuEExFGYJZECr3yge1lES0WbIiecplR2lwpk69IlX6TQdXRnhHkn44BqWXSJyp3YtlzuylyLbnKnrK/sidIrrfiEjKDLOxrogBpVMI3Ark830IwwoNqkXnUD20yaQSVV3TCH1XqfDwEWmcXh+L4dPGaWlmcsS0E=
   on:
     repo: DeepElement/winjs-rocks
-    branch: stable
+    branch: master
   skip_cleanup: true
 after_success:
 - git config --global user.email ${GIT_EMAIL}
