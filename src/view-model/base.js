@@ -3,13 +3,23 @@ var WinJS = require('winjs'),
     mixins = require('../helper/mixins');
 
 var _constructor = function(options) {
-    //this.ApplicationService = ioc.get("application");
+    var that = this;
     this._loadingState = "loading";
+
+    ioc.getServiceKeys().forEach(function(key) {
+        that[key.capitalizeFirstLetter() + "Service"] = ioc.getService(key);
+    });
+
+    this._initialLoadTimerId = this.ApplicationService.setTimeout(function(){
+        if(that._loadingState != "loaded")
+            that.MessageService.send("viewLoadTimeoutMessage", this.key);
+        that.ApplicationService.clearTimeout(this._initialLoadTimerId);
+    }, 10000);
 };
 
 var instanceMembers = {
     _super: {
-        get: function(){
+        get: function() {
             return Object.getPrototypeOf(this);
         }
     },
@@ -26,10 +36,10 @@ var instanceMembers = {
     onDataSet: function() {
         console.log("ViewModel:onDataSet");
         var that = this;
+        this.notifyLoading();
 
-        setTimeout(function(){
-            that._loadingState = "loaded";
-            that.notify("loadingState");
+        setTimeout(function() {
+            this.notifyLoaded();
         }, 10000);
     },
 
@@ -40,14 +50,31 @@ var instanceMembers = {
     setData: function(val) {
         console.log("ViewModel:setData");
         this._data = val;
-        this._loadingState = "loading";
-        this.notify("loadingState");
+        this.notifyLoading();
         this.notify('data');
         this.onDataSet();
     },
 
+    onNavigateTo: function() {
+        console.log("ViewModel:onNavigateTo");
+    },
+
+    onNavigateFrom: function() {
+        console.log("ViewModel:onNavigateFrom");
+    },
+
     getLoadingState: function() {
         return this._loadingState;
+    },
+
+    notifyLoading: function() {
+        this._loadingState = "loading";
+        this.notify("loadingState");
+    },
+
+    notifyLoaded: function() {
+        this._loadingState = "loaded";
+        this.notify("loadingState");
     }
 };
 

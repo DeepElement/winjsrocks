@@ -1,11 +1,17 @@
 var WinJS = require('winjs'),
     mixins = require('../helper/mixins');
-    
+
 var _constructor = function(options) {
 
 };
 
 var instanceMembers = {
+    _super: {
+        get: function() {
+            return Object.getPrototypeOf(this);
+        }
+    },
+    
     start: function(options) {
         return WinJS.Promise.as();
     },

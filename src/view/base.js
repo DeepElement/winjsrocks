@@ -5,13 +5,17 @@ var _constructor = function(element, options) {
     var that = this;
     this._viewModel = options;
     this._super.apply(this, arguments);
+
+    this._onLoadingStateChangedBinding = this._onLoadingStateChanged.bind(this);
 };
 
 var instanceMembers = {
-    _super: {
-        get: function(){
-            console.log("called");
-            return Object.getPrototypeOf(this);
+
+    _onLoadingStateChanged: function() {
+        if (this.getViewModel().getLoadingState() == "loaded") {
+            WinJS.UI.processAll(this.element);
+            WinJS.Binding.processAll(this.element, this.getViewModel());
+            WinJS.Resources.processAll(this.element);
         }
     },
 
@@ -21,13 +25,20 @@ var instanceMembers = {
         return null;
     },
 
+    render: function(element, options, loadResult) {
+        console.log("View::render");
+        return this._super.prototype.render.apply(this, arguments);
+    },
+
     init: function(element, options) {
         console.log("View::init");
+        this.getViewModel().addEventListener("loadingState", this._onLoadingStateChangedBinding);
         return this._super.prototype.init.apply(this, arguments);
     },
 
     dispose: function() {
         console.log("View::dispose");
+        this.viewModel.removeEventListener("loadingState", this._onLoadingStateChangedBinding);
         return this._super.prototype.dispose.apply(this, arguments);
     },
 
@@ -45,16 +56,14 @@ var instanceMembers = {
                 that._viewModel.addEventListener("loadingState", callbackDelegate);
             } else
                 return complete();
+        }).done(function() {
+            that._onLoadingStateChanged();
         });
     },
 
     ready: function() {
         console.log("View::Ready");
         this._super.prototype.ready.apply(this, arguments);
-    },
-
-    onBindingReady: function() {
-
     },
 
     getAnimationElements: function() {

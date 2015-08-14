@@ -4,7 +4,7 @@ var ioc = require('../ioc'),
 exports.notifyServices = function(method, args, done) {
   async.each(ioc.getServiceKeys(),
     function(key, keyCb) {
-      var serviceInstance = ioc.get(key);
+      var serviceInstance = ioc.getService(key);
       if (serviceInstance["on" + method.capitalizeFirstLetter()])
         serviceInstance["on" + method.capitalizeFirstLetter()].apply(serviceInstance, args);
     },
