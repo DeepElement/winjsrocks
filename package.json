@@ -55,6 +55,6 @@
   },
   "scripts": {
     "test": "mocha",
-    "prepublish": "gulp dist"
+    "prepublish": "./node_modules/gulp/bin/gulp.js dist"
   }
 }
