@@ -7,7 +7,7 @@ after_success:
 - git config --global user.email "${GIT_EMAIL}"
 - git config --global user.name "${GIT_NAME}"
 - git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
-      travis-build > /dev/null
+  travis-build > /dev/null
 - cd travis-build
 - git fetch --quiet > /dev/null
 - git merge origin/master --no-commit > /dev/null
@@ -21,7 +21,7 @@ deploy:
   provider: npm
   email: todd@deepelement.com
   api_key:
-    secure: OqVXUM0OFMtBsSKN+CleqK8FK/6VVL16D0M8xeMEN7MN4F6OgxCQ4y9hZehdSxs18tpuVu0JiEkRJuNpTXw25SLuArPXRcPEAKmFxd1yH3DaAg38+JNyneFMEcJbcsc2Ke+wbXGtIwuaKZ+2pUJwSzuuURfT8p5PtkoIUrtKSfHVWpzosS12eaghnwaCRVBT509oNINSO0DNoM9/uxkN9XyPYB0PIBBejGy43aXOfz5kSs0wKonQnD3DvDeVrWKJUcSl0S+DvgjJzp5uNuOh9Xtzf7ACo6AyBaTRJyA7mwMuod+BTZzM5CFHZlYFYlG4B+QSFMm8AtXNRURhdo1qjjSeUM8wdAtYfAaIUXvSDjCMTlhnNYm+ZodUe/0b38bH3IhizcxDMFdxPe8G5FYzbAqTdNk8uOfFYG1HOpOWQy9fHp9FP0r+u7UWczbcnQ+ClmdagMR7qh9yUbZwNAuB9nsrTjy6GCvC81bb28mzzQ2pGi9DFj53wIB0YPzxe8v7AxZMi0ErngKSwuEExFGYJZECr3yge1lES0WbIiecplR2lwpk69IlX6TQdXRnhHkn44BqWXSJyp3YtlzuylyLbnKnrK/sidIrrfiEjKDLOxrogBpVMI3Ark830IwwoNqkXnUD20yaQSVV3TCH1XqfDwEWmcXh+L4dPGaWlmcsS0E=
+    secure: LNH3+jZBYyvPRlQvlERJ+KiQ/4FofRm17aWLphcCkRn/7jcokcJBgRXG/v1d0HlSejnqGFfgjzti5HkAe0auj+TVZtDkqMiVM0V4O4ZE3DlKOPNAU0pTNjyfesa8ccryASMgmkxxoq74qNXCiS+VSRVArg5XqCvC0/9mDXgxgmfBCUec9MlUqgJqsYxv++i80eTYrXPm57mlj6yo38CAti4wFlPmeRZ0dxA/X4/HYytMC2nQQ+JzXkTLdsMufYYXY9neWOhWNA2kSv0KrWbnnyMLQFEvbgNu/nxxgt3WA3LqO87PcCoQnCwqBVgh+pa4t4rC1lfe3JJwLN2mAvLUg1IRBk2zXic2YgDy7uvncTNJnpHRhC1HcPOV5Xi6ZhEQv6+X6D1EJ9xNLDTwayRonCFK0JriT0H3RTkDirbzRrshxlLLfSNMW41qpU4bSgi8nkMoiMiKsjBL5I8fIDrDmwIqlBqRObjdrw4pz4WeOFsmvcfQrt7AqFVovRxzFIWlBmfPJo6aAK7nbkSK80zgzbRqriMwyGthzk91cryv3w0W8Ly3i7fJCtusKuJK2VqDUVxTtU5QjbFcIJGyA35uHgQCueLoWC4hCyYdz0Z0w9mh9oikXaJ3S580cgW1vYMZKgHohzcXCnCq1XgHInKvlTDjGDss8HMhW+0RqAGC5R8=
   on:
     repo: DeepElement/winjs-rocks
     branch: stable
