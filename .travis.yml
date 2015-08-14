@@ -1,27 +1,29 @@
 language: node_js
 node_js:
- - 0.10.33
+- 0.10.33
 script: npm test
 branches:
- only:
+  only:
   - master
 before_deploy:
- - npm install
+- npm install
 deploy:
- skip_cleanup: true
- provider: npm
- email: todd@deepelement.com
- api_key:
-  secure: Bv6aWO8c5pKh76a2M280c5sEZfyidN5c6bw3VOxRBYOA/WH2n75I1DynlmoCIJcyRW373qQf0e+kqpbzWQ7zqpvCd812UKXZCYkD9P6RM8QyRQMKEfNP8V8Ok8GAxB7/5ZJNzuGxrnNloet+efJarNdgTKGx9kgduCvuJVqSr576qlkN0rhiOqNvPY4EDSp/puvG1EIGFuMbLwdLbufB4/gAKdJz/ky/tWIKiE+M+NUaKzxz8XTWnoDGWF7IQgeRJ6ZNEzXQC+hj+pXsUP/g3LSIhiwEpbMvV+xKrjHR85FWOmAlKkqlOi5zWr6I9wJtVcJUic+Qp7Q4pZoVvmvcmYmwaTFN3szhvIxnlttbozzN6APc2nmc3tN7hPa1TCr8big3SUy2PXME8y9rcJuTbWadwhJ8VbrfNxxjOMA9xjJV8Y3HEY8jgmnll4ZIqa0yYNvirB28zwwwlnF8b6d8QVu0nlbZ5mLQk+RdMLBqNQMD9NrhLqJhYuE63jLVzs3aF59KGbikuO0a3czb+AT85NtecXS+YwY8Qk0F6Vl8+PvjdG/iBdka86wC2MyDo94Uk1gmz15w93Td+cReEdxN/ruOo46PQDvHyr51EYuAGkHaBs/OHvLfqJ7jzdft7kc7MB/pzxzawHNEj0KcUo5uOTtPh9Me5dCTz11Ay+OdpqE=
- on:
-  repo: DeepElement/winjs-rocks
+  provider: npm
+  email: todd@deepelement.com
+  api_key:
+    secure: OqVXUM0OFMtBsSKN+CleqK8FK/6VVL16D0M8xeMEN7MN4F6OgxCQ4y9hZehdSxs18tpuVu0JiEkRJuNpTXw25SLuArPXRcPEAKmFxd1yH3DaAg38+JNyneFMEcJbcsc2Ke+wbXGtIwuaKZ+2pUJwSzuuURfT8p5PtkoIUrtKSfHVWpzosS12eaghnwaCRVBT509oNINSO0DNoM9/uxkN9XyPYB0PIBBejGy43aXOfz5kSs0wKonQnD3DvDeVrWKJUcSl0S+DvgjJzp5uNuOh9Xtzf7ACo6AyBaTRJyA7mwMuod+BTZzM5CFHZlYFYlG4B+QSFMm8AtXNRURhdo1qjjSeUM8wdAtYfAaIUXvSDjCMTlhnNYm+ZodUe/0b38bH3IhizcxDMFdxPe8G5FYzbAqTdNk8uOfFYG1HOpOWQy9fHp9FP0r+u7UWczbcnQ+ClmdagMR7qh9yUbZwNAuB9nsrTjy6GCvC81bb28mzzQ2pGi9DFj53wIB0YPzxe8v7AxZMi0ErngKSwuEExFGYJZECr3yge1lES0WbIiecplR2lwpk69IlX6TQdXRnhHkn44BqWXSJyp3YtlzuylyLbnKnrK/sidIrrfiEjKDLOxrogBpVMI3Ark830IwwoNqkXnUD20yaQSVV3TCH1XqfDwEWmcXh+L4dPGaWlmcsS0E=
+  on:
+    repo: DeepElement/winjs-rocks
+    branch: stable
+  skip_cleanup: true
 after_success:
- - git config --global user.email ${GIT_EMAIL}
- - git config --global user.name ${GIT_NAME}
- - git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} travis-build > /dev/null
- - git fetch --quiet > /dev/null
- - cd travis-build
- - git merge origin/master --no-commit > /dev/null
- - npm version patch
- - git commit -m "Travis CI autocommit from travis build ${TRAVIS_BUILD_NUMBER}"
- - git push -fq origin stable > /dev/null
+- git config --global user.email ${GIT_EMAIL}
+- git config --global user.name ${GIT_NAME}
+- git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
+  travis-build > /dev/null
+- git fetch --quiet > /dev/null
+- cd travis-build
+- git merge origin/master --no-commit > /dev/null
+- npm version patch
+- git commit -m "Travis CI autocommit from travis build ${TRAVIS_BUILD_NUMBER}"
+- git push -fq origin stable > /dev/null
