@@ -50,7 +50,8 @@ gulp.task("dist:clean", function(cb) {
 
 gulp.task("dist:package", function() {
     var b = browserify({
-        entries: 'dist/winjs-rocks.bundle.js'
+        entries: 'dist/winjs-rocks.bundle.js',
+        fullPaths: false
     });
     return b.bundle()
         .pipe(source('winjs-rocks.js'))
@@ -66,12 +67,16 @@ gulp.task("dist:bundle", function(done) {
             if (err)
                 return done(err);
 
+            var relativeFiles = files.map(function(f){
+                return path.join("..", path.relative(".", f));
+            });
+
             var instance = new BrowserifyBridge({
                 env: process.env,
                 envWhiteList: ['NODE_ENV'],
                 package: path.join(__dirname, "package.json"),
-                sources: files,
-                relativeApiRoot: path.join(__dirname, "src")
+                sources: relativeFiles,
+                relativeApiRoot: "../src"
             });
             instance.exportToFile(path.join(__dirname, "dist", "winjs-rocks.bundle.js"),
                 done);

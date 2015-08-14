@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "browserify": "^11.0.1",
-    "browserify-bridge": "0.0.2",
+    "browserify-bridge": "0.0.4",
     "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-clean": "^0.3.1",
