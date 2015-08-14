@@ -14,3 +14,4 @@ ioc.registerProvider("network", require('./provider/network'));
 
 ioc.registerService("navigation", require('./service/navigation'));
 ioc.registerService("message", require('./service/message'));
+ioc.registerService("application", require('./service/application'));

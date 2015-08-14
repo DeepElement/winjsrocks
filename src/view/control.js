@@ -2,7 +2,7 @@ var WinJS = require('winjs'),
     base = require('./base');
 
 var _constructor = function(options) {
-    base.apply(this, arguments);
+    Object.getPrototypeOf(this).apply(this, arguments);
 };
 
 var instanceMembers = {

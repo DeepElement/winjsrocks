@@ -1,6 +1,7 @@
 var common = require('../common'),
     assert = require('assert'),
     should = require('should'),
+    util = require("util"),
     sinon = require("sinon");
 
 describe('Unit', function() {
