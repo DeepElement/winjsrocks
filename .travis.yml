@@ -3,7 +3,7 @@ node_js:
 - 0.10.33
 script: npm test
 after_success:
-- if [ "${TRAVIS_BRANCH}" != "master" ]; exit 1; fi
+- if [ ${TRAVIS_BRANCH} != "master" ]; exit 1; fi
 - git config --global user.email "${GIT_EMAIL}"
 - git config --global user.name "${GIT_NAME}"
 - git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
