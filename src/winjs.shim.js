@@ -10,19 +10,22 @@ function abs(uri) {
 WinJS.UI.Pages.define = function(uri, members, baseClassDef) {
     var absUri = abs(uri);
     var pageClassDef = _pageDefine(absUri, members);
-    baseClassDef.prototype._super = pageClassDef;
-
-    // migrate props that are not override
-    var propertyNames = Object.getOwnPropertyNames(pageClassDef.prototype);
-    for(var i=0; i<=propertyNames.length-1; i++)
+    if(baseClassDef)
     {
-        var key = propertyNames[i];
-        if (!baseClassDef.prototype[key])
+        baseClassDef.prototype._super = pageClassDef;
+    
+        // migrate props that are not override
+        var propertyNames = Object.getOwnPropertyNames(pageClassDef.prototype);
+        for(var i=0; i<=propertyNames.length-1; i++)
         {
-            baseClassDef.prototype[key] = pageClassDef.prototype[key];
+            var key = propertyNames[i];
+            if (!baseClassDef.prototype[key])
+            {
+                baseClassDef.prototype[key] = pageClassDef.prototype[key];
+            }
         }
+    
+        WinJS.UI.Pages._viewMap[absUri] = baseClassDef;
     }
-
-    WinJS.UI.Pages._viewMap[absUri] = baseClassDef;
-    return baseClassDef;
+    return baseClassDef || pageClassDef;
 };
