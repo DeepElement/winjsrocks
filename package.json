@@ -53,7 +53,7 @@
     },
     "scripts": {
         "test": "gulp test",
-        "prepublish": "npm install -dev",
+        "prepublish": "npm install -dev --ignore-scripts",
         "postinstall": "gulp dist"
     }
 }
