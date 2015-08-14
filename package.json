@@ -55,6 +55,6 @@
   },
   "scripts": {
     "test": "mocha",
-    "prepublish": "gulp build-dist"
+    "prepublish": "gulp dist"
   }
 }

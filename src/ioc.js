@@ -1,23 +1,61 @@
+require("./runtime");
 var Momentr = require('momentr');
 var _container = new Momentr();
-var _validScopes = ["request", "application", "session"];
+var _validScopes = ["request", "application"];
 
-var _viewModelPrefix = "viewModel_",
-    _servicePrefix = "service_",
-    _viewPrefix = "view_",
-    _providerPrefix = "provider_";
+var exportsConfig = [{
+    type: "viewModel",
+    prefix: "viewModel_",
+    scope: "request"
+}, {
+    type: "provider",
+    prefix: "provider_",
+    scope: "request"
+}, {
+    type: "service",
+    prefix: "service_",
+    scope: "application"
+}, {
+    type: "model",
+    prefix: "model_",
+    scope: "request"
+}, {
+    type: "view",
+    prefix: "view_",
+    scope: "request"
+}];
+
 
 exports.getRegisteredKeys = function() {
     return _container.getRegisteredKeys();
 };
 
-exports.getServiceKeys = function() {
-    var keys = _container.getRegisteredKeys();
-    return keys.filter(function(f) {
-        return f.indexOf(_servicePrefix) == 0;
-    }).map(function(f){
-        return f.substr(_servicePrefix.length);
-    });
+exportsConfig.forEach(function(config) {
+    var caseType = config.type.capitalizeFirstLetter();
+    exports["get" + caseType + "Keys"] = function() {
+        var keys = _container.getRegisteredKeys();
+        return keys.filter(function(f) {
+            return f.indexOf(config.prefix) == 0;
+        }).map(function(f) {
+            return f.substr(config.prefix.length);
+        });
+    };
+
+    exports["get" + caseType] = function(key) {
+        return _container.get(config.prefix + key);
+    };
+
+    exports["get" + caseType + "Def"] = function(key) {
+        return _container.def(config.prefix + key).type;
+    };
+
+    exports["register" + caseType] = function(key, clazz) {
+        return _container.register(config.prefix + key, clazz, config.scope);
+    };
+});
+
+exports.getRegisteredKeys = function() {
+    return _container.getRegisteredKeys();
 };
 
 exports.getAllInstances = function() {
@@ -35,39 +73,3 @@ exports.clear = function() {
 exports.override = function(key, clazz) {
     return _container.override(key, clazz);
 };
-
-exports.registerService = function(key, clazz) {
-    return _container.register(_servicePrefix + key, clazz, 'application');
-};
-
-exports.registerProvider = function(key, clazz) {
-    return _container.register(_providerPrefix + key, clazz, 'request');
-};
-
-exports.registerView = function(key, clazz) {
-    return _container.register(_viewPrefix + key, clazz, 'request');
-};
-
-exports.registerViewModel = function(key, clazz) {
-    _container.register(_viewModelPrefix + key, clazz, 'request');
-}
-
-exports.getProvider = function(key) {
-    return _container.get(_providerPrefix + key);
-}
-
-exports.getService = function(key) {
-    return _container.get(_servicePrefix + key);
-}
-
-exports.getViewModel = function(key) {
-    return _container.get(_viewModelPrefix + key);
-}
-
-exports.getView = function(key) {
-    return _container.get(_viewPrefix + key);
-}
-
-exports.getViewDef = function(key) {
-    return _container.def(_viewPrefix + key).type;
-}

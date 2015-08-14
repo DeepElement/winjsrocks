@@ -10,12 +10,8 @@ var gulp = require('gulp'),
   mkdirp = require('mkdirp'),
   BrowserifyBridge = require('browserify-bridge');
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
-
-gulp.task("build-dist", function(cb) {
-  runSequence('clean', 'build-bundle', cb);
+gulp.task("dist", function(cb) {
+  runSequence('dist:clean', 'dist:bundle', cb);
 });
 
 gulp.task("test", function() {
@@ -48,11 +44,11 @@ gulp.task("test-unit", function() {
     }));
 });
 
-gulp.task("clean", function(cb) {
+gulp.task("dist:clean", function(cb) {
   rimraf('./dist', cb);
 });
 
-gulp.task("build-bundle", function(done) {
+gulp.task("dist:bundle", function(done) {
   mkdirp(path.join(__dirname, "dist"), function(err) {
     if (err)
       return done(err);
