@@ -3,16 +3,16 @@ before_install:
   npm install -g npm@'>=2.13.5'
 script: npm test
 after_success:
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then git config --global user.email "${GIT_EMAIL}"; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then git config --global user.name "${GIT_NAME}"; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then git config --global user.email "${GIT_EMAIL}"; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then git config --global user.name "${GIT_NAME}"; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  git clone --quiet --branch=stable https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
   travis-build > /dev/null; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  cd travis-build; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  git fetch --quiet > /dev/null; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  git merge origin/master --no-commit > /dev/null; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  git commit -m "Travis CI auto-merge from travis build ${TRAVIS_BUILD_NUMBER}"; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  npm version patch -m "Travis CI auto-version from travis build ${TRAVIS_BUILD_NUMBER}"; fi
-- if [ "${TRAVIS_BRANCH}" != "master" ]; then  git push -fq origin stable > /dev/null; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  cd travis-build; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  git fetch --quiet > /dev/null; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  git merge origin/master --no-commit > /dev/null; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  git commit -m "Travis CI auto-merge from travis build ${TRAVIS_BUILD_NUMBER}"; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  npm version patch -m "Travis CI auto-version from travis build ${TRAVIS_BUILD_NUMBER}"; fi
+- if [ "${TRAVIS_BRANCH}" = "master" ]; then  git push -fq origin stable > /dev/null; fi
 before_deploy:
 - npm install
 deploy:
