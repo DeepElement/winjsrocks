@@ -10,8 +10,3 @@ A framework based on WinJS for building cross platform apps.
 =============================
 
 # IN DEVELOPMENT (UNSTABLE)
-
-# 3rd party libraries
-
-- UI Framework - ![WinJS](https://www.npmjs.com/package/winjs)
-- IoC Container - ![Momentr](https://www.npmjs.com/package/momentr)
