@@ -34,8 +34,7 @@
     "sprintf-js": "^1.0.3",
     "underscore": "^1.8.3",
     "uuid": "^2.0.1",
-    "winjs": "^4.1.0",
-    "winston": "^1.0.1"
+    "winjs": "^4.1.0"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
