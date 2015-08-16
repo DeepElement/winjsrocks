@@ -47,6 +47,7 @@ var instanceMembers = {
     _onNavigating: function(args) {
         var that = this;
         var newElement = this.createDefaultPageElement();
+        this._element.clear();
         this._element.appendChild(newElement);
         this._lastNavigationPromise.cancel();
 
