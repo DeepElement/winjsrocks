@@ -47,16 +47,32 @@ var instanceMembers = {
     _onNavigating: function(args) {
         var that = this;
         var newElement = this.createDefaultPageElement();
-        this._element.clear();
         this._element.appendChild(newElement);
         this._lastNavigationPromise.cancel();
+
+        function cleanup() {
+          if (that._element.childElementCount > 1) {
+            var oldElement = that._element.firstElementChild;
+            // Cleanup and remove previous element
+            if (oldElement.winControl) {
+
+              if (oldElement.winControl.unload) {
+                oldElement.winControl.unload();
+              }
+              oldElement.winControl.dispose();
+            }
+            oldElement.parentNode.removeChild(oldElement);
+            oldElement.innerText = "";
+          }
+        }
+
 
         // TODO: archive the old view/viewModel
         this._lastNavigationPromise = WinJS.Promise.as().then(function() {
             return WinJS.UI.Pages.render(args.detail.location,
                 newElement,
                 args.detail.state);
-        });
+        }).then(cleanup, cleanup);
         args.detail.setPromise(this._lastNavigationPromise);
 
         this.MessageService.send("navigatingMessage", args);

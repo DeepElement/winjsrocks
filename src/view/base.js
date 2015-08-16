@@ -38,7 +38,7 @@ var instanceMembers = {
 
     dispose: function() {
         console.log("View::dispose");
-        this.viewModel.removeEventListener("loadingState", this._onLoadingStateChangedBinding);
+        this.getViewModel().removeEventListener("loadingState", this._onLoadingStateChangedBinding);
         return this._super.prototype.dispose.apply(this, arguments);
     },
 
