@@ -15,10 +15,12 @@ var instanceMembers = {
     var that = this;
     return base.prototype.start.apply(this, arguments).then(function() {
       return new WinJS.Promise(function(complete, error) {
+        // Init the loki db
         that._db = new loki(that._lokiDbName, {
           adapter: that._lokiStorageProvider
         });
 
+        // Build the dynamic creation factory for Loki deserialization
         var creationFactoryMapping = {};
         var modelKeys = ioc.getModelKeys();
         modelKeys.forEach(function(modelKey) {
@@ -26,6 +28,16 @@ var instanceMembers = {
             proto: ioc.getModelDef(modelKey)
           }
         });
+
+        // Expose the dynamic model api on the data service
+        modelKeys.forEach(function(modelKey) {
+          that._db.addCollection(modelKey);
+          that["get" + modelKey.capitalizeFirstLetter() + "Collection"] = function(){
+            return that._db.getCollection(modelKey);
+          };
+        });
+
+        // load the db
         that._db.loadDatabase(creationFactoryMapping,
           function(resp) {
             if (resp === 'Database not found')
