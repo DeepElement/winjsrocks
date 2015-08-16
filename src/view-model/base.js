@@ -37,10 +37,6 @@ var instanceMembers = {
         console.log("ViewModel:onDataSet");
         var that = this;
         this.notifyLoading();
-
-        setTimeout(function() {
-            this.notifyLoaded();
-        }, 10000);
     },
 
     getData: function() {
