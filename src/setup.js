@@ -18,3 +18,8 @@ ioc.registerService("navigation", require('./service/navigation'));
 ioc.registerService("message", require('./service/message'));
 ioc.registerService("application", require('./service/application'));
 ioc.registerService("data", require('./service/data'));
+
+// Export globals
+window.Binding = window.Binding || {};
+window.Binding.Mode = window.Binding.Mode || {};
+window.Binding.Mode.Command = require('./binding/mode').command;
