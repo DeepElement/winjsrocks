@@ -12,8 +12,7 @@ var instanceMembers = {
     data.jsonParse = data.jsonParse || false;
     request({
       url: data.url,
-      followAllRedirects: true,
-      gzip: true
+      followAllRedirects: true
     }, function(error, response) {
       if (!that.pendingDispose) {
         if (error)
