@@ -26,10 +26,8 @@ var instanceMembers = {
             proto: ioc.getModelDef(modelKey)
           }
         });
-        console.log('load database', creationFactoryMapping);
         that._db.loadDatabase(creationFactoryMapping,
           function(resp) {
-            console.log('a');
             if (resp === 'Database not found')
               that._db.saveDatabase(function() {
                 return complete();
