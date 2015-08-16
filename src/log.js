@@ -1,8 +1,13 @@
-var winston = require('winston');
-/*
-  Uses Winston : https://github.com/winstonjs/winston
-*/
-module.exports = new winston.Logger();
+var _log = function(msg) {
+  if (process.env.NODE_ENV != "production")
+    console.log(new Date() + msg);
+}
 
-if (process.env.NODE_ENV != "production")
-  module.exports.add(winston.transports.Console);
+module.exports = {
+  info: function(msg) {
+    _log("info:" + msg);
+  },
+  warn: function(msg) {
+    _log("warn:" + msg);
+  }
+}
