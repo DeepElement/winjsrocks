@@ -24,7 +24,7 @@ gulp.task("test", function() {
         }));
 });
 
-gulp.task("test-integration", function() {
+gulp.task("test:integration", function() {
     return gulp.src('test/integration/**/*.js', {
             read: false
         })
@@ -34,7 +34,7 @@ gulp.task("test-integration", function() {
         }));
 });
 
-gulp.task("test-unit", function() {
+gulp.task("test:unit", function() {
     return gulp.src('test/unit/**/*.js', {
             read: false
         })

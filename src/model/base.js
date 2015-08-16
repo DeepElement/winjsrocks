@@ -2,7 +2,7 @@ var WinJS = require('winjs'),
     mixins = require('../helper/mixins');
 
 var _constructor = function(options) {
-
+  this._contentType = options.contentType || "none";
 };
 
 var instanceMembers = {
@@ -10,6 +10,9 @@ var instanceMembers = {
         get: function() {
             return Object.getPrototypeOf(this);
         }
+    },
+    getContentType: function(){
+      return this._contentType;
     }
 };
 
