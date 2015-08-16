@@ -68,11 +68,11 @@ var instanceMembers = {
 
 
         // TODO: archive the old view/viewModel
-        this._lastNavigationPromise = WinJS.Promise.as().then(function() {
+        this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
             return WinJS.UI.Pages.render(args.detail.location,
                 newElement,
                 args.detail.state);
-        }).then(cleanup, cleanup);
+        });
         args.detail.setPromise(this._lastNavigationPromise);
 
         this.MessageService.send("navigatingMessage", args);
