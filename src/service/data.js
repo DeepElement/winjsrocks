@@ -22,7 +22,7 @@ var instanceMembers = {
 
         // Build the dynamic creation factory for Loki deserialization
         var creationFactoryMapping = {};
-        var modelKeys = ioc.getModelKeys();
+        var modelKeys = ioc.getItemModelKeys();
         modelKeys.forEach(function(modelKey) {
           creationFactoryMapping[modelKey] = {
             proto: ioc.getModelDef(modelKey)

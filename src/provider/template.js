@@ -2,7 +2,8 @@ var WinJS = require('winjs'),
   base = require('./base'),
   ioc = require('../ioc'),
   config = require('../config'),
-  util = require("util");
+  util = require("util"),
+  winjsHelper = require('../helper/winjs');
 
 var _constructor = function(options) {
   base.call(this, arguments);
@@ -15,16 +16,11 @@ var instanceMembers = {
     var _renderCompletePromise = itemPromise.then(function(item) {
       var itemViewModel = item.data;
       var viewKey = itemViewModel.getItem().getContentType().toLowerCase();
+      var viewTemplateUri = config.get("domain:" + viewKey + ":template");
       WinJS.Utilities.addClass(mediaTile, "item-template-" + viewKey);
-      var viewTemplateUri = config.get("ui:item-view:template-uri");
-      var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
       var viewClassDef = ioc.getItemViewDef(viewKey);
-      var existingBaseClass = WinJS.UI.Pages.define(actualViewTemplateUri);
-      if (existingBaseClass != viewClassDef) {
-        var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
-        ioc.override(viewKey, extendedClassDef);
-      }
-      return WinJS.UI.Pages.render(actualViewTemplateUri, mediaTile, itemViewModel);
+      winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
+      return WinJS.UI.Pages.render(viewTemplateUri, mediaTile, itemViewModel);
     });
     return {
       element: mediaTile,
