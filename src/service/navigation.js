@@ -61,7 +61,7 @@ var instanceMembers = {
       history.pushState({
         context: state,
         key: viewKey
-      }, viewKey, viewKey);
+      }, viewKey, "#" + viewKey);
 
       WinJS.Navigation.navigate(actualViewTemplateUri, vmInstance);
     }
