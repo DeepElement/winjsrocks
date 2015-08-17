@@ -31,7 +31,7 @@ var instanceMembers = {
     },
 
     setInterval: function(delegate, interval) {
-        var intervalId = window.setInterval(delegate, timeout);
+        var intervalId = window.setInterval(delegate, interval);
         this._intervalIds.push(intervalId);
         return intervalId;
     },
