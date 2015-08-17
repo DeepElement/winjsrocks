@@ -10,3 +10,32 @@ A framework based on WinJS for building cross platform apps.
 =============================
 
 # IN DEVELOPMENT (UNSTABLE)
+
+## Configuration
+
+```javascript
+{
+  "ui": {
+    "view": {
+      "template-uri": "./ui/views/%s/view.html"
+    },
+    "item-view": {
+      "template-uri": "./ui/items/%s/view.html"
+    }
+  },
+  "resources": {
+    "scripts": [
+      "vendor/jquery.2.1.4/jquery-2.1.4.min.js"
+    ],
+    "stylesheets": [
+      "vendor/winjs/css/ui-dark.css",
+      "vendor/winjs/css/ui-dark-intrinsics.css",
+      "css/branding.css",
+      "css/default.css"
+    ]
+  },
+  "app": {
+    "data-sync-interval": "5000"
+  }
+}
+```

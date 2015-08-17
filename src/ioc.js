@@ -4,6 +4,10 @@ var _container = new Momentr();
 var _validScopes = ["request", "application"];
 
 var exportsConfig = [{
+  type: "itemViewModel",
+  prefix: "itemViewModel_",
+  scope: "request"
+}, {
   type: "viewModel",
   prefix: "viewModel_",
   scope: "request"
@@ -26,6 +30,10 @@ var exportsConfig = [{
 }, {
   type: "view",
   prefix: "view_",
+  scope: "request"
+}, {
+  type: "itemView",
+  prefix: "itemView_",
   scope: "request"
 }];
 
