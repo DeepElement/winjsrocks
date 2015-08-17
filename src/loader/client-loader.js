@@ -3,7 +3,7 @@ var config = require('../config'),
   ioc = require('../ioc'),
   winjsHelper = require('../helper/winjs');
 
-modules.export = function(options, callback) {
+module.exports = function(options, callback) {
   // Load Item domain
   var domain = config.get("domain");
   if (domain) {
