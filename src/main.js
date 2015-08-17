@@ -11,7 +11,6 @@ var config = require('./config'),
 exports.configure = function(options, done) {
   async.waterfall([
       function(cb) {
-        // load app config
         var appConfig = options["app-config"];
         if (appConfig)
           config.file(appConfig, cb);
@@ -20,6 +19,9 @@ exports.configure = function(options, done) {
       },
       function(cb) {
         async.parallel([
+          function(innerCb){
+            require('./loader/client-loader')({}, innerCb);
+          },
           function(innerCb) {
             // load styles series
             var stylesheets = config.get("resources:stylesheets");

@@ -12,10 +12,6 @@ var exportsConfig = [{
   prefix: "viewModel_",
   scope: "request"
 }, {
-  type: "itemViewModel",
-  prefix: "itemViewModel_",
-  scope: "request"
-}, {
   type: "provider",
   prefix: "provider_",
   scope: "request"
@@ -24,8 +20,8 @@ var exportsConfig = [{
   prefix: "service_",
   scope: "application"
 }, {
-  type: "model",
-  prefix: "model_",
+  type: "itemModel",
+  prefix: "itemModel_",
   scope: "request"
 }, {
   type: "view",
@@ -55,6 +51,10 @@ exportsConfig.forEach(function(config) {
 
   exports["get" + caseType] = function(key) {
     return _container.get(config.prefix + key);
+  };
+
+  exports["override" + caseType] = function(key, classDef) {
+    return _container.override(config.prefix + key, classDef);
   };
 
   exports["get" + caseType + "Def"] = function(key) {

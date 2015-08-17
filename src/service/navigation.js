@@ -3,7 +3,7 @@ var WinJS = require('winjs'),
   config = require('../config'),
   base = require('./base'),
   log = require('../log'),
-  util = require("util");
+  winjsHelper = require("../helper/winjs");
 
 var _constructor = function(options) {
   base.call(this, arguments);
@@ -49,17 +49,10 @@ var instanceMembers = {
   _onNavigateToMessage: function(type, args) {
     var viewKey = args.viewKey;
     var state = args.state;
-    var viewTemplateUri = config.get("ui:view:template-uri");
+    var viewTemplateUri = config.get("pages:" + viewKey + ":template");
     if (viewTemplateUri) {
-      var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
       var viewClassDef = ioc.getViewDef(viewKey);
-
-      var existingBaseClass = WinJS.UI.Pages.define(actualViewTemplateUri);
-      if (existingBaseClass != viewClassDef) {
-        var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
-        ioc.override(viewKey, extendedClassDef);
-      }
-
+      winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
       var vmInstance = ioc.getViewModel(viewKey);
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
@@ -72,7 +65,7 @@ var instanceMembers = {
         key: viewKey
       }, viewKey, "#" + viewKey);
 
-      WinJS.Navigation.navigate(actualViewTemplateUri, vmInstance);
+      WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
   },
 
