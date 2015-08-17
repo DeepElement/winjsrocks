@@ -1,4 +1,5 @@
-var ioc = require('./ioc');
+var ioc = require('./ioc'),
+  WinJS = require('winjs');
 
 // Register Base Classes
 require('./model/base');
@@ -30,3 +31,4 @@ window.WinJSRocks.ItemTemplateSelector = {
     return ioc.getProvider("template").itemTemplateSelector;
   }
 };
+WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
