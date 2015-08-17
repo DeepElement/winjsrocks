@@ -3,6 +3,7 @@ var WinJS = require('winjs'),
   mixins = require('../helper/mixins'),
   log = require('../log');
 
+
 var _constructor = function(options) {
   var that = this;
   this._loadingState = "loading";
