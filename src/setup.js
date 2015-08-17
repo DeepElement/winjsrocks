@@ -22,9 +22,12 @@ ioc.registerService("application", require('./service/application'));
 ioc.registerService("data", require('./service/data'));
 
 // Export globals
-window.WinJSRocks = window.WinJSRocks || {};
-window.WinJSRocks.Binding = window.WinJSRocks.Binding || {};
-window.WinJSRocks.Binding.Mode = window.WinJSRocks.Binding.Mode || {};
-window.WinJSRocks.Binding.Mode.Command = require('./binding/mode').command;
-window.WinJSRocks.ItemTemplateSelector = ioc.getProvider("template").itemTemplateSelector;
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks);
+WinJS.Namespace.define("WinJSRocks.Binding.Mode", {
+  Command: require('./binding/mode').command
+});
+WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.Binding.Mode.Command);
+
+WinJS.Namespace.define("WinJSRocks", {
+  ItemTemplateSelector: ioc.getProvider("template").itemTemplateSelector
+});
+WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
