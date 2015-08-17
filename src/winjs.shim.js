@@ -10,7 +10,7 @@ function abs(uri) {
 WinJS.UI.Pages.define = function(uri, members, baseClassDef) {
   var absUri = abs(uri);
   var pageClassDef = _pageDefine(absUri, members);
-  if (baseClassDef && (typeof pageClassDef != typeof baseClassDef)) {
+  if (baseClassDef) {
     baseClassDef.prototype._super = pageClassDef;
 
     // migrate props that are not override
