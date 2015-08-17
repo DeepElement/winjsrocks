@@ -9,6 +9,7 @@ var _constructor = function(options) {
   base.call(this, arguments);
   this._onNavigatingBinding = this._onNavigating.bind(this);
   this._onNavigatedBinding = this._onNavigated.bind(this);
+  this._onNavigateBackMessageBinding = this._onNavigateBackMessage.bind(this);
   this._onBeforeNavigateBinding = this._onBeforeNavigate.bind(this);
   this._onResizedBinding = this._onResized.bind(this);
   this._onPopStateBinding = this._onPopState.bind(this);
@@ -29,6 +30,7 @@ var instanceMembers = {
       WinJS.Navigation.addEventListener("beforenavigate",
         that._onBeforeNavigateBinding);
       that.MessageService.register("navigateToMessage", that._onNavigateToMessageBinding);
+      that.MessageService.register("navigateBackMessage", that._onNavigateBackMessageBinding);
       window.addEventListener("resize", that._onResizedBinding);
       window.addEventListener("popstate", that._onPopStateBinding);
     });
@@ -36,6 +38,11 @@ var instanceMembers = {
 
   _onPopState: function(event) {
     this.MessageService.send("navigateBackMessage");
+  },
+
+  _onNavigateBackMessage: function(type, args) {
+    var steps = args.steps || 1;
+    return WinJS.Navigation.back(steps);
   },
 
   _onNavigateToMessage: function(type, args) {
@@ -159,7 +166,8 @@ var instanceMembers = {
           that._onNavigatedBinding);
         WinJS.Navigation.removeEventListener("beforenavigate",
           that._onBeforeNavigateBinding);
-        that.MessageService.register("navigateToMessage", that._onNavigateToMessageBinding);
+        that.MessageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
+        that.MessageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
         window.removeEventListener("resize", that._onResizedBinding);
         window.removeEventListener("popstate", that._onPopStateBinding)
 
