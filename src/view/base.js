@@ -10,12 +10,29 @@ var _constructor = function(element, options) {
 };
 
 var instanceMembers = {
+  _markForProcessing: function(subject) {
+      var _self = this;
+      for (var _property in subject)
+          if (subject.hasOwnProperty(_property)) {
+              if (typeof subject[_property] == "object" && _property[0] != "_") {
+                  _self._markForProcessing(subject[_property]);
+              } else
+              if (subject[_property] instanceof Function && !subject[_property]["supportedForProcessing"]) {
+                  WinJS.Utilities.markSupportedForProcessing(subject[_property]);
+              }
+          }
+  },
+
+  update: function(){
+    this._markForProcessing(this.getViewModel());
+    WinJS.UI.processAll(this.element);
+    WinJS.Binding.processAll(this.element, this.getViewModel());
+    WinJS.Resources.processAll(this.element);
+  },
 
   _onLoadingStateChanged: function() {
     if (this.getViewModel().getLoadingState() == "loaded") {
-      WinJS.UI.processAll(this.element);
-      WinJS.Binding.processAll(this.element, this.getViewModel());
-      WinJS.Resources.processAll(this.element);
+      this.processAll();
     }
   },
 
