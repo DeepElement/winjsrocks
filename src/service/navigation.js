@@ -41,6 +41,7 @@ var instanceMembers = {
   },
 
   _onNavigateBackMessage: function(type, args) {
+    args = args || {};
     var steps = args.steps || 1;
     return WinJS.Navigation.back(steps);
   },
