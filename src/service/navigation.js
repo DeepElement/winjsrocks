@@ -58,7 +58,8 @@ var instanceMembers = {
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
 
-      this.getViewModel().onNavigateFrom();
+      if(this.getViewModel())
+        this.getViewModel().onNavigateFrom();
 
       history.pushState({
         context: state,
