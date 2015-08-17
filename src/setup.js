@@ -28,7 +28,8 @@ window.WinJSRocks.Binding.Mode = window.WinJSRocks.Binding.Mode || {};
 window.WinJSRocks.Binding.Mode.Command = require('./binding/mode').command;
 window.WinJSRocks.ItemTemplateSelector = {
   get: function() {
-    return ioc.getProvider("template").itemTemplateSelector;
+    var func = ioc.getProvider("template").itemTemplateSelector;
+    WinJS.Utilities.markSupportedForProcessing(func);
+    return func;
   }
 };
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
