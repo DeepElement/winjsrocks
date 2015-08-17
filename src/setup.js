@@ -27,5 +27,4 @@ window.WinJSRocks.Binding = window.WinJSRocks.Binding || {};
 window.WinJSRocks.Binding.Mode = window.WinJSRocks.Binding.Mode || {};
 window.WinJSRocks.Binding.Mode.Command = require('./binding/mode').command;
 window.WinJSRocks.ItemTemplateSelector = ioc.getProvider("template").itemTemplateSelector;
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.Binding.Mode.Command);
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
+WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks);
