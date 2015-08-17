@@ -1,4 +1,5 @@
-var ioc = require('./ioc');
+var ioc = require('./ioc'),
+  WinJS = require('winjs');
 
 // Register Base Classes
 require('./model/base');
