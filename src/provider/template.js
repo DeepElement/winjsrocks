@@ -19,8 +19,11 @@ var instanceMembers = {
       var viewTemplateUri = config.get("ui:item-view:template-uri");
       var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
       var viewClassDef = ioc.getItemViewDef(viewKey);
-      var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
-      ioc.override(viewKey, extendedClassDef);
+      var existingBaseClass = WinJS.UI.Pages.define(actualViewTemplateUri);
+      if (existingBaseClass != viewClassDef) {
+        var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
+        ioc.override(viewKey, extendedClassDef);
+      }
       return WinJS.UI.Pages.render(actualViewTemplateUri, mediaTile, itemViewModel);
     });
     return {

@@ -53,8 +53,13 @@ var instanceMembers = {
     if (viewTemplateUri) {
       var actualViewTemplateUri = util.format(viewTemplateUri, viewKey);
       var viewClassDef = ioc.getViewDef(viewKey);
-      var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
-      ioc.override(viewKey, extendedClassDef);
+
+      var existingBaseClass = WinJS.UI.Pages.define(actualViewTemplateUri);
+      if (existingBaseClass != viewClassDef) {
+        var extendedClassDef = WinJS.UI.Pages.define(actualViewTemplateUri, {}, viewClassDef);
+        ioc.override(viewKey, extendedClassDef);
+      }
+
       var vmInstance = ioc.getViewModel(viewKey);
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
