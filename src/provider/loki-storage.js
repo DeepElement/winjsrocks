@@ -11,7 +11,7 @@ var _constructor = function(options) {
 
 var instanceMembers = {
   loadDatabase: function(dbname, callback) {
-    log.info("LokiStorage:loadDatabase");
+    log.log("LokiStorage:loadDatabase");
     var dbStorageKey = dbname + this._lokiStorageKey;
     this._storageProvider.get({
         filename: dbStorageKey
@@ -31,7 +31,7 @@ var instanceMembers = {
       });
   },
   saveDatabase: function(dbname, dbstring, callback) {
-    log.info("LokiStorage:saveDatabase");
+    log.log("LokiStorage:saveDatabase");
     var dbStorageKey = dbname + this._lokiStorageKey;
     var storageStr = "";
     if (!(typeof(dbstring) === 'string'))
