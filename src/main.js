@@ -19,30 +19,34 @@ exports.configure = function(options, done) {
           return cb();
       },
       function(cb) {
-        // load styles series
-        var stylesheets = config.get("resources:stylesheets");
-        if (stylesheets) {
-          windowHelper.loadResources(stylesheets.map(function(s) {
-            return {
-              type: 'stylesheet',
-              url: s
-            };
-          }), cb);
-        } else
-          return cb();
-      },
-      function(cb) {
-        // load scripts series
-        var scripts = config.get("resources:scripts");
-        if (scripts) {
-          windowHelper.loadResourcesSeries(scripts.map(function(s) {
-            return {
-              type: 'script',
-              url: s
-            };
-          }), cb);
-        } else
-          return cb();
+        async.parallel([
+          function(innerCb) {
+            // load styles series
+            var stylesheets = config.get("resources:stylesheets");
+            if (stylesheets) {
+              windowHelper.loadResources(stylesheets.map(function(s) {
+                return {
+                  type: 'stylesheet',
+                  url: s
+                };
+              }), innerCb);
+            } else
+              return innerCb();
+          },
+          function(innerCb) {
+            // load scripts series
+            var scripts = config.get("resources:scripts");
+            if (scripts) {
+              windowHelper.loadResourcesSeries(scripts.map(function(s) {
+                return {
+                  type: 'script',
+                  url: s
+                };
+              }), innerCb);
+            } else
+              return innerCb();
+          }
+        ], cb);
       }
     ],
     function(err) {
