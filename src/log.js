@@ -1,6 +1,6 @@
 var _log = function(msg) {
   if (process.env.NODE_ENV != "production")
-    console.log(new Date() + msg);
+    console.log(msg);
 }
 
 module.exports = {
