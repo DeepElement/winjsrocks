@@ -32,7 +32,7 @@ var instanceMembers = {
 
   _onLoadingStateChanged: function() {
     if (this.getViewModel().getLoadingState() == "loaded") {
-      this.processAll();
+      this.update();
     }
   },
 
