@@ -36,14 +36,14 @@ var instanceMembers = {
   },
 
   addItemViewModel: function(model) {
-    var itemViewModel = ioc.getItemViewModel(model.contentType);
+    var itemViewModel = ioc.getItemViewModel(model.getContentType());
     if (itemViewModel) {
       itemViewModel.setData(model);
       this._itemViewModels.push(itemViewModel);
       this.notify("itemViewModels");
       return itemViewModel;
     }
-    log.warn("ItemViewModel for " + model.contenType + " not found");
+    log.warn("ItemViewModel for " + model.getContentType() + " not found");
     return null;
   },
 
