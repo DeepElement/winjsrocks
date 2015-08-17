@@ -111,8 +111,9 @@ var instanceMembers = {
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
         args.detail.state,
-        new WinJS.Promise(function(){
-            that.MessageService.send("viewEarlyRenderMessage");
+        new WinJS.Promise(function(completed){
+            that.MessageService.send("viewRenderedMessage");
+            return completed();
         }));
     });
     args.detail.setPromise(this._lastNavigationPromise);
