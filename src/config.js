@@ -79,7 +79,7 @@ exports.loadFile = function(path, callback) {
                     jsonParse: true
                 }, function(err, resp) {
                     if (!err)
-                        result = resp.parsed.json;
+                        result = resp;
                     return done();
                 });
             },
@@ -95,7 +95,7 @@ exports.loadFile = function(path, callback) {
                             jsonParse: true
                         }, function(err, resp) {
                             if (!err)
-                                result = resp.parsed.json;
+                                result = resp;
                             return done();
                         });
                     }
