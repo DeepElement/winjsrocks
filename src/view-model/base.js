@@ -37,7 +37,7 @@ var instanceMembers = {
   },
 
   addItemViewModel: function(model) {
-    var itemViewModel = ioc.getItemViewModel(model.getContentType());
+    var itemViewModel = ioc.getItemViewModel(model.getContentType().toLowerCase());
     if (itemViewModel) {
       itemViewModel.setData(model);
       this._itemViewModels.push(itemViewModel);
