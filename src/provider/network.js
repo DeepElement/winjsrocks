@@ -12,7 +12,8 @@ var instanceMembers = {
     data.jsonParse = data.jsonParse || false;
     request({
       url: data.url,
-      followAllRedirects: true
+      followAllRedirects: true,
+      gzip: true
     }, function(error, response) {
       if (!that.pendingDispose) {
         if (error)
@@ -30,6 +31,32 @@ var instanceMembers = {
         return callback(null, response);
       }
     });
+  },
+
+  post: function(data, callback) {
+    var that = this;
+    data.jsonParse = data.jsonParse || false;
+    request.post({
+        url: data.url,
+        form: data.body
+      },
+      function(error, response) {
+        if (!that.pendingDispose) {
+          if (error)
+            return callback(error);
+          if (!error && (response.statusCode / 100) > 3) {
+            return callback(error || response.statusCode);
+          }
+          response.parsed = {};
+          try {
+            if (data.jsonParse)
+              response.parsed.json = JSON.parse(response.body);
+          } catch (x) {
+            return callback('network-error');
+          }
+          return callback(null, response);
+        }
+      });
   }
 };
 
