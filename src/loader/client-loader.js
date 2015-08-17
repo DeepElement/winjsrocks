@@ -3,11 +3,11 @@ var config = require('../config'),
   ioc = require('../ioc'),
   winjsHelper = require('../helper/winjs');
 
-module.exports = function(options, callback) {
+modules.export = function(options, callback) {
   // Load Item domain
   var domain = config.get("domain");
   if (domain) {
-    domain.forEach(function(modelKey) {
+    for(var modelKey in domain){
       var view = config.get("domain:" + modelKey + ":view");
       var viewClassDef;
       if (view) {
@@ -31,13 +31,13 @@ module.exports = function(options, callback) {
         var modelClassDef = require(model);
         ioc.registerItemModel(modelKey, model);
       }
-    });
+    };
   }
 
   // Load Pages
   var pages = config.get("pages");
   if (pages) {
-    pages.forEach(function(pageKey) {
+    for(var pageKey in pages) {
       var view = config.get("page:" + pageKey + ":view");
       var viewClassDef;
       if (view) {
@@ -55,7 +55,7 @@ module.exports = function(options, callback) {
         var viewModelClassDef = require(viewModel);
         ioc.registerViewModel(pageKey, viewModelClassDef);
       }
-    });
+    };
   }
 
   return callback();
