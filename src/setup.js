@@ -30,3 +30,4 @@ window.WinJSRocks.ItemTemplateSelector = {
     return ioc.getProvider("template").itemTemplateSelector;
   }
 };
+WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
