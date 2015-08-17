@@ -110,11 +110,7 @@ var instanceMembers = {
       that.MessageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
-        args.detail.state,
-        new WinJS.Promise(function(completed){
-            that.MessageService.send("viewEarlyRenderMessage");
-            return completed();
-        }));
+        args.detail.state);
     });
     args.detail.setPromise(this._lastNavigationPromise);
   },
