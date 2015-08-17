@@ -25,9 +25,9 @@ ioc.registerService("data", require('./service/data'));
 WinJS.Namespace.define("WinJSRocks.Binding.Mode", {
   Command: require('./binding/mode').command
 });
-WinJSRocks.winjs.Utilities.markSupportedForProcessing(WinJSRocks.Binding.Mode.Command);
+WinJS.Utilities.markSupportedForProcessing(WinJSRocks.Binding.Mode.Command);
 
 WinJS.Namespace.define("WinJSRocks", {
   ItemTemplateSelector: ioc.getProvider("template").itemTemplateSelector
 });
-WinJSRocks.winjs.Utilities.markSupportedForProcessing(WinJSRocks.ItemTemplateSelector);
+WinJS.Utilities.markSupportedForProcessing(WinJSRocks.ItemTemplateSelector);
