@@ -6,7 +6,9 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-
+  getItem: function(){
+    return this.getData();
+  }
 };
 
 var staticMembers = {
