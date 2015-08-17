@@ -112,7 +112,7 @@ var instanceMembers = {
         newElement,
         args.detail.state,
         new WinJS.Promise(function(completed){
-            that.MessageService.send("viewRenderedMessage");
+            that.MessageService.send("viewEarlyRenderMessage");
             return completed();
         }));
     });
