@@ -58,6 +58,8 @@ var instanceMembers = {
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
 
+      this.getViewModel().onNavigateFrom();
+
       history.pushState({
         context: state,
         key: viewKey
@@ -96,7 +98,6 @@ var instanceMembers = {
       }
     }
 
-
     // TODO: archive the old view/viewModel
     this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
       return WinJS.UI.Pages.render(args.detail.location,
@@ -110,6 +111,7 @@ var instanceMembers = {
 
   _onNavigated: function() {
     this.MessageService.send("navigatedMessage");
+    this.getViewModel().onNavigateTo();
   },
 
   _onResized: function() {

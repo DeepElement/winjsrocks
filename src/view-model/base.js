@@ -1,10 +1,12 @@
 var WinJS = require('winjs'),
   ioc = require('../ioc'),
-  mixins = require('../helper/mixins');
+  mixins = require('../helper/mixins'),
+  log = require('../log');
 
 var _constructor = function(options) {
   var that = this;
   this._loadingState = "loading";
+  this._itemViewModels = [];
 
   ioc.getServiceKeys().forEach(function(key) {
     that[key.capitalizeFirstLetter() + "Service"] = ioc.getService(key);
@@ -22,6 +24,41 @@ var instanceMembers = {
     get: function() {
       return Object.getPrototypeOf(this);
     }
+  },
+
+  addItemViewModels: function(models) {
+    var that = this;
+    var results = [];
+    models.forEach(function(model){
+      results.push(that.addItemViewModel(model));
+    });
+    return results;
+  },
+
+  addItemViewModel: function(model) {
+    var itemViewModel = ioc.getItemViewModel(model.contentType);
+    if (itemViewModel) {
+      itemViewModel.setData(model);
+      this._itemViewModels.push(itemViewModel);
+      this.notify("itemViewModels");
+      return itemViewModel;
+    }
+    log.warn("ItemViewModel for " + model.contenType + " not found");
+    return null;
+  },
+
+  removeItemViewModel: function(instance) {
+    var instanceIdx = this._itemViewModels.indexOf(instance);
+    if (instanceIdx > -1) {
+      this._itemViewModels.slice(instanceIdx, 1);
+      this.notify("itemViewModels");
+      return true;
+    }
+    return false;
+  },
+
+  getItemViewModels: function() {
+    return this._itemViewModels;
   },
 
   getBackNavigationDisabled: function() {
@@ -43,7 +80,7 @@ var instanceMembers = {
   },
 
   onDataSet: function() {
-    console.log("ViewModel:onDataSet");
+    log.log("ViewModel:onDataSet");
     var that = this;
     this.notifyLoading();
   },
@@ -53,7 +90,7 @@ var instanceMembers = {
   },
 
   setData: function(val) {
-    console.log("ViewModel:setData");
+    log.log("ViewModel:setData");
     this._data = val;
     this.notifyLoading();
     this.notify('data');
@@ -61,11 +98,19 @@ var instanceMembers = {
   },
 
   onNavigateTo: function() {
-    console.log("ViewModel:onNavigateTo");
+    log.log("ViewModel:onNavigateTo");
+
+    this._itemViewModels.forEach(function(itemViewModel) {
+      itemViewModel.onNavigateTo();
+    });
   },
 
   onNavigateFrom: function() {
     console.log("ViewModel:onNavigateFrom");
+
+    this._itemViewModels.forEach(function(itemViewModel) {
+      itemViewModel.onNavigateFrom();
+    });
   },
 
   getLoadingState: function() {
