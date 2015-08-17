@@ -1,6 +1,6 @@
 var WinJS = require('winjs'),
   base = require('./base'),
-  request = require('request');
+  $ = require('jquery');
 
 var _constructor = function(options) {
   base.call(this, arguments);
@@ -9,54 +9,37 @@ var _constructor = function(options) {
 var instanceMembers = {
   get: function(data, callback) {
     var that = this;
-    data.jsonParse = data.jsonParse || false;
-    request({
+    $.ajax({
+      type: "GET",
+      crossDomain: true,
       url: data.url,
-      followAllRedirects: true,
-      gzip: true
-    }, function(error, response) {
-      if (!that.pendingDispose) {
-        if (error)
-          return callback(error);
-        if (!error && (response.statusCode / 100) > 3) {
-          return callback(error || response.statusCode);
-        }
-        response.parsed = {};
-        try {
-          if (data.jsonParse)
-            response.parsed.json = JSON.parse(response.body);
-        } catch (x) {
-          return callback('network-error');
-        }
-        return callback(null, response);
+      headers: {
+      },
+      success: function(data, text) {
+        return callback(null, data);
+      },
+      error: function(request, status, error) {
+        return callback(error);
       }
     });
   },
 
   post: function(data, callback) {
     var that = this;
-    data.jsonParse = data.jsonParse || false;
-    request.post({
-        url: data.url,
-        form: data.body
+    $.ajax({
+      type: "POST",
+      crossDomain: true,
+      url: data.url,
+      data: data.form,
+      headers: {
       },
-      function(error, response) {
-        if (!that.pendingDispose) {
-          if (error)
-            return callback(error);
-          if (!error && (response.statusCode / 100) > 3) {
-            return callback(error || response.statusCode);
-          }
-          response.parsed = {};
-          try {
-            if (data.jsonParse)
-              response.parsed.json = JSON.parse(response.body);
-          } catch (x) {
-            return callback('network-error');
-          }
-          return callback(null, response);
-        }
-      });
+      success: function(data, text) {
+        return callback(null, data);
+      },
+      error: function(request, status, error) {
+        return callback(error);
+      }
+    });
   }
 };
 
