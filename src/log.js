@@ -1,6 +1,9 @@
 module.exports = {
-  info: function(msg) {
+  log: function(msg) {
     console.log(msg);
+  },
+  info: function(msg) {
+    console.info(msg);
   },
   warn: function(msg) {
     console.warn(msg);
