@@ -20,6 +20,7 @@ ioc.registerService("application", require('./service/application'));
 ioc.registerService("data", require('./service/data'));
 
 // Export globals
-window.Binding = window.Binding || {};
-window.Binding.Mode = window.Binding.Mode || {};
-window.Binding.Mode.Command = require('./binding/mode').command;
+window.WinJSRocks = window.WinJSRocks || {};
+window.WinJSRocks.Binding = window.WinJSRocks.Binding || {};
+window.WinJSRocks.Binding.Mode = window.WinJSRocks.Binding.Mode || {};
+window.WinJSRocks.Binding.Mode.Command = require('./binding/mode').command;
