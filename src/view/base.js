@@ -10,7 +10,7 @@ var _constructor = function(element, options) {
 
 var instanceMembers = {
   addManagedEventListener: function(subject, property, handler) {
-    if(subject && subject["on" + property] && handler)
+    if(subject && property && handler)
     {
         var binding = handler.bind(this);
         this._managedEvents.push({
@@ -68,7 +68,7 @@ var instanceMembers = {
     if(this._managedEvents)
     {
       this._managedEvents.forEach(function(ctx) {
-        if(ctx.subject && ctx.property && ctx.subject["on" + ctx.property] && ctx.binding)
+        if(ctx.subject && ctx.property && ctx.binding)
         	ctx.subject.removeEventListener(ctx.property, ctx.binding);
       });
       this._managedEvents = null;
