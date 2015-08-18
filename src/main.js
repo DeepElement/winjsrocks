@@ -9,6 +9,7 @@ var config = require('./config'),
   ioc = require('./ioc');
 
 exports.configure = function(options, done) {
+  var componentHash = options["component-hash"];
   async.waterfall([
       function(cb) {
         var appConfig = options["app-config"];
@@ -19,8 +20,10 @@ exports.configure = function(options, done) {
       },
       function(cb) {
         async.parallel([
-          function(innerCb){
-            require('./loader/client-loader')({}, innerCb);
+          function(innerCb) {
+            require('./loader/client-loader')({
+              componentHash: componentHash
+            }, innerCb);
           },
           function(innerCb) {
             // load styles series
