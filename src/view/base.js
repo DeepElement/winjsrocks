@@ -6,8 +6,6 @@ var _constructor = function(element, options) {
   this._viewModel = options;
   this._super.apply(this, arguments);
   this._managedEvents = [];
-
-  this._onLoadingStateChangedBinding = this._onLoadingStateChanged.bind(this);
 };
 
 var instanceMembers = {
@@ -59,13 +57,11 @@ var instanceMembers = {
   },
 
   init: function(element, options) {
-    this.getViewModel().addEventListener("loadingState", this._onLoadingStateChangedBinding);
+    this.addManagedEventListener(this.getViewModel(), "loadingState", this._onLoadingStateChanged);
     return this._super.prototype.init.apply(this, arguments);
   },
 
   dispose: function() {
-    this.getViewModel().removeEventListener("loadingState", this._onLoadingStateChangedBinding);
-
     this._managedEvents.forEach(function(ctx) {
       ctx.subject.removeEventListener(ctx.property, ctx.binding);
     });
