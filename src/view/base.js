@@ -72,7 +72,7 @@ var instanceMembers = {
     if(this._managedEvents)
     {
       this._managedEvents.forEach(function(ctx) {
-        if(ctx.subject && ctx.subject[property] && ctx.binding)
+        if(ctx.subject && ctx.property && ctx.subject[ctx.property] && ctx.binding)
         	ctx.subject.removeEventListener(ctx.property, ctx.binding);
       });
       this._managedEvents = null;
