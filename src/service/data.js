@@ -25,7 +25,7 @@ var instanceMembers = {
         var modelKeys = ioc.getItemModelKeys();
         modelKeys.forEach(function(modelKey) {
           creationFactoryMapping[modelKey] = {
-            proto: ioc.getModelDef(modelKey)
+            proto: ioc.getItemModelDef(modelKey)
           }
         });
 
