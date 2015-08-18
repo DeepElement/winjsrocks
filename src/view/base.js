@@ -13,6 +13,7 @@ var instanceMembers = {
     if(subject && property && handler)
     {
         var binding = handler.bind(this);
+        this._managedEvents = this._managedEvents || [];
         this._managedEvents.push({
           subject: subject,
           property: property,
@@ -65,6 +66,7 @@ var instanceMembers = {
   },
 
   dispose: function() {
+    var result = this._super.prototype.dispose.apply(this, arguments);
     if(this._managedEvents)
     {
       this._managedEvents.forEach(function(ctx) {
@@ -73,7 +75,7 @@ var instanceMembers = {
       });
       this._managedEvents = null;
     }
-    return this._super.prototype.dispose.apply(this, arguments);
+    return result;
   },
 
   processed: function(element, options) {
