@@ -66,10 +66,13 @@ var instanceMembers = {
   dispose: function() {
     this.getViewModel().removeEventListener("loadingState", this._onLoadingStateChangedBinding);
 
-    this._managedEvents.forEach(function(ctx) {
-      ctx.subject.removeEventListener(ctx.property, ctx.binding);
-    });
-    this._managedEvents = null;
+    if(this._managedEvents)
+    {
+      this._managedEvents.forEach(function(ctx) {
+        ctx.subject.removeEventListener(ctx.property, ctx.binding);
+      });
+      this._managedEvents = null;
+    }
 
     return this._super.prototype.dispose.apply(this, arguments);
   },
