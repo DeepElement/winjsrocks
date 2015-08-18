@@ -5,25 +5,37 @@ var _constructor = function(element, options) {
   var that = this;
   this._viewModel = options;
   this._super.apply(this, arguments);
+  this._managedEvents = [];
 
   this._onLoadingStateChangedBinding = this._onLoadingStateChanged.bind(this);
 };
 
 var instanceMembers = {
-  _markForProcessing: function(subject) {
-      var _self = this;
-      for (var _property in subject)
-          if (subject.hasOwnProperty(_property)) {
-              if (typeof subject[_property] == "object" && _property[0] != "_") {
-                  _self._markForProcessing(subject[_property]);
-              } else
-              if (subject[_property] instanceof Function && !subject[_property]["supportedForProcessing"]) {
-                  WinJS.Utilities.markSupportedForProcessing(subject[_property]);
-              }
-          }
+  addManagedEventListener: function(subject, property, handler) {
+    var binding = handler.bind(this);
+    this._managedEvents.push({
+      subject: subject,
+      property: property,
+      handler: handler,
+      binding: binding
+    });
+    subject.addEventListener(property, binding);
   },
 
-  update: function(){
+  _markForProcessing: function(subject) {
+    var _self = this;
+    for (var _property in subject)
+      if (subject.hasOwnProperty(_property)) {
+        if (typeof subject[_property] == "object" && _property[0] != "_") {
+          _self._markForProcessing(subject[_property]);
+        } else
+        if (subject[_property] instanceof Function && !subject[_property]["supportedForProcessing"]) {
+          WinJS.Utilities.markSupportedForProcessing(subject[_property]);
+        }
+      }
+  },
+
+  update: function() {
     this._markForProcessing(this.getViewModel());
     WinJS.UI.processAll(this.element);
     WinJS.Binding.processAll(this.element, this.getViewModel());
@@ -53,6 +65,12 @@ var instanceMembers = {
 
   dispose: function() {
     this.getViewModel().removeEventListener("loadingState", this._onLoadingStateChangedBinding);
+
+    this._managedEvents.forEach(function(ctx) {
+      ctx.subject.removeEventListener(ctx.property, ctx.binding);
+    });
+    this._managedEvents = null;
+
     return this._super.prototype.dispose.apply(this, arguments);
   },
 
