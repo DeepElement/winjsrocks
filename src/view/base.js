@@ -10,14 +10,17 @@ var _constructor = function(element, options) {
 
 var instanceMembers = {
   addManagedEventListener: function(subject, property, handler) {
-    var binding = handler.bind(this);
-    this._managedEvents.push({
-      subject: subject,
-      property: property,
-      handler: handler,
-      binding: binding
-    });
-    subject.addEventListener(property, binding);
+    if(subject && subject[property] && handler)
+    {
+        var binding = handler.bind(this);
+        this._managedEvents.push({
+          subject: subject,
+          property: property,
+          handler: handler,
+          binding: binding
+        });
+        subject.addEventListener(property, binding);
+    }
   },
 
   _markForProcessing: function(subject) {
@@ -62,11 +65,14 @@ var instanceMembers = {
   },
 
   dispose: function() {
-    this._managedEvents.forEach(function(ctx) {
-      ctx.subject.removeEventListener(ctx.property, ctx.binding);
-    });
-    this._managedEvents = null;
-
+    if(this._managedEvents)
+    {
+      this._managedEvents.forEach(function(ctx) {
+        if(ctx.subject && ctx.property && ctx.subject[ctx.property] && ctx.binding)
+        	ctx.subject.removeEventListener(ctx.property, ctx.binding);
+      });
+      this._managedEvents = null;
+    }
     return this._super.prototype.dispose.apply(this, arguments);
   },
 
