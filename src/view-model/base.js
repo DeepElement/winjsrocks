@@ -81,7 +81,6 @@ var instanceMembers = {
   },
 
   onDataSet: function() {
-    log.log("ViewModel:onDataSet");
     var that = this;
     this.notifyLoading();
   },
@@ -91,7 +90,6 @@ var instanceMembers = {
   },
 
   setData: function(val) {
-    log.log("ViewModel:setData");
     this._data = val;
     this.notifyLoading();
     this.notify('data');
@@ -99,16 +97,12 @@ var instanceMembers = {
   },
 
   onNavigateTo: function() {
-    log.log("ViewModel:onNavigateTo");
-
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateTo();
     });
   },
 
   onNavigateFrom: function() {
-    console.log("ViewModel:onNavigateFrom");
-
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
     });
