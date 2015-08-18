@@ -12,14 +12,17 @@ var _constructor = function(element, options) {
 
 var instanceMembers = {
   addManagedEventListener: function(subject, property, handler) {
-    var binding = handler.bind(this);
-    this._managedEvents.push({
-      subject: subject,
-      property: property,
-      handler: handler,
-      binding: binding
-    });
-    subject.addEventListener(property, binding);
+    if(subject && subject[property] && handler)
+    {
+        var binding = handler.bind(this);
+        this._managedEvents.push({
+          subject: subject,
+          property: property,
+          handler: handler,
+          binding: binding
+        });
+        subject.addEventListener(property, binding);
+    }
   },
 
   _markForProcessing: function(subject) {
@@ -69,7 +72,8 @@ var instanceMembers = {
     if(this._managedEvents)
     {
       this._managedEvents.forEach(function(ctx) {
-        ctx.subject.removeEventListener(ctx.property, ctx.binding);
+        if(ctx.subject && ctx.subject[property] && ctx.binding)
+        	ctx.subject.removeEventListener(ctx.property, ctx.binding);
       });
       this._managedEvents = null;
     }
