@@ -43,25 +43,21 @@ var instanceMembers = {
   },
 
   render: function(element, options, loadResult) {
-    console.log("View::render");
     return this._super.prototype.render.apply(this, arguments);
   },
 
   init: function(element, options) {
-    console.log("View::init");
     this.getViewModel().addEventListener("loadingState", this._onLoadingStateChangedBinding);
     return this._super.prototype.init.apply(this, arguments);
   },
 
   dispose: function() {
-    console.log("View::dispose");
     this.getViewModel().removeEventListener("loadingState", this._onLoadingStateChangedBinding);
     return this._super.prototype.dispose.apply(this, arguments);
   },
 
   processed: function(element, options) {
     var that = this;
-    console.log("View::Processed");
     return new WinJS.Promise(function(complete, error, progress) {
       if (that._viewModel.getLoadingState() == "loading") {
         var callbackDelegate = function() {
@@ -80,7 +76,6 @@ var instanceMembers = {
   },
 
   ready: function() {
-    console.log("View::Ready");
     this._super.prototype.ready.apply(this, arguments);
   },
 

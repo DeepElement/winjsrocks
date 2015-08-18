@@ -18,13 +18,11 @@ var _constructor = function(options) {
 
 var instanceMembers = {
   get: function(options, callback) {
-    log.log("LocalStorage:get");
     if (this._repo[options.fileName])
       return callback(null, this._repo[options.fileName]);
     return callback('does-not-exist');
   },
   createOrUpdate: function(options, callback) {
-    log.log("LocalStorage:createOrUpdate", options);
     options.data = options.data || {};
     var subject = this._repo[options.fileName];
     if (!subject) {
@@ -38,7 +36,6 @@ var instanceMembers = {
     return callback(null, subject);
   },
   del: function(options, callback) {
-    log.log("LocalStorage:createOrUpdate");
     if (this._repo[options.fileName]) {
       delete this._repo[options.fileName];
       this._repo[options.fileName] = null;
