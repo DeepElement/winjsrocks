@@ -8,6 +8,7 @@ before_deploy:
 after_success:
 - "./build/repo-cli.sh"
 deploy:
+  skip_cleanup: true
   provider: npm
   email: todd@deepelement.com
   api_key:
