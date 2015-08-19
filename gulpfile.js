@@ -51,7 +51,8 @@ gulp.task("dist:clean", function(cb) {
 gulp.task("dist:package", function() {
     var b = browserify({
         entries: 'dist/winjs-rocks.bundle.js',
-        fullPaths: false
+        fullPaths: false,
+        standalone: "WinJSRocks"
     });
     return b.bundle()
         .pipe(source('winjs-rocks.js'))

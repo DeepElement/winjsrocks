@@ -1,4 +1,3 @@
-window.WinJSRocks = this;
 require('./runtime');
 require('./winjs.shim');
 require('./setup');
