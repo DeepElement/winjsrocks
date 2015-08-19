@@ -95,6 +95,7 @@ var instanceMembers = {
         }
         oldElement.parentNode.removeChild(oldElement);
         oldElement.innerText = "";
+        WinJS.Utilities.disposeSubTree(oldElement);
       }
     }
 
