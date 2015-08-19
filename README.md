@@ -46,7 +46,7 @@ A framework based on WinJS for building cross platform apps.
 ```
 
 
-[npm]:                     https://www.npmjs.com/package/require-globify
+[npm]:                     https://www.npmjs.com/package/winjs-rocks
 [travis]:                  https://travis-ci.org/deepelement/winjs-rocks
 [travis-shield]:           https://img.shields.io/travis/DeepElement/winjs-rocks.svg?branch=stable
 [travis-shield-develop]:   https://img.shields.io/travis/DeepElement/winjs-rocks.svg?branch=master
