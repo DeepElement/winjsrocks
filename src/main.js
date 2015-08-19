@@ -1,3 +1,4 @@
+window.WinJSRocks = this;
 require('./runtime');
 require('./winjs.shim');
 require('./setup');
@@ -119,5 +120,3 @@ exports.resume = function(options, done) {
       return done();
     });
 };
-
-window.WinJSRocks = this;
