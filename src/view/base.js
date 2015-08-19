@@ -75,6 +75,8 @@ var instanceMembers = {
       });
       this._managedEvents = null;
     }
+    if(this.element)
+      WinJS.Utilities.disposeSubTree(this.element);
     return result;
   },
 
