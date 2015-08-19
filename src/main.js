@@ -119,3 +119,5 @@ exports.resume = function(options, done) {
       return done();
     });
 };
+
+window.WinJSRocks = this;
