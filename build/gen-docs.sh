@@ -6,7 +6,7 @@ if [ "${TRAVIS_BRANCH}" = "master" ]; then
   cd docs-build
 
   doctoc . --github
-  git add -U .
+  git add -u .
   git commit -m "Travis CI auto-doc from travis build ${TRAVIS_BUILD_NUMBER} - [ci skip]";
   cd ..;
 fi
