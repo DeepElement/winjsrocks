@@ -37,5 +37,3 @@ exports.command = WinJS.Binding.initializer(function(source, sourceProps, dest, 
     });
   }
 });
-
-winjsHelper.markForProcessing(exports.command);
