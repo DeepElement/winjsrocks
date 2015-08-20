@@ -20,14 +20,3 @@ ioc.registerService("navigation", require('./service/navigation'));
 ioc.registerService("message", require('./service/message'));
 ioc.registerService("application", require('./service/application'));
 ioc.registerService("data", require('./service/data'));
-
-// Export globals
-WinJS.Namespace.define("WinJSRocks.Binding.Mode", {
-  Command: require('./binding/mode').command
-});
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.Binding.Mode.Command);
-
-WinJS.Namespace.define("WinJSRocks", {
-  ItemTemplateSelector: ioc.getProvider("template").itemTemplateSelector
-});
-WinJS.Utilities.markSupportedForProcessing(window.WinJSRocks.ItemTemplateSelector);
