@@ -51,7 +51,6 @@ gulp.task("dist:clean", function(cb) {
 
 gulp.task("dist:package", function() {
   var b = browserify({
-    entries: ['./src/main'],
     fullPaths: false,
     debug: process.env.NODE_ENV != "production"
   });
