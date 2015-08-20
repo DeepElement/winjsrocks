@@ -50,12 +50,12 @@ gulp.task("dist:clean", function(cb) {
 
 gulp.task("dist:package", function() {
     var b = browserify({
-        entries: 'dist/winjs-rocks.bundle.js',
+        entries: 'dist/winjs-rocks.js',
         fullPaths: false,
         standalone: "WinJSRocks"
     });
     return b.bundle()
-        .pipe(source('winjs-rocks.js'))
+        .pipe(source('winjs-rocks.bundle.js'))
         .pipe(gulp.dest('./dist'));
 });
 
@@ -79,7 +79,7 @@ gulp.task("dist:bundle", function(done) {
                 sources: relativeFiles,
                 relativeApiRoot: "../src"
             });
-            instance.exportToFile(path.join(__dirname, "dist", "winjs-rocks.bundle.js"),
+            instance.exportToFile(path.join(__dirname, "dist", "winjs-rocks.js"),
                 done);
         });
     });
