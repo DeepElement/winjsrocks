@@ -4,7 +4,7 @@
     "email": "todd@deepelement.com",
     "url": "http://www.deepelement.com"
   },
-  "name": "winjs-rocks",
+  "name": "winjsrocks",
   "private": false,
   "description": "WinJS-based MVVM architecture for cross-platform apps",
   "version": "0.1.59",
