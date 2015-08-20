@@ -7,7 +7,7 @@
   "name": "winjs-rocks",
   "private": false,
   "description": "WinJS-based MVVM architecture for cross-platform apps",
-  "version": "0.1.52",
+  "version": "0.1.53",
   "keywords": [
     "winjs",
     "commonjs",
