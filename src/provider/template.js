@@ -21,6 +21,7 @@ var instanceMembers = {
       winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
       return WinJS.UI.Pages.render(viewTemplateUri, mediaTile, itemViewModel);
     });
+    winjsHelper.markForProcessing(this);
     return {
       element: mediaTile,
       renderComplete: _renderCompletePromise
