@@ -1,20 +1,24 @@
 language: node_js
 before_install:
 - chmod +x -R build
+- git config --global user.email "${GIT_EMAIL}"
+- git config --global user.name "${GIT_NAME}";
 install:
 - npm install
+- npm install -g doctoc
 - npm install -g npm@'>=2.13.5'
 script:
 - npm run-script build
 - npm test
 after_success:
+- "./build/gen-docs.sh"
 - "./build/repo-cli.sh"
 deploy:
   skip_cleanup: true
   provider: npm
   email: todd@deepelement.com
   api_key:
-    secure: G/71aydKtPgPW9QS/m+CeVxhCpGT70tyxDOcFFJekEirH94Szm7Yw98PvHOJCBGnaQumVWfYfg0X67Ch1NGvEIp+KQgJ62RHufw0gpjWAOMCFmW1erxg+Odd3wyfIEHc9v1RL56Chdk9RweguaCgebikusYxaWSzqvRrvYC5jYHQevnbisoefl5hPWugHNvlsXQtnJIhOEvI16/ZL4X78y0WRbYiu9TxSFQH+Az4uZz0aQdpVAN6piIZRQ7sJrO3qCV7tXFtZSt+vpzBKvvuDD63xIPNwrBQwFSlARd7YsjGeO6En3OnAh5Urckc2+yUcThJEC+i38xxxcmIfszFj1I/8XsNMuVFF1bvAP1d8FXWYcfQ5SH8c6upiRyGSDpCoSJZbFpysi1v8qHihvKGS5bqvwnmM7X77KIQc8kU08tO1xWYJ51LIv13hV7XECBeHQxpmFzuZdNI3BNJKNaC9YT5b09ftkS58EbQyzO3Q2ASxYWXbd7B3WWE7lLYTPp7pppNcsobaVkQbfBzWpOjWQCWFAyta46qf9EVAtwFul2HF2w1RuPGg9A3TIN5Wxp2jmK/KkuxQYucu6tp0qawVkAdxoxvrBXrenQaPmLEt5oCgimMBODJd1mdomUtd/W2gGupwbTbnsQ+uTFf+OgTFladzJmLWpS+6M+Ny3uergc=
+    secure: ku+ifXGbj9wMpCIgDaoFFLiL/VmJ98RAYjYwX3FrEWsIj9EnX4DwHqeHWUf6dmp7yuwPX+JFvNbED7sOotCcdb1L6hM1BEDS7SNbUOs080v7AvUqbPLlCMHue55K34lM++qmPMFgh/2MoGE9t5H/fA3CrddcXrfeTYGwV776GjGkxYrh9kuZmsIay2+aMAAB+654wrQWXTv8YLODMxxZwAlFiGRurquxok2Hc4JqP0v9Szz4ElnYyC5/A6mIWv9Rxxjw7yAdCrOMbUVVW1mmpPx/wlawp/ctlGFRgejhSpX4FHGUSE0dK86Gx6j/jU5/JZIuqVV7YcSsbnt24SLOlo3klOFd2b5CtzRenEFoyg41YOsG0VG0mddyM7dhWV1cuHPPba2z9Mjtv4WvDTGKJZm65WkfTumdDuGSMi68iUlLquWO+jhKarkcuApkc5N+FHzHNH5mWtrMKD1U+5gqz2Fc3xRNIvD9CI3OaeUqPN0AdTjqr+DAGU4/wq+dBtiiCyuvgp1TXKfr+kd250uz3LLtsGx4MG/fvi1lmw4gZ0xuWpuA0z1hZQWd1InNt1t+mRgH85UvAeqqP+tqaIHw317EPoX1epKBjJrRviEwvm5aRncL0/B9zPidS0Y+TBQf1Wgljfbaztk2JlNqHsYCVSjRyBCo54qIrzkgho5blbM=
   on:
-    repo: DeepElement/winjs-rocks
+    repo: DeepElement/winjsrocks
     branch: stable

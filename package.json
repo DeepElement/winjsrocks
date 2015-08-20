@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:DeepElement/winjs-rocks.git"
+    "url": "git@github.com:DeepElement/winjsrocks.git"
   },
   "licenses": [
     {
@@ -23,7 +23,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "homepage": "https://github.com/DeepElement/winjs-rocks",
+  "homepage": "https://github.com/DeepElement/winjsrocks",
   "main": "./dist/winjsrocks.js",
   "dependencies": {
     "async": "0.9.0",
