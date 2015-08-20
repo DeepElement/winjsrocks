@@ -1,4 +1,5 @@
 require('./runtime');
+require('./globals');
 require('./winjs.shim');
 require('./setup');
 
