@@ -1,8 +1,7 @@
 var WinJS = require('winjs'),
     ioc = require('../ioc'),
     config = require('../config'),
-    base = require('./base'),
-    util = require("util");
+    base = require('./base');
 
 var _constructor = function(options) {
     this._timeoutIds = [];
