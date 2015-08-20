@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [WinJS Rocks!](#winjs-rocks)
+- [](#)
+- [IN DEVELOPMENT (UNSTABLE)](#in-development-unstable)
+  - [Configuration](#configuration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # WinJS Rocks!
 
 A framework based on WinJS for building cross platform apps.
