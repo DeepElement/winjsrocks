@@ -14,8 +14,14 @@ A framework based on WinJS for building cross platform apps.
 
 ----- 
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [IN DEVELOPMENT (UNSTABLE)](#in-development-unstable)
+  - [Configuration](#configuration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 
