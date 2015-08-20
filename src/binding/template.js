@@ -3,8 +3,6 @@ var ioc = require('../ioc'),
 
 exports.itemTemplateSelector = {
   get: function() {
-    var instance = ioc.getProvider("template").itemTemplateSelector;
-    winjsHelper.markForProcessing(instance);
-    return instance;
+    return ioc.getProvider("template").itemTemplateSelector;
   }
 }
