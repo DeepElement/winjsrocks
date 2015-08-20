@@ -1,14 +1,8 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [WinJS Rocks! - The missing MVVM Framework for WinJS](#winjs-rocks---the-missing-mvvm-framework-for-winjs)
-  - [Introduction](#introduction)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 WinJS Rocks! - The missing MVVM Framework for WinJS
 =====
+
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 ## Introduction
 The purpose of this framework is to create a stack to enable MVVM development tightly integrated with the latest WinJS 4+ apis.
