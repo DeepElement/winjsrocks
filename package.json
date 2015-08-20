@@ -7,7 +7,7 @@
   "name": "winjs-rocks",
   "private": false,
   "description": "WinJS-based MVVM architecture for cross-platform apps",
-  "version": "0.1.49",
+  "version": "0.1.50",
   "keywords": [
     "winjs",
     "commonjs",
@@ -17,10 +17,12 @@
     "type": "git",
     "url": "git@github.com:DeepElement/winjs-rocks.git"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://opensource.org/licenses/MIT"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "homepage": "https://github.com/DeepElement/winjs-rocks",
   "main": "./dist/winjs-rocks.js",
   "dependencies": {
