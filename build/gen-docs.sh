@@ -1,4 +1,4 @@
-doctoc . --github --notitle --maxlevel 4
+doctoc . --github --title '**Table of Contents**'
 
 if [ "${TRAVIS_BRANCH}" = "master" ]; then
   # Fetch repo
