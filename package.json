@@ -24,7 +24,7 @@
     }
   ],
   "homepage": "https://github.com/DeepElement/winjs-rocks",
-  "main": "./dist/winjs-rocks.bundle.js",
+  "main": "./dist/winjs-rocks.js",
   "dependencies": {
     "async": "0.9.0",
     "lokijs": "1.3.4",
