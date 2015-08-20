@@ -2,7 +2,6 @@ var WinJS = require('winjs'),
   base = require('./base'),
   ioc = require('../ioc'),
   config = require('../config'),
-  util = require("util"),
   winjsHelper = require('../helper/winjs');
 
 var _constructor = function(options) {
