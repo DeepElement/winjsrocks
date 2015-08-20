@@ -1,15 +1,5 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [WinJS Rocks!](#winjs-rocks)
-- [](#)
-- [IN DEVELOPMENT (UNSTABLE)](#in-development-unstable)
-  - [Configuration](#configuration)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# WinJS Rocks!
+WinJS Rocks!
+=====
 
 A framework based on WinJS for building cross platform apps.
 (http://winjs.rocks & http://winjsrocks.com)
@@ -20,10 +10,20 @@ A framework based on WinJS for building cross platform apps.
 [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
 ![yo](https://img.shields.io/npm/dm/winjsrocks.svg)
 
-
 ![Thank the knife](http://i.imgur.com/BZ5R5NP.png)
 
-=============================
+----- 
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [IN DEVELOPMENT (UNSTABLE)](#in-development-unstable)
+  - [Configuration](#configuration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 
 # IN DEVELOPMENT (UNSTABLE)
 
