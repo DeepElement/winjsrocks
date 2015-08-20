@@ -12,7 +12,7 @@ if [ "${TRAVIS_BRANCH}" = "master" ]; then
   # Forward Integrate
   git checkout --track -b stable origin/stable > /dev/null;
   git merge origin/master --no-commit  > /dev/null;
-  #git commit -m "Travis CI auto-merge from travis build ${TRAVIS_BUILD_NUMBER}  - [ci skip]";
+  git commit -m "Travis CI auto-merge from travis build ${TRAVIS_BUILD_NUMBER}  - [ci skip]";
   npm version patch -m "Travis CI auto-build from travis build ${TRAVIS_BUILD_NUMBER}";
   git push -q origin stable > /dev/null;
 
