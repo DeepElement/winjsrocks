@@ -10,7 +10,13 @@ var _constructor = function(options) {
   this._itemViewModels = [];
 
   ioc.getServiceKeys().forEach(function(key) {
-    that[key.capitalizeFirstLetter() + "Service"] = ioc.getService(key);
+    var apiKey = key.capitalizeFirstLetter() + "Service";
+    Object.defineProperty(that, apiKey, {
+      value: ioc.getService(key),
+      writable: false,
+      configurable: false,
+      enumerable: false
+    });
   });
 
   this._initialLoadTimerId = this.ApplicationService.setTimeout(function() {
@@ -30,7 +36,7 @@ var instanceMembers = {
   addItemViewModels: function(models) {
     var that = this;
     var results = [];
-    models.forEach(function(model){
+    models.forEach(function(model) {
       results.push(that.addItemViewModel(model));
     });
     return results;
