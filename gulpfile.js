@@ -12,7 +12,7 @@ var gulp = require('gulp'),
   BrowserifyBridge = require('browserify-bridge');
 
 gulp.task("dist", function(cb) {
-  runSequence('dist:clean', 'dist:bundle', 'dist:package', cb);
+  runSequence('dist:clean', 'dist:bundle', 'dist:package', 'dist:add-global-exports', cb);
 });
 
 gulp.task("test", function() {
@@ -60,6 +60,10 @@ gulp.task("dist:package", function() {
   return b.bundle()
     .pipe(source('winjsrocks.bundle.js'))
     .pipe(gulp.dest('./dist'));
+});
+
+gulp.task("dist:add-global-exports", function(done) {
+  fs.appendFile('./dist/winjsrocks.bundle.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
 });
 
 gulp.task("dist:bundle", function(done) {
