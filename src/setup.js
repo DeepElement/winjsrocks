@@ -14,7 +14,6 @@ require('./view-model/item');
 ioc.registerProvider("network", require('./provider/network'));
 ioc.registerProvider("lokiStorage", require('./provider/loki-storage'));
 ioc.registerProvider("localStorage", require('./provider/local-storage'));
-ioc.registerProvider("template", require('./provider/template'));
 
 ioc.registerService("navigation", require('./service/navigation'));
 ioc.registerService("message", require('./service/message'));
