@@ -9,9 +9,6 @@ A framework based on WinJS for building cross platform apps.
 [![Dependency Status][dependencies-shield]][dependencies]
 [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
 ![yo](https://img.shields.io/npm/dm/winjsrocks.svg)
-
-![Thank the knife](http://i.imgur.com/BZ5R5NP.png)
-
 ----- 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
