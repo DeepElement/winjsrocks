@@ -51,12 +51,12 @@ gulp.task("dist:clean", function(cb) {
 
 gulp.task("dist:package", function() {
   var b = browserify({
-    entries: 'dist/winjs-rocks.js',
+    entries: 'dist/winjsrocks.js',
     fullPaths: false,
-    standalone: "WinJSRocks"
+    standalone: "winjsrocks"
   });
   return b.bundle()
-    .pipe(source('winjs-rocks.bundle.js'))
+    .pipe(source('winjsrocks.bundle.js'))
     .pipe(gulp.dest('./dist'));
 });
 
@@ -80,13 +80,13 @@ gulp.task("dist:bundle", function(done) {
         sources: relativeFiles,
         relativeApiRoot: "../src"
       });
-      var outputModuleFile = path.join(__dirname, "dist", "winjs-rocks.js");
+      var outputModuleFile = path.join(__dirname, "dist", "winjsrocks.js");
       instance.exportToFile(outputModuleFile,
         function() {
           // append custom script
           var s = "for(var key in exports) {\n" +
             "if(key != 'helper.winjs'){" +
-            "exports.helper.winjs.markForProcessing(exports[key]);\n" + 
+            "exports.helper.winjs.markForProcessing(exports[key]);\n" +
             "}}\n";
           fs.appendFile(outputModuleFile, s, done);
         });
