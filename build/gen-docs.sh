@@ -1,4 +1,4 @@
-doctoc . --github
+doctoc . --github --notitle --maxlevel 4
 
 if [ "${TRAVIS_BRANCH}" = "master" ]; then
   # Fetch repo
