@@ -94,7 +94,7 @@ gulp.task("dist:package:release:google-closure", function(done) {
   glob("./src/**/*.js", function(err, files) {
     if (err)
       return done(err);
-    async.each(files,
+    async.eachSeries(files,
       function(file, fileCb) {
         var fileBaseName = path.basename(file);
         exec('java -jar node_modules/google-closure-compiler/compiler.jar --js ' + file + " " +
