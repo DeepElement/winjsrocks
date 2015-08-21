@@ -3,7 +3,6 @@ var WinJS = require('winjs'),
   mixins = require('../helper/mixins'),
   log = require('../log');
 
-
 var _constructor = function(options) {
   var that = this;
   this._loadingState = "loading";
@@ -87,8 +86,7 @@ var instanceMembers = {
   },
 
   onDataSet: function() {
-    var that = this;
-    this.notifyLoading();
+    return WinJS.Promise.as();
   },
 
   getData: function() {
@@ -96,10 +94,13 @@ var instanceMembers = {
   },
 
   setData: function(val) {
-    this._data = val;
-    this.notifyLoading();
-    this.notify('data');
-    this.onDataSet();
+    var that = this;
+    that._data = val;
+    that.notifyLoading();
+    that.notify('data');
+    WinJS.Promise.as(that.onDataSet()).done(function() {
+      that.notifyLoaded();
+    })
   },
 
   onNavigateTo: function() {
