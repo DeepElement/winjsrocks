@@ -13,7 +13,13 @@ var gulp = require('gulp'),
   exec = require('child_process').exec;
 
 gulp.task("dist", function(cb) {
-  runSequence('dist:clean', 'dist:bundle', 'dist:package', 'dist:add-global-exports', 'dist:google-closure', cb);
+  runSequence('dist:clean',
+    'dist:bundle',
+    'dist:package:debug',
+    'dist:package:debug:add-global-exports',
+    'dist:package:release:google-closure',
+    'dist:package:release',
+    'dist:package:release:add-global-exports', cb);
 });
 
 gulp.task("test", function() {
@@ -50,10 +56,10 @@ gulp.task("dist:clean", function(cb) {
   rimraf('./dist', cb);
 });
 
-gulp.task("dist:package", function() {
+gulp.task("dist:package:debug", function() {
   var b = browserify({
     fullPaths: false,
-    debug: process.env.NODE_ENV != "production"
+    debug: true
   });
   b.require('./dist/winjsrocks', {
     expose: "winjsrocks"
@@ -63,24 +69,42 @@ gulp.task("dist:package", function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task("dist:add-global-exports", function(done) {
+gulp.task("dist:package:release", function() {
+  var b = browserify({
+    fullPaths: false,
+    debug: false
+  });
+  b.require('./dist/winjsrocks', {
+    expose: "winjsrocks"
+  });
+  return b.bundle()
+    .pipe(source('winjsrocks-bundle.js'))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task("dist:package:debug:add-global-exports", function(done) {
   fs.appendFile('./dist/winjsrocks-bundle.debug.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
 });
 
-gulp.task("dist:google-closure", function(done) {
-  glob("./dist/winjsrocks-bundle.debug.js", function(err, files) {
+gulp.task("dist:package:release:add-global-exports", function(done) {
+  fs.appendFile('./dist/winjsrocks-bundle.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
+});
+
+gulp.task("dist:package:release:google-closure", function(done) {
+  glob("./src/**/*.js", function(err, files) {
     if (err)
       return done(err);
     async.each(files,
       function(file, fileCb) {
         var fileBaseName = path.basename(file);
         exec('java -jar node_modules/google-closure-compiler/compiler.jar --js ' + file + " " +
-          '--js_output_file ./dist/winjsrocks-bundle.js ' +
+          '--js_output_file ' + file + '.closure ' +
           '--compilation_level SIMPLE ' +
           '--language_in ECMASCRIPT5 ' +
           '--formatting=pretty_print ' +
           '--formatting=print_input_delimiter ' +
-          '--warning_level QUIET',
+          '--warning_level QUIET;' +
+          'mv ' + file + '.closure ' + file,
           function(err, stdout, stderr) {
             if (stderr)
               console.log(stderr);
