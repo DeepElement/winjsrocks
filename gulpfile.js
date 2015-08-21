@@ -9,10 +9,11 @@ var gulp = require('gulp'),
   rimraf = require('rimraf'),
   fs = require('fs'),
   mkdirp = require('mkdirp'),
-  BrowserifyBridge = require('browserify-bridge');
+  BrowserifyBridge = require('browserify-bridge'),
+  exec = require('child_process').exec;
 
 gulp.task("dist", function(cb) {
-  runSequence('dist:clean', 'dist:bundle', 'dist:package', 'dist:add-global-exports', cb);
+  runSequence('dist:clean', 'dist:bundle', 'dist:package', 'dist:add-global-exports', 'dist:google-closure', cb);
 });
 
 gulp.task("test", function() {
@@ -58,12 +59,36 @@ gulp.task("dist:package", function() {
     expose: "winjsrocks"
   });
   return b.bundle()
-    .pipe(source('winjsrocks.bundle.js'))
+    .pipe(source('winjsrocks-bundle.debug.js'))
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task("dist:add-global-exports", function(done) {
-  fs.appendFile('./dist/winjsrocks.bundle.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
+  fs.appendFile('./dist/winjsrocks-bundle.debug.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
+});
+
+gulp.task("dist:google-closure", function(done) {
+  glob("./dist/winjsrocks-bundle.debug.js", function(err, files) {
+    if (err)
+      return done(err);
+    async.each(files,
+      function(file, fileCb) {
+        var fileBaseName = path.basename(file);
+        exec('java -jar node_modules/google-closure-compiler/compiler.jar --js ' + file + " " +
+          '--js_output_file ./dist/winjsrocks-bundle.js ' +
+          '--compilation_level SIMPLE ' +
+          '--language_in ECMASCRIPT5 ' +
+          '--formatting=pretty_print ' +
+          '--formatting=print_input_delimiter ' +
+          '--warning_level QUIET',
+          function(err, stdout, stderr) {
+            if (stderr)
+              console.log(stderr);
+            return fileCb(err);
+          });
+      },
+      done);
+  });
 });
 
 gulp.task("dist:bundle", function(done) {
