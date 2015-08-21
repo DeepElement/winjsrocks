@@ -7,7 +7,7 @@ exports.itemTemplateSelector = function(itemPromise) {
   var mediaTile = document.createElement("div");
   WinJS.Utilities.addClass(mediaTile, "item-template");
   var _renderCompletePromise = itemPromise.then(function(item) {
-    var itemViewModel = item.data;
+    var itemViewModel = item instanceof Array? item[0].data : item.data;
     var viewKey = itemViewModel.getItem().getContentType().toLowerCase();
     var viewTemplateUri = config.get("domain:" + viewKey + ":template");
     WinJS.Utilities.addClass(mediaTile, "item-template-" + viewKey);
@@ -15,7 +15,6 @@ exports.itemTemplateSelector = function(itemPromise) {
     winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
     return WinJS.UI.Pages.render(viewTemplateUri, mediaTile, itemViewModel);
   });
-  winjsHelper.markForProcessing(this);
   return {
     element: mediaTile,
     renderComplete: _renderCompletePromise
