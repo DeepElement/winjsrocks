@@ -11,17 +11,16 @@ var _constructor = function(element, options) {
 
 var instanceMembers = {
   addManagedEventListener: function(subject, property, handler) {
-    if(subject && property && handler)
-    {
-        var binding = handler.bind(this);
-        this._managedEvents = this._managedEvents || [];
-        this._managedEvents.push({
-          subject: subject,
-          property: property,
-          handler: handler,
-          binding: binding
-        });
-        subject.addEventListener(property, binding);
+    if (subject && property && handler) {
+      var binding = handler.bind(this);
+      this._managedEvents = this._managedEvents || [];
+      this._managedEvents.push({
+        subject: subject,
+        property: property,
+        handler: handler,
+        binding: binding
+      });
+      subject.addEventListener(property, binding);
     }
   },
 
@@ -55,15 +54,14 @@ var instanceMembers = {
 
   dispose: function() {
     var result = this._super.prototype.dispose.apply(this, arguments);
-    if(this._managedEvents)
-    {
+    if (this._managedEvents) {
       this._managedEvents.forEach(function(ctx) {
-        if(ctx.subject && ctx.property && ctx.binding)
-        	ctx.subject.removeEventListener(ctx.property, ctx.binding);
+        if (ctx.subject && ctx.property && ctx.binding)
+          ctx.subject.removeEventListener(ctx.property, ctx.binding);
       });
       this._managedEvents = null;
     }
-    if(this.element)
+    if (this.element)
       WinJS.Utilities.disposeSubTree(this.element);
     return result;
   },
@@ -102,6 +100,11 @@ var instanceMembers = {
   /* Generally called on Window Resize */
   updateLayout: function() {
 
+  },
+
+  error: function(err) {
+    var messageService = WinJS.ioc.getService("message");
+    messageService.send("viewErrorMessage", err);
   }
 };
 
