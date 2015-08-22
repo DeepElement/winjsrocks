@@ -24,3 +24,4 @@ module.exports = WinJS.Class.define(_constructor,
     instanceMembers, staticMembers);
 WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
 WinJS.Class.mix(module.exports, mixins.notify);
+WinJS.Class.mix(module.exports, mixins.autoProperty);
