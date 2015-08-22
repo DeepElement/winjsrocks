@@ -44,7 +44,7 @@ exports.autoProperty = {
         value: this["_" + propertyName],
         get: function() {
           return this["_" + propertyName];
-        }
+        },
         writable: false,
         configurable: false,
         enumerable: true
