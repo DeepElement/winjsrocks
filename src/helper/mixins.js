@@ -5,22 +5,50 @@ exports.notify = {
 };
 
 exports.autoProperty = {
-  createAutoProperty: function(propertyName, defaultValue) {
-    Object.defineProperty(this, propertyName, {
-      value: defaultValue,
-      get: function() {
-        return this[propertyName];
-      },
-      set: function(val) {
-        if (val != this[propertyName]) {
-          this[propertyName] = val;
-          if (this.notify)
-            this.notify(propertyName, val);
+  createAutoProperty: function(propertyName, defaultValue, readonly) {
+    if (!readonly) {
+      Object.defineProperty(this, propertyName, {
+        value: defaultValue,
+        get: function() {
+          return this["_" + propertyName];
+        },
+        set: function(val) {
+          if (val != this["_" + propertyName]) {
+            this["_" + propertyName] = val;
+            if (this.notify)
+              this.notify(propertyName, val);
+          }
+        },
+        writable: false,
+        configurable: false,
+        enumerable: true
+      });
+    } else {
+      Object.defineProperty(this, "_" + propertyName, {
+        value: defaultValue,
+        get: function() {
+          return this["__" + propertyName];
+        },
+        set: function(val) {
+          if (val != this["__" + propertyName]) {
+            this["__" + propertyName] = val;
+            if (this.notify)
+              this.notify(propertyName, val);
+          }
+        },
+        writable: false,
+        configurable: false,
+        enumerable: false
+      });
+      Object.defineProperty(this, propertyName, {
+        value: this["_" + propertyName],
+        get: function() {
+          return this["_" + propertyName];
         }
-      },
-      writable: false,
-      configurable: false,
-      enumerable: true
-    });
+        writable: false,
+        configurable: false,
+        enumerable: true
+      });
+    }
   }
 }
