@@ -25,7 +25,6 @@ exports.autoProperty = {
       });
     } else {
       Object.defineProperty(this, "_" + propertyName, {
-        value: defaultValue,
         get: function() {
           if (!this["__" + propertyName])
             this["__" + propertyName] = defaultValue;
