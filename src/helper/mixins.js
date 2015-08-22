@@ -42,7 +42,7 @@ exports.autoProperty = {
       });
       Object.defineProperty(this, propertyName, {
         get: function() {
-          return this["_" + propertyName];
+          return this["__" + propertyName];
         },
         configurable: false,
         enumerable: true
