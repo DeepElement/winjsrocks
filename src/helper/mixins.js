@@ -8,8 +8,9 @@ exports.autoProperty = {
   createAutoProperty: function(propertyName, defaultValue, readonly) {
     if (!readonly) {
       Object.defineProperty(this, propertyName, {
-        value: defaultValue,
         get: function() {
+          if (!this["_" + propertyName])
+            this["_" + propertyName] = defaultValue;
           return this["_" + propertyName];
         },
         set: function(val) {
@@ -26,6 +27,8 @@ exports.autoProperty = {
       Object.defineProperty(this, "_" + propertyName, {
         value: defaultValue,
         get: function() {
+          if (!this["__" + propertyName])
+            this["__" + propertyName] = defaultValue;
           return this["__" + propertyName];
         },
         set: function(val) {
@@ -39,7 +42,6 @@ exports.autoProperty = {
         enumerable: false
       });
       Object.defineProperty(this, propertyName, {
-        value: this["_" + propertyName],
         get: function() {
           return this["_" + propertyName];
         },
