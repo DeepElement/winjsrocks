@@ -1,4 +1,5 @@
 var WinJS = require('winjs'),
+  ioc = require('../ioc'),
   mixins = require('../helper/mixins'),
   winjsHelper = require('../helper/winjs');
 
@@ -103,7 +104,7 @@ var instanceMembers = {
   },
 
   error: function(err) {
-    var messageService = WinJS.ioc.getService("message");
+    var messageService = ioc.getService("message");
     messageService.send("viewErrorMessage", err);
   }
 };
