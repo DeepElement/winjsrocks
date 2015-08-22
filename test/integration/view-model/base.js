@@ -1,4 +1,4 @@
-var common = require('../common'),
+var common = require('../../common'),
   assert = require('assert'),
   should = require('should'),
   resolver = require('../../resolver');
@@ -17,9 +17,15 @@ describe('Integration', function() {
     });
 
     describe("construction", function() {
-      it('callback fired', function(done) {
+      it('standard success', function() {
+        // Arrange
         var subject = resolver.resolve("view-model/base");
-        should.exist(subject);
+
+        // Act
+        var instance = new subject();
+
+        // Assert
+        should.exist(instance);
       });
     });
   });
