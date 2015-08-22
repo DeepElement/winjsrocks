@@ -19,7 +19,6 @@ exports.autoProperty = {
               this.notify(propertyName, val);
           }
         },
-        writable: false,
         configurable: false,
         enumerable: true
       });
@@ -36,7 +35,6 @@ exports.autoProperty = {
               this.notify(propertyName, val);
           }
         },
-        writable: false,
         configurable: false,
         enumerable: false
       });
@@ -45,7 +43,6 @@ exports.autoProperty = {
         get: function() {
           return this["_" + propertyName];
         },
-        writable: false,
         configurable: false,
         enumerable: true
       });
