@@ -74,10 +74,14 @@ exports.load = function(options, done) {
       for (var handler in messageHooks)
         MessageService.register(handler, messageHooks[handler]);
 
-      // notify of app ready
-      MessageService.send("applicationReadyMessage");
+      // Enable features
+      // TODO: dynamically add features
+      require('./feature/platform').execute({}, function() {
+        // notify of app ready
+        MessageService.send("applicationReadyMessage");
 
-      return done();
+        return done();
+      });
     });
 };
 
