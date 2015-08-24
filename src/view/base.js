@@ -7,24 +7,9 @@ var _constructor = function(element, options) {
   var that = this;
   this._viewModel = options;
   this._super.apply(this, arguments);
-  this._managedEvents = [];
 };
 
 var instanceMembers = {
-  addManagedEventListener: function(subject, property, handler) {
-    if (subject && property && handler) {
-      var binding = handler.bind(this);
-      this._managedEvents = this._managedEvents || [];
-      this._managedEvents.push({
-        subject: subject,
-        property: property,
-        handler: handler,
-        binding: binding
-      });
-      subject.addEventListener(property, binding);
-    }
-  },
-
   update: function() {
     winjsHelper.markForProcessing(this.getViewModel());
     WinJS.UI.processAll(this.element);
@@ -55,13 +40,7 @@ var instanceMembers = {
 
   dispose: function() {
     var result = this._super.prototype.dispose.apply(this, arguments);
-    if (this._managedEvents) {
-      this._managedEvents.forEach(function(ctx) {
-        if (ctx.subject && ctx.property && ctx.binding)
-          ctx.subject.removeEventListener(ctx.property, ctx.binding);
-      });
-      this._managedEvents = null;
-    }
+    this.removeAllManagedEventListeners();
     if (this.element)
       WinJS.Utilities.disposeSubTree(this.element);
     return result;
@@ -118,3 +97,4 @@ module.exports = WinJS.Class.define(_constructor,
 WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
 WinJS.Class.mix(module.exports, mixins.notify);
 WinJS.Class.mix(module.exports, mixins.autoProperty);
+WinJS.Class.mix(module.exports, mixins.managedEvents);

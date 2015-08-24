@@ -8,8 +8,6 @@ var _constructor = function(options) {
   this._loadingState = "loading";
   this._itemViewModels = [];
 
-  this._managedEvents = [];
-
   ioc.getServiceKeys().forEach(function(key) {
     var apiKey = key.capitalizeFirstLetter() + "Service";
     Object.defineProperty(that, apiKey, {
@@ -130,13 +128,7 @@ var instanceMembers = {
       itemViewModel.onNavigateFrom();
     });
 
-    if (this._managedEvents) {
-      this._managedEvents.forEach(function(ctx) {
-        if (ctx.subject && ctx.property && ctx.binding)
-          ctx.subject.removeEventListener(ctx.property, ctx.binding);
-      });
-      this._managedEvents = null;
-    }
+    this.removeAllManagedEventListeners();
   },
 
   getLoadingState: function() {
@@ -163,3 +155,4 @@ module.exports = WinJS.Class.define(_constructor,
 WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
 WinJS.Class.mix(module.exports, mixins.notify);
 WinJS.Class.mix(module.exports, mixins.autoProperty);
+WinJS.Class.mix(module.exports, mixins.managedEvents);
