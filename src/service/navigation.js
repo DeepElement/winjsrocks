@@ -41,6 +41,9 @@ var instanceMembers = {
   },
 
   _onNavigateBackMessage: function(type, args) {
+    if (this.getViewModel() && this.getViewModel().getBackNavigationDisabled()) {
+      log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
+    }
     args = args || {};
     var steps = args.steps || 1;
     return WinJS.Navigation.back(steps);
@@ -57,7 +60,7 @@ var instanceMembers = {
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
 
-      if(this.getViewModel())
+      if (this.getViewModel())
         this.getViewModel().onNavigateFrom();
 
       history.pushState({
