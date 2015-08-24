@@ -8,6 +8,8 @@ var _constructor = function(options) {
   this._loadingState = "loading";
   this._itemViewModels = [];
 
+  this._managedEvents = [];
+
   ioc.getServiceKeys().forEach(function(key) {
     var apiKey = key.capitalizeFirstLetter() + "Service";
     Object.defineProperty(that, apiKey, {
@@ -26,6 +28,20 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
+  addManagedEventListener: function(subject, property, handler) {
+    if (subject && property && handler) {
+      var binding = handler.bind(this);
+      this._managedEvents = this._managedEvents || [];
+      this._managedEvents.push({
+        subject: subject,
+        property: property,
+        handler: handler,
+        binding: binding
+      });
+      subject.addEventListener(property, binding);
+    }
+  },
+
   _super: {
     get: function() {
       return Object.getPrototypeOf(this);
@@ -113,6 +129,14 @@ var instanceMembers = {
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
     });
+
+    if (this._managedEvents) {
+      this._managedEvents.forEach(function(ctx) {
+        if (ctx.subject && ctx.property && ctx.binding)
+          ctx.subject.removeEventListener(ctx.property, ctx.binding);
+      });
+      this._managedEvents = null;
+    }
   },
 
   getLoadingState: function() {
