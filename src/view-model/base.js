@@ -129,6 +129,9 @@ var instanceMembers = {
     });
 
     this.removeAllManagedEventListeners();
+
+
+    for (var member in this) delete this[member];
   },
 
   getLoadingState: function() {

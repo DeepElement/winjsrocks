@@ -43,6 +43,10 @@ var instanceMembers = {
     this.removeAllManagedEventListeners();
     if (this.element)
       WinJS.Utilities.disposeSubTree(this.element);
+    this._viewModel = null;
+
+    for (var member in this) delete this[member];
+
     return result;
   },
 
