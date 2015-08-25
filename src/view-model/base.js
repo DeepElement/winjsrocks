@@ -124,14 +124,7 @@ var instanceMembers = {
   },
 
   onNavigateFrom: function() {
-    this._itemViewModels.forEach(function(itemViewModel) {
-      itemViewModel.onNavigateFrom();
-    });
 
-    this.removeAllManagedEventListeners();
-
-
-    for (var member in this) delete this[member];
   },
 
   getLoadingState: function() {
@@ -146,6 +139,17 @@ var instanceMembers = {
   notifyLoaded: function() {
     this._loadingState = "loaded";
     this.notify("loadingState");
+  },
+
+  dispose: function(){
+    this._itemViewModels.forEach(function(itemViewModel) {
+      itemViewModel.onNavigateFrom();
+    });
+
+    this.removeAllManagedEventListeners();
+
+
+    for (var member in this) delete this[member];
   }
 };
 
