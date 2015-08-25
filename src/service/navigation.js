@@ -86,6 +86,8 @@ var instanceMembers = {
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
+      if(that._element && that._element.wincontrol && that._element.wincontrol.getViewModel())
+        that._element.wincontrol.getViewModel().dispose();
       if (that._element.childElementCount > 1) {
         var oldElement = that._element.firstElementChild;
         // Cleanup and remove previous element
