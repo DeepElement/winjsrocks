@@ -87,10 +87,10 @@ var instanceMembers = {
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
-      if (that.getView() && that.getViewModel())
-        that.getViewModel().dispose();
-
       if (args.detail.delta == -1) {
+        if (that.getView() && that.getViewModel())
+          that.getViewModel().dispose();
+
         if (that.getView())
           ioc.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
         if (that.getViewModel())
