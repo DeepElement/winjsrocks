@@ -87,8 +87,8 @@ var instanceMembers = {
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
-      if (that._element && that._element.wincontrol && that._element.wincontrol.getViewModel())
-        that._element.wincontrol.getViewModel().dispose();
+      if (that.getView() && that.getViewModel())
+        that.getViewModel().dispose();
 
       if (args.detail.delta == -1) {
         if (that.getView())
