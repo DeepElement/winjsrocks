@@ -103,6 +103,13 @@ var instanceMembers = {
         oldElement.innerText = "";
         WinJS.Utilities.disposeSubTree(oldElement);
       }
+
+      if (args.detail.delta == -1) {
+        if (that.getView())
+          ioc.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
+        if (that.getViewModel())
+          ioc.delViewModelInstance(that.getViewModel().getKey(), that.getViewModel());
+      }
     }
 
     // TODO: archive the old view/viewModel
@@ -147,7 +154,7 @@ var instanceMembers = {
     var viewElem = this.getViewElement();
     if (viewElem && viewElem.winControl)
       return viewElem.winControl
-    return false;
+    return null;
   },
 
   getViewElement: function() {

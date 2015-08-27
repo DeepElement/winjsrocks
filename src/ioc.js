@@ -64,6 +64,11 @@ exportsConfig.forEach(function(config) {
   exports["register" + caseType] = function(key, clazz) {
     return _container.register(config.prefix + key, clazz, config.scope);
   };
+
+  exports["del" + caseType + "Instance"] = function(key, instance) {
+    console.log('b');
+    return _container.del(config.prefix + key, instance);
+  };
 });
 
 exports.getRegisteredKeys = function() {
