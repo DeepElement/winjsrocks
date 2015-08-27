@@ -88,13 +88,13 @@ var instanceMembers = {
 
     function cleanup() {
       if (args.detail.delta == -1) {
-        if (that.getView() && that.getViewModel())
-          that.getViewModel().dispose();
-
         if (that.getView())
           ioc.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
         if (that.getViewModel())
           ioc.delViewModelInstance(that.getViewModel().getKey(), that.getViewModel());
+
+        if (that.getView() && that.getViewModel())
+          that.getViewModel().dispose();
       }
 
       if (that._element.childElementCount > 1) {
