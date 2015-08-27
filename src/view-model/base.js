@@ -144,7 +144,7 @@ var instanceMembers = {
   dispose: function(){
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
-      ioc.delItemViewInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);
+      ioc.delItemViewModelInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);
     });
 
     this.removeAllManagedEventListeners();
