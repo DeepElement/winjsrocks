@@ -3,7 +3,8 @@ var common = require('../../common'),
   should = require('should'),
   path = require('path'),
   async = require('async'),
-  resolver = require('../../resolver');
+  resolver = require('../../resolver'),
+  memWatch = require('../../memwatch');
 
 describe('Integration', function() {
   describe('Navigator', function() {
@@ -36,7 +37,6 @@ describe('Integration', function() {
         window.document.body.appendChild(navigationService.getRootElement());
 
 
-
         var memoryUsage = [];
         messageService.send('navigateToMessage', {
           viewKey: "page1"
@@ -44,36 +44,15 @@ describe('Integration', function() {
 
 
         // Do the test
-        gc();
-        memoryUsage.push(process.memoryUsage());
+        memWatch.start();
 
         messageService.send('navigateToMessage', {
           viewKey: "page2"
         });
 
-
-        gc();
-        memoryUsage.push(process.memoryUsage());
-
-        var diffs = memoryUsage.map(function(mm) {
-          return {
-            rss: mm.rss - memoryUsage[0].rss,
-            heapTotal: mm.heapTotal - memoryUsage[0].heapTotal,
-            heapUsed: mm.heapUsed - memoryUsage[0].heapUsed
-          };
-        });
-
-        for (var i = 0; i <= diffs.length - 1; i++)
-          for (var m = 0; m <= diffs[i].length - 1; m++) {
-            diffs[i][m].should.be.most(0);
-          }
-
-        setTimeout(function() {
-          console.log(window.document.body.innerHTML);
-
-
-          return done();
-        }, 5000);
+        memWatch.end();
+        memWatch.assert();
+        return done();
       });
     });
   });
