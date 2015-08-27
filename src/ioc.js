@@ -66,7 +66,6 @@ exportsConfig.forEach(function(config) {
   };
 
   exports["del" + caseType + "Instance"] = function(key, instance) {
-    console.log('b');
     return _container.del(config.prefix + key, instance);
   };
 });
