@@ -20,6 +20,7 @@ describe('Integration', function() {
       });
 
       it('callback fired', function(done) {
+        var WinJS = require('winjs');
         var ioc = resolver.resolve('ioc');
         var conf = resolver.resolve('config');
         var viewBase = resolver.resolve('view/base');
@@ -27,28 +28,36 @@ describe('Integration', function() {
         var messageService = ioc.getService("message");
         var navigationService = ioc.getService("navigation");
 
+        var page1ViewModel = WinJS.Class.derive(viewModelBase, function(options) {
+          viewModelBase.apply(this, arguments);
+        }, {
+          onDataSet: function() {
+            var that = this;
+            return viewModelBase.prototype.onDataSet.apply(this, arguments).then(
+              function() {
+                that.body = window.document.body;
+              });
+          }
+        });
+
         ioc.registerView("page1", viewBase);
-        ioc.registerViewModel("page1", viewModelBase);
+        ioc.registerViewModel("page1", page1ViewModel);
         conf.set("pages:page1:template", path.join(__dirname, "..", "harness", "default.template.html"));
-        ioc.registerView("page2", viewBase);
-        ioc.registerViewModel("page2", viewModelBase);
-        conf.set("pages:page2:template", path.join(__dirname, "..", "harness", "default.template.html"));
 
         window.document.body.appendChild(navigationService.getRootElement());
 
-
         var memoryUsage = [];
-        messageService.send('navigateToMessage', {
-          viewKey: "page1"
-        });
-
 
         // Do the test
         memWatch.start();
 
-        messageService.send('navigateToMessage', {
-          viewKey: "page2"
-        });
+        for (var i = 0; i <= 50; i++) {
+          messageService.send('navigateToMessage', {
+            viewKey: "page1"
+          });
+
+          messageService.send('navigateBackMessage');
+        }
 
         memWatch.end();
         memWatch.assert();
