@@ -63,11 +63,14 @@ var instanceMembers = {
       if (this.getViewModel())
         this.getViewModel().onNavigateFrom();
 
-      history.pushState({
-        context: state,
-        key: viewKey
-      }, viewKey, "#" + viewKey);
+      if (window["history"]) {
+        window.history.pushState({
+          context: state,
+          key: viewKey
+        }, viewKey, "#" + viewKey);
+      }
 
+      console.log(viewTemplateUri);
       WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
   },
@@ -86,7 +89,7 @@ var instanceMembers = {
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
-      if(that._element && that._element.wincontrol && that._element.wincontrol.getViewModel())
+      if (that._element && that._element.wincontrol && that._element.wincontrol.getViewModel())
         that._element.wincontrol.getViewModel().dispose();
       if (that._element.childElementCount > 1) {
         var oldElement = that._element.firstElementChild;
