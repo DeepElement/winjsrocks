@@ -24,7 +24,7 @@
     "async": "0.9.0",
     "jquery": "2.1.4",
     "lokijs": "1.3.4",
-    "momentr": "0.0.5",
+    "momentr": "0.0.6",
     "platform": "^1.3.0",
     "underscore": "1.8.3",
     "uuid": "2.0.1",
