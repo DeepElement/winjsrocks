@@ -1,9 +1,9 @@
-var common = require('../common'),
+var common = require('../../common'),
   assert = require('assert'),
   should = require('should'),
   path = require('path'),
   async = require('async'),
-  resolver = require('../resolver');
+  resolver = require('../../resolver');
 
 describe('Integration', function() {
   describe('Navigator', function() {

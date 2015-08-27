@@ -69,8 +69,6 @@ var instanceMembers = {
           key: viewKey
         }, viewKey, "#" + viewKey);
       }
-
-      console.log(viewTemplateUri);
       WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
   },
