@@ -1,17 +1,21 @@
 module.exports = {
   log: function(msg) {
-    console.log(msg);
+    if (process.env.NODE_ENV != "test")
+      console.log(msg);
   },
   info: function(msg) {
-    console.info(msg);
+    if (process.env.NODE_ENV != "test")
+      console.info(msg);
   },
   warn: function(msg) {
-    console.warn(msg);
+    if (process.env.NODE_ENV != "test")
+      console.warn(msg);
   },
-  error: function(msg){
-    console.error(msg);
+  error: function(msg) {
+    if (process.env.NODE_ENV != "test")
+      console.error(msg);
   },
-  element: function(el){
+  element: function(el) {
     var stack = [];
     while (el.parentNode != null) {
       var sibCount = 0;

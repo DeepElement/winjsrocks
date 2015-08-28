@@ -1,7 +1,8 @@
 var ioc = require('./ioc'),
   async = require('async'),
-  extend = require('extend-object');
-  
+  extend = require('extend-object'),
+  WinJS = require('winjs');
+
 var store = {};
 exports.get = function(path) {
   try {
@@ -70,32 +71,34 @@ exports.file = function(path, callback) {
 
 exports.loadFile = function(path, callback) {
   var result = null;
-  var networkProvider = ioc.getProvider("network");
 
   async.waterfall([
       function(done) {
-        networkProvider.get({
-          url: path,
-          jsonParse: true
-        }, function(err, resp) {
-          if (!err)
-            result = resp;
-          return done();
-        });
+        WinJS.xhr({
+            url: path
+          })
+          .done(function(resp) {
+              result = resp;
+              return done();
+            },
+            function(result) {
+              return done();
+            });
       },
       function(done) {
         if (!result) {
           if (!(typeof location === "undefined")) {
             var browserCompatiblePath = path.replace("ms-appx://",
               location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''));
-            networkProvider.get({
-              url: browserCompatiblePath,
-              jsonParse: true
-            }, function(err, resp) {
-              if (!err)
+            WinJS.xhr({
+              url: browserCompatiblePath
+            }).done(function(resp) {
                 result = resp;
-              return done();
-            });
+                return done();
+              },
+              function(result) {
+                return done();
+              });
           } else {
             result = require(path);
             return done();
