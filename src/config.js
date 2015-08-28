@@ -78,7 +78,7 @@ exports.loadFile = function(path, callback) {
             url: path
           })
           .done(function(resp) {
-              result = resp;
+              result = resp.response;
               return done();
             },
             function(result) {
@@ -93,7 +93,7 @@ exports.loadFile = function(path, callback) {
             WinJS.xhr({
               url: browserCompatiblePath
             }).done(function(resp) {
-                result = resp;
+                result = resp.response;
                 return done();
               },
               function(result) {
