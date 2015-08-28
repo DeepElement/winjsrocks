@@ -1,18 +1,7 @@
 var ioc = require('./ioc'),
-  async = require('async');
-
-function extend(target, source) {
-  target = target || {};
-  for (var prop in source) {
-    if (typeof source[prop] === 'object') {
-      target[prop] = extend(target[prop], source[prop]);
-    } else {
-      target[prop] = source[prop];
-    }
-  }
-  return target;
-}
-
+  async = require('async'),
+  extend = require('extend-object');
+  
 var store = {};
 exports.get = function(path) {
   try {
