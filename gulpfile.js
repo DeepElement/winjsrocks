@@ -13,13 +13,21 @@ var gulp = require('gulp'),
   exec = require('child_process').exec;
 
 gulp.task("dist", function(cb) {
-  runSequence('dist:clean',
+  runSequence(
+    'dist:clean',
+    'dist:temp-sources',
     'dist:bundle',
-    'dist:package:debug',
-    'dist:package:debug:add-global-exports',
-    'dist:package:release:google-closure',
-    'dist:package:release',
-    'dist:package:release:add-global-exports', cb);
+
+    'dist:package:debug:full',
+    'dist:package:debug:winjs-exclude',
+
+    'dist:package:google-closure',
+
+    'dist:package:release:full',
+    'dist:package:release:winjs-exclude',
+
+    'dist:package:add-global-exports',
+    cb);
 });
 
 gulp.task("test", function() {
@@ -56,7 +64,12 @@ gulp.task("dist:clean", function(cb) {
   rimraf('./dist', cb);
 });
 
-gulp.task("dist:package:debug", function() {
+gulp.task("dist:temp-sources", function(cb) {
+  return gulp.src(['./src/**'])
+    .pipe(gulp.dest('./dist/temp-sources'));
+});
+
+gulp.task("dist:package:debug:full", function() {
   var b = browserify({
     fullPaths: false,
     debug: true
@@ -65,11 +78,25 @@ gulp.task("dist:package:debug", function() {
     expose: "winjsrocks"
   });
   return b.bundle()
-    .pipe(source('winjsrocks-bundle.debug.js'))
+    .pipe(source('winjsrocks-bdl.debug.js'))
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task("dist:package:release", function() {
+gulp.task("dist:package:debug:winjs-exclude", function() {
+  var b = browserify({
+    fullPaths: false,
+    debug: true
+  });
+  b.require('./dist/winjsrocks', {
+    expose: "winjsrocks"
+  });
+  b.exclude('winjs');
+  return b.bundle()
+    .pipe(source('winjsrocks-bdl.debug-excludes.js'))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task("dist:package:release:full", function() {
   var b = browserify({
     fullPaths: false,
     debug: false
@@ -78,20 +105,38 @@ gulp.task("dist:package:release", function() {
     expose: "winjsrocks"
   });
   return b.bundle()
-    .pipe(source('winjsrocks-bundle.js'))
+    .pipe(source('winjsrocks-bdl.js'))
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task("dist:package:debug:add-global-exports", function(done) {
-  fs.appendFile('./dist/winjsrocks-bundle.debug.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
+gulp.task("dist:package:release:winjs-exclude", function() {
+  var b = browserify({
+    fullPaths: false,
+    debug: false
+  });
+  b.require('./dist/winjsrocks', {
+    expose: "winjsrocks"
+  });
+  b.exclude('winjs');
+  return b.bundle()
+    .pipe(source('winjsrocks-bdl.excludes.js'))
+    .pipe(gulp.dest('./dist'));
 });
 
-gulp.task("dist:package:release:add-global-exports", function(done) {
-  fs.appendFile('./dist/winjsrocks-bundle.js', "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", done);
+gulp.task("dist:package:add-global-exports", function(done) {
+  glob("./dist/winjsrocks-bdl*.js", function(er, files) {
+    if (er)
+      return done(er);
+    async.each(files,
+      function(file, fileCb) {
+        fs.appendFile(file, "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", fileCb);
+      },
+      done);
+  })
 });
 
-gulp.task("dist:package:release:google-closure", function(done) {
-  glob("./src/**/*.js", function(err, files) {
+gulp.task("dist:package:google-closure", function(done) {
+  glob("./dist/temp-sources/**/*.js", function(err, files) {
     if (err)
       return done(err);
     async.eachSeries(files,
@@ -120,12 +165,12 @@ gulp.task("dist:bundle", function(done) {
     if (err)
       return done(err);
 
-    glob(path.join(__dirname, "src") + "/**/*.js", function(err, files) {
+    glob(path.join(__dirname, "dist", "temp-sources") + "/**/*.js", function(err, files) {
       if (err)
         return done(err);
 
       var relativeFiles = files.map(function(f) {
-        return path.join("..", path.relative(".", f));
+        return "./" + path.join(".", path.relative("./dist", f));
       });
 
       var instance = new BrowserifyBridge({
@@ -133,7 +178,7 @@ gulp.task("dist:bundle", function(done) {
         envWhiteList: ['NODE_ENV'],
         package: path.join(__dirname, "package.json"),
         sources: relativeFiles,
-        relativeApiRoot: "../src"
+        relativeApiRoot: "./temp-sources/"
       });
       var outputModuleFile = path.join(__dirname, "dist", "winjsrocks.js");
       instance.exportToFile(outputModuleFile,
