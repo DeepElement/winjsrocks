@@ -13,7 +13,7 @@ var instanceMembers = {
   loadDatabase: function(dbname, callback) {
     var dbStorageKey = dbname + this._lokiStorageKey;
     this._storageProvider.get({
-        filename: dbStorageKey
+        fileName: dbStorageKey
       },
       function(err, resp) {
         if (err) {
