@@ -32,10 +32,12 @@ var instanceMembers = {
   saveDatabase: function(dbname, dbstring, callback) {
     var dbStorageKey = dbname + this._lokiStorageKey;
     var storageStr = "";
-    if (!(typeof(dbstring) === 'string'))
-      storageStr = JSON.stringify(dbstring);
-    else
+    
+    if (typeof dbstring === 'string' || dbstring instanceof String)
       storageStr = String(dbstring);
+    else
+      storageStr = JSON.stringify(dbstring);
+    
     this._storageProvider.createOrUpdate({
         fileName: dbStorageKey,
         data: storageStr
