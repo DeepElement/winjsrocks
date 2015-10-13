@@ -14,25 +14,33 @@ var gulp = require('gulp'),
 
 var gutil = require("gulp-util"),
   webpack = require("webpack"),
-  webpackConfig = require("./webpack.config.js");
+  webpackConfig = require("./webpack.config.js"),
+  packageConfig = require('./package.json');
 
 gulp.task("dist", function(cb) {
   runSequence(
     'dist:clean',
     'dist:temp-sources',
     'dist:bundle',
-
-    'dist:package:debug:full',
-    'dist:package:debug:winjs-exclude',
-
-    'dist:package:release:full',
-    'dist:package:release:winjs-exclude',
-
-    'dist:package:add-global-exports',
+    'dist:package:debug',
+    'dist:package:release',
+    'dist:clean-temp',
     cb);
 });
 
-gulp.task("webpack:build", function(callback) {
+gulp.task("dist:clean-temp", function(cb) {
+  async.parallel([
+      function(done) {
+        rimraf('./dist/temp-sources', done);
+      },
+      function(done) {
+        rimraf("./dist/require-surface.js", done);
+      }
+    ],
+    cb);
+});
+
+gulp.task("dist:package:release", function(cb) {
   // modify some webpack config options
   var myConfig = Object.create(webpackConfig);
   myConfig.plugins = myConfig.plugins || [];
@@ -46,6 +54,7 @@ gulp.task("webpack:build", function(callback) {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin()
   );
+  myConfig.output.filename = "dist/winjsrocks-" + packageConfig.version + ".js";
 
   // run webpack
   webpack(myConfig, function(err, stats) {
@@ -53,26 +62,27 @@ gulp.task("webpack:build", function(callback) {
     gutil.log("[webpack:build]", stats.toString({
       colors: true
     }));
-    callback();
+    cb();
   });
 });
 
-// modify some webpack config options
-var myDevConfig = Object.create(webpackConfig);
-myDevConfig.devtool = "sourcemap";
-myDevConfig.debug = true;
+gulp.task("dist:package:debug", function(cb) {
+  // modify some webpack config options
+  var myDevConfig = Object.create(webpackConfig);
+  myDevConfig.devtool = "sourcemap";
+  myDevConfig.debug = true;
+  myDevConfig.output.filename = "dist/winjsrocks-." + packageConfig.version + ".debug.js";
 
-// create a single instance of the compiler to allow caching
-var devCompiler = webpack(myDevConfig);
+  // create a single instance of the compiler to allow caching
+  var devCompiler = webpack(myDevConfig);
 
-gulp.task("webpack:build-dev", function(callback) {
   // run webpack
   devCompiler.run(function(err, stats) {
     if (err) throw new gutil.PluginError("webpack:build-dev", err);
     gutil.log("[webpack:build-dev]", stats.toString({
       colors: true
     }));
-    callback();
+    cb();
   });
 });
 
@@ -115,71 +125,6 @@ gulp.task("dist:temp-sources", function(cb) {
     .pipe(gulp.dest('./dist/temp-sources'));
 });
 
-gulp.task("dist:package:debug:full", function() {
-  var b = browserify({
-    fullPaths: false,
-    debug: true
-  });
-  b.require('./dist/winjsrocks', {
-    expose: "winjsrocks"
-  });
-  return b.bundle()
-    .pipe(source('winjsrocks-bdl.debug.js'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task("dist:package:debug:winjs-exclude", function() {
-  var b = browserify({
-    fullPaths: false,
-    debug: true
-  });
-  b.require('./dist/winjsrocks', {
-    expose: "winjsrocks"
-  });
-  b.exclude('winjs');
-  return b.bundle()
-    .pipe(source('winjsrocks-bdl.debug-excludes.js'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task("dist:package:release:full", function() {
-  var b = browserify({
-    fullPaths: false,
-    debug: false
-  });
-  b.require('./dist/winjsrocks', {
-    expose: "winjsrocks"
-  });
-  return b.bundle()
-    .pipe(source('winjsrocks-bdl.js'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task("dist:package:release:winjs-exclude", function() {
-  var b = browserify({
-    fullPaths: false,
-    debug: false
-  });
-  b.require('./dist/winjsrocks', {
-    expose: "winjsrocks"
-  });
-  b.exclude('winjs');
-  return b.bundle()
-    .pipe(source('winjsrocks-bdl.excludes.js'))
-    .pipe(gulp.dest('./dist'));
-});
-
-gulp.task("dist:package:add-global-exports", function(done) {
-  glob("./dist/winjsrocks-bdl*.js", function(er, files) {
-    if (er)
-      return done(er);
-    async.each(files,
-      function(file, fileCb) {
-        fs.appendFile(file, "if(!window.winjsrocks)window.winjsrocks = require('winjsrocks');", fileCb);
-      },
-      done);
-  })
-});
 
 gulp.task("dist:bundle", function(done) {
   mkdirp(path.join(__dirname, "dist"), function(err) {
@@ -201,7 +146,7 @@ gulp.task("dist:bundle", function(done) {
         sources: relativeFiles,
         relativeApiRoot: "./temp-sources/"
       });
-      var outputModuleFile = path.join(__dirname, "dist", "winjsrocks.js");
+      var outputModuleFile = path.join(__dirname, "dist", "require-surface.js");
       instance.exportToFile(outputModuleFile,
         function() {
           // append custom script
@@ -209,7 +154,11 @@ gulp.task("dist:bundle", function(done) {
             "if(key != 'helper.winjs'){" +
             "exports.helper.winjs.markForProcessing(exports[key]);\n" +
             "}}\n";
-          fs.appendFile(outputModuleFile, s, done);
+          fs.appendFile(outputModuleFile, s, function() {
+            //rimraf('./dist/temp-sources', function(){
+            return done();
+            //});
+          });
         });
     });
   });
