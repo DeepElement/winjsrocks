@@ -12,6 +12,10 @@ var gulp = require('gulp'),
   BrowserifyBridge = require('browserify-bridge'),
   exec = require('child_process').exec;
 
+var gutil = require("gulp-util"),
+  webpack = require("webpack"),
+  webpackConfig = require("./webpack.config.js");
+
 gulp.task("dist", function(cb) {
   runSequence(
     'dist:clean',
@@ -28,6 +32,50 @@ gulp.task("dist", function(cb) {
 
     'dist:package:add-global-exports',
     cb);
+});
+
+gulp.task("webpack:build", function(callback) {
+  // modify some webpack config options
+  var myConfig = Object.create(webpackConfig);
+  myConfig.plugins = myConfig.plugins || [];
+  myConfig.plugins = myConfig.plugins.concat(
+    new webpack.DefinePlugin({
+      "process.env": {
+        // This has effect on the react lib size
+        "NODE_ENV": JSON.stringify("production")
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin()
+  );
+
+  // run webpack
+  webpack(myConfig, function(err, stats) {
+    if (err) throw new gutil.PluginError("webpack:build", err);
+    gutil.log("[webpack:build]", stats.toString({
+      colors: true
+    }));
+    callback();
+  });
+});
+
+// modify some webpack config options
+var myDevConfig = Object.create(webpackConfig);
+myDevConfig.devtool = "sourcemap";
+myDevConfig.debug = true;
+
+// create a single instance of the compiler to allow caching
+var devCompiler = webpack(myDevConfig);
+
+gulp.task("webpack:build-dev", function(callback) {
+  // run webpack
+  devCompiler.run(function(err, stats) {
+    if (err) throw new gutil.PluginError("webpack:build-dev", err);
+    gutil.log("[webpack:build-dev]", stats.toString({
+      colors: true
+    }));
+    callback();
+  });
 });
 
 gulp.task("test", function() {
@@ -133,31 +181,6 @@ gulp.task("dist:package:add-global-exports", function(done) {
       },
       done);
   })
-});
-
-gulp.task("dist:package:google-closure", function(done) {
-  glob("./dist/temp-sources/**/*.js", function(err, files) {
-    if (err)
-      return done(err);
-    async.eachSeries(files,
-      function(file, fileCb) {
-        var fileBaseName = path.basename(file);
-        exec('java -jar node_modules/google-closure-compiler/compiler.jar --js ' + file + " " +
-          '--js_output_file ' + file + '.closure ' +
-          '--compilation_level SIMPLE ' +
-          '--language_in ECMASCRIPT5 ' +
-          '--formatting=pretty_print ' +
-          '--formatting=print_input_delimiter ' +
-          '--warning_level QUIET;' +
-          'mv ' + file + '.closure ' + file,
-          function(err, stdout, stderr) {
-            if (stderr)
-              console.log(stderr);
-            return fileCb(err);
-          });
-      },
-      done);
-  });
 });
 
 gulp.task("dist:bundle", function(done) {
