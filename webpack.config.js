@@ -5,7 +5,8 @@ module.exports = {
   cache: true,
   entry: "./src/main.js",
   output: {
-    filename: "dist/webpack-bundle.js"
+    filename: "dist/webpack-bundle.js",
+    library: "winjsrocks"
   },
   node: {
     fs: "empty"
