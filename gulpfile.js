@@ -25,8 +25,6 @@ gulp.task("dist", function(cb) {
     'dist:package:debug:full',
     'dist:package:debug:winjs-exclude',
 
-    'dist:package:google-closure',
-
     'dist:package:release:full',
     'dist:package:release:winjs-exclude',
 
