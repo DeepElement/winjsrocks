@@ -1,3 +1,5 @@
+node_js:
+  - "4.1"
 language: node_js
 before_install:
 - chmod +x -R build
