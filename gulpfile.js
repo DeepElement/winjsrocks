@@ -6,7 +6,7 @@ var gulp = require('gulp'),
   path = require('path'),
   glob = require("glob"),
   rimraf = require('rimraf'),
-  fs = require('fs'),
+  fs = require('fs-extra'),
   mkdirp = require('mkdirp'),
   BrowserifyBridge = require('browserify-bridge'),
   exec = require('child_process').exec;
@@ -41,9 +41,7 @@ gulp.task("dist:clean-temp", function(cb) {
 });
 
 gulp.task("dist:package:latest-entry", function(cb) {
-  fs.writeFile("dist/latest.js",
-    "module.exports=require('./winjsrocks-" + packageConfig.version + ".js');", cb
-  );
+  fs.copy("dist/winjsrocks-" + packageConfig.version + ".js", "dist/latest.js", cb);
 });
 
 gulp.task("dist:package:release", function(cb) {

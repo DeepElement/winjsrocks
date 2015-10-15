@@ -6,7 +6,8 @@ module.exports = {
   entry: "./dist/require-surface.js",
   output: {
     filename: "dist/webpack-bundle.js",
-    library: "winjsrocks"
+    library: "winjsrocks",
+    libraryTarget: "umd"
   },
   node: {
     fs: "empty"
@@ -17,7 +18,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
