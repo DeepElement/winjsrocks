@@ -19,7 +19,7 @@ describe('Integration', function() {
         subject.unload({}, done);
       });
 
-      it('callback fired', function(done) {
+      /*it('callback fired', function(done) {
         var WinJS = require('winjs');
         var ioc = resolver.resolve('ioc');
         var conf = resolver.resolve('config');
@@ -62,7 +62,7 @@ describe('Integration', function() {
         memWatch.end();
         memWatch.assert();
         return done();
-      });
+      });*/
     });
   });
 });
