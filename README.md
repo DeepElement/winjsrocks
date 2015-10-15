@@ -1,15 +1,22 @@
-WinJS Rocks!
+WinJSRocks - an MVVM framework optimized for WinJS
 =====
+http://winjs.rocks http://winjsrocks.com
 
-A framework based on WinJS for building cross platform apps.
-(http://winjs.rocks & http://winjsrocks.com)
+
+Built to support amazing apps targetting:
+- Windows 10
+- XboxOne
+- Windows Phone 10
+- Cordova
+- FireTV
+- Web
 
 [![Build Status][travis-shield]][travis]
 [![Build Status][travis-shield-develop]][travis]
 [![Dependency Status][dependencies-shield]][dependencies]
 [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
 ![yo](https://img.shields.io/npm/dm/winjsrocks.svg)
------ 
+-----
 
 
 # IN DEVELOPMENT (UNSTABLE)
