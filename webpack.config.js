@@ -15,9 +15,16 @@ module.exports = {
     "winjs": "WinJS"
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel-loader'
-    }]
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel',
+        query: {
+          optional: ['runtime'],
+          stage: 0
+        }
+      }
+    ]
   }
 };

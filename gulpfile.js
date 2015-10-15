@@ -2,7 +2,6 @@ var gulp = require('gulp'),
   mocha = require('gulp-mocha'),
   async = require('async'),
   source = require('vinyl-source-stream'),
-  browserify = require('browserify'),
   runSequence = require('gulp-run-sequence'),
   path = require('path'),
   glob = require("glob"),
@@ -24,6 +23,7 @@ gulp.task("dist", function(cb) {
     'dist:bundle',
     'dist:package:debug',
     'dist:package:release',
+    'dist:package:latest-entry',
     'dist:clean-temp',
     cb);
 });
@@ -38,6 +38,12 @@ gulp.task("dist:clean-temp", function(cb) {
       }
     ],
     cb);
+});
+
+gulp.task("dist:package:latest-entry", function(cb) {
+  fs.writeFile("dist/latest.js",
+    "module.exports=require('./winjsrocks-" + packageConfig.version + ".js');", cb
+  );
 });
 
 gulp.task("dist:package:release", function(cb) {
