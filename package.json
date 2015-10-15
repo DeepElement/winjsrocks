@@ -32,7 +32,6 @@
   "devDependencies": {
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.8.25",
-    "browserify": "11.0.1",
     "browserify-bridge": "0.0.5",
     "glob": "5.0.14",
     "gulp": "3.9.0",

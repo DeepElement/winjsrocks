@@ -1,3 +1,5 @@
+node_js:
+  - "4.1"
 language: node_js
 before_install:
 - chmod +x -R build
@@ -5,7 +7,6 @@ before_install:
 - git config --global user.name "${GIT_NAME}";
 install:
 - npm install
-- npm install -g npm@'>=2.13.5'
 script:
 - npm run-script build
 - npm test
