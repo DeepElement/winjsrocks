@@ -45,8 +45,6 @@ var instanceMembers = {
       WinJS.Utilities.disposeSubTree(this.element);
     this._viewModel = null;
 
-    for (var member in this) delete this[member];
-
     return result;
   },
 
