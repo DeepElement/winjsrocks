@@ -40,6 +40,8 @@ var instanceMembers = {
     },
 
     setImmediate: function(delegate){
+      if (typeof window.setImmediate !== 'function')
+        window.setImmediate = window.setTimeout;
       var refId = window.setImmediate(delegate);
       this._immediateIds.push(refId);
       return refId;
