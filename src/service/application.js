@@ -6,6 +6,7 @@ var WinJS = require('winjs'),
 var _constructor = function(options) {
     this._timeoutIds = [];
     this._intervalIds = [];
+    this._immediateIds = [];
 };
 
 var instanceMembers = {
@@ -19,6 +20,9 @@ var instanceMembers = {
                 });
                 that._intervalIds.forEach(function(t){
                     that.clearInterval(t);
+                });
+                that._immediateIds.forEach(function(t){
+                    that.clearImmediate(t);
                 });
             });
     },
@@ -35,8 +39,18 @@ var instanceMembers = {
         return intervalId;
     },
 
+    setImmediate: function(delegate){
+      var refId = window.setImmediate(delegate);
+      this._immediateIds.push(refId);
+      return refId;
+    },
+
     clearTimeout: function(timerId) {
         return window.clearTimeout(timerId);
+    },
+
+    clearImmediate: function(refId){
+      return window.clearImmediate(refId);
     },
 
     clearInterval: function(timerId) {

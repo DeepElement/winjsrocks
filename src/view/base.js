@@ -11,10 +11,14 @@ var _constructor = function(element, options) {
 
 var instanceMembers = {
   update: function() {
-    winjsHelper.markForProcessing(this.getViewModel());
-    WinJS.UI.processAll(this.element);
-    WinJS.Binding.processAll(this.element, this.getViewModel());
-    WinJS.Resources.processAll(this.element);
+    var that = this;
+    var appService = ioc.getService("application");
+    appService.setImmediate(function() {
+      winjsHelper.markForProcessing(that.getViewModel());
+      WinJS.UI.processAll(that.element);
+      WinJS.Binding.processAll(that.element, that.getViewModel());
+      WinJS.Resources.processAll(that.element);
+    });
   },
 
   _onLoadingStateChanged: function() {
