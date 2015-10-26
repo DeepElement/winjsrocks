@@ -13,18 +13,19 @@ var instanceMembers = {
   update: function() {
     var that = this;
     var appService = ioc.getService("application");
-    appService.setImmediate(function() {
-      winjsHelper.markForProcessing(that.getViewModel());
-      WinJS.UI.processAll(that.element);
-      WinJS.Binding.processAll(that.element, that.getViewModel());
-      WinJS.Resources.processAll(that.element);
+    winjsHelper.markForProcessing(that.getViewModel());
+    return WinJS.UI.processAll(that.element).then(function() {
+      return WinJS.Binding.processAll(that.element, that.getViewModel()).then(function() {
+        return WinJS.Resources.processAll(that.element);
+      });
     });
   },
 
   _onLoadingStateChanged: function() {
     if (this.getViewModel().getLoadingState() == "loaded") {
-      this.update();
+      return this.update();
     }
+    return WinJS.Promise.as();
   },
 
   getData: function() {
@@ -67,7 +68,7 @@ var instanceMembers = {
         return complete();
       }
     }).then(function() {
-      that._onLoadingStateChanged();
+      return that._onLoadingStateChanged();
     });
   },
 
