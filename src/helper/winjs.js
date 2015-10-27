@@ -1,11 +1,16 @@
 var ioc = require("../ioc"),
-  WinJS = require('winjs');
+  WinJS = require('winjs'),
+  config = require('../config');
 
 exports.pageDefine = function(viewKey, templateUri, baseClassDef) {
   var existingBaseClass = WinJS.UI.Pages.define(templateUri);
   if (baseClassDef && existingBaseClass != baseClassDef) {
     var extendedClassDef = WinJS.UI.Pages.define(templateUri, {}, baseClassDef);
     ioc.overrideView(viewKey, extendedClassDef);
+
+    // Add the config entry for the navigation service pre-nav validation
+    config.set("pages:" + viewKey + ":template", templateUri);
+
     return extendedClassDef;
   }
   return existingBaseClass;
