@@ -1,5 +1,5 @@
-import ioc from. / ioc;
-import winjsHelper from. / helper / winjs;
+import ioc from "./ioc";
+import winjsHelper from "./helper/winjs";
 
 export default class {
 
