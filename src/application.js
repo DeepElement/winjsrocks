@@ -1,5 +1,6 @@
 import LifeCycle from "./common/lifecycle";
 import ioc from "./ioc";
+import async from "async";
 
 export default class extends LifeCycle {
   constructor() {

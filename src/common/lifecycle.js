@@ -1,4 +1,4 @@
-import loadable from "./loadable";
+import Loadable from "./loadable";
 
 export default class extends Loadable {
   constructor() {
@@ -6,10 +6,10 @@ export default class extends Loadable {
   }
 
   pause(options, callback) {
-
+    return callback();
   }
 
   resume(options, callback) {
-
+    return callback();
   }
 };

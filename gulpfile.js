@@ -9,7 +9,6 @@ var gulp = require('gulp'),
   babel = require('babel/register'),
   fs = require('fs-extra'),
   mkdirp = require('mkdirp'),
-  BrowserifyBridge = require('browserify-bridge'),
   exec = require('child_process').exec;
 
 var gutil = require("gulp-util"),

@@ -15,6 +15,7 @@ import baseProvider from "./provider/base";
 import basePlugin from "./plugin/base";
 import baseModel from "./model/base";
 import baseCommand from "./command/base";
+import builder from "./builder";
 
 var viewModel = {
   baseViewModel,
@@ -50,6 +51,7 @@ var command = {
 // The surface API
 export default {
   application,
+  builder,
   container,
   logger,
   configuration,
