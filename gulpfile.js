@@ -75,7 +75,7 @@ gulp.task("dist:package:debug", function(cb) {
   var myDevConfig = Object.create(webpackConfig);
   myDevConfig.devtool = "sourcemap";
   myDevConfig.debug = true;
-  myDevConfig.output.filename = "dist/winjsrocks-." + packageConfig.version + ".debug.js";
+  myDevConfig.output.filename = "dist/winjsrocks-" + packageConfig.version + ".debug.js";
 
   // create a single instance of the compiler to allow caching
   var devCompiler = webpack(myDevConfig);
