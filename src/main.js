@@ -9,7 +9,7 @@ var config = require('./config'),
   ioc = require('./ioc');
 
 exports.configure = function(options, done) {
-  var componentHash = options["component-hash"];
+  options = options || {};
   async.waterfall([
       function(cb) {
         var appConfig = options["app-config"];
