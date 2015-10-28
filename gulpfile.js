@@ -20,24 +20,9 @@ var gutil = require("gulp-util"),
 gulp.task("dist", function(cb) {
   runSequence(
     'dist:clean',
-    'dist:temp-sources',
-    'dist:bundle',
     'dist:package:debug',
     'dist:package:release',
     'dist:package:latest-entry',
-    'dist:clean-temp',
-    cb);
-});
-
-gulp.task("dist:clean-temp", function(cb) {
-  async.parallel([
-      function(done) {
-        rimraf('./dist/temp-sources', done);
-      },
-      function(done) {
-        rimraf("./dist/require-surface.js", done);
-      }
-    ],
     cb);
 });
 
@@ -132,48 +117,4 @@ gulp.task("test:unit", function() {
 
 gulp.task("dist:clean", function(cb) {
   rimraf('./dist', cb);
-});
-
-gulp.task("dist:temp-sources", function(cb) {
-  return gulp.src(['./src/**'])
-    .pipe(gulp.dest('./dist/temp-sources'));
-});
-
-
-gulp.task("dist:bundle", function(done) {
-  mkdirp(path.join(__dirname, "dist"), function(err) {
-    if (err)
-      return done(err);
-
-    glob(path.join(__dirname, "dist", "temp-sources") + "/**/*.js", function(err, files) {
-      if (err)
-        return done(err);
-
-      var relativeFiles = files.map(function(f) {
-        return "./" + path.join(".", path.relative("./dist", f));
-      });
-
-      var instance = new BrowserifyBridge({
-        env: process.env,
-        envWhiteList: ['NODE_ENV'],
-        package: path.join(__dirname, "package.json"),
-        sources: relativeFiles,
-        relativeApiRoot: "./temp-sources/"
-      });
-      var outputModuleFile = path.join(__dirname, "dist", "require-surface.js");
-      instance.exportToFile(outputModuleFile,
-        function() {
-          // append custom script
-          var s = "for(var key in exports) {\n" +
-            "if(key != 'helper.winjs'){" +
-            "exports.helper.winjs.markForProcessing(exports[key]);\n" +
-            "}}\n";
-          fs.appendFile(outputModuleFile, s, function() {
-            //rimraf('./dist/temp-sources', function(){
-            return done();
-            //});
-          });
-        });
-    });
-  });
 });

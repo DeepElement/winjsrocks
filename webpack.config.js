@@ -3,7 +3,7 @@ var path = require("path"),
 
 module.exports = {
   cache: true,
-  entry: "./dist/require-surface.js",
+  entry: "./src/entry.js",
   output: {
     filename: "dist/webpack-bundle.js",
     library: "winjsrocks",
