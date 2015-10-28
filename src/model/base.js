@@ -2,6 +2,7 @@ var WinJS = require('winjs'),
     mixins = require('../helper/mixins');
 
 var _constructor = function(options) {
+  options = options || {};
   this._contentType = options.contentType || "none";
 };
 
