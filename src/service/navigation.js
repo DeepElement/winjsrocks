@@ -187,8 +187,8 @@ var instanceMembers = {
         window.removeEventListener("resize", that._onResizedBinding);
         window.removeEventListener("popstate", that._onPopStateBinding)
 
-        if (this._element)
-          WinJS.Utilities.disposeSubTree(this._element);
+        if (that._element)
+          WinJS.Utilities.disposeSubTree(that._element);
       });
   }
 };

@@ -33,6 +33,7 @@
     "winjs": "4.1.0"
   },
   "devDependencies": {
+    "babel": "^5.8.29",
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.8.25",
     "browserify-bridge": "0.0.5",

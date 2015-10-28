@@ -21,11 +21,11 @@ var winJSShim = function() {
 };
 
 var jsdomShim = function() {
-  global.document.documentElement.classList = {
+  /*global.document.documentElement.classList = {
     add: function() {
 
     }
-  };
+  };*/
 };
 
 var deleteRequireModulesInPath = function(path) {
