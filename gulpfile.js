@@ -6,6 +6,7 @@ var gulp = require('gulp'),
   path = require('path'),
   glob = require("glob"),
   rimraf = require('rimraf'),
+  babel = require('babel/register'),
   fs = require('fs-extra'),
   mkdirp = require('mkdirp'),
   BrowserifyBridge = require('browserify-bridge'),
@@ -96,6 +97,9 @@ gulp.task("test", function() {
     })
     .pipe(mocha({
       reporter: 'spec',
+      compilers: {
+        js: babel
+      },
       timeout: 60000
     }));
 });
@@ -106,6 +110,9 @@ gulp.task("test:integration", function() {
     })
     .pipe(mocha({
       reporter: 'spec',
+      compilers: {
+        js: babel
+      },
       timeout: 60000
     }));
 });
@@ -116,6 +123,9 @@ gulp.task("test:unit", function() {
     })
     .pipe(mocha({
       reporter: 'spec',
+      compilers: {
+        js: babel
+      },
       timeout: 60000
     }));
 });
