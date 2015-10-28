@@ -17,6 +17,18 @@ exports.configure = function(options, done) {
           config.file(appConfig, cb);
         else
           return cb();
+      },
+      function(cb) {
+        if (options.plugins) {
+          async.each(options.plugins.filter(function(p) {
+              return p instanceof require('./plugin/base');
+            }),
+            function(plugin, pluginCb) {
+              plugin.load(pluginCb);
+            },
+            cb);
+        } else
+          return cb();
       }
     ],
     function(err) {
