@@ -29,23 +29,35 @@ var instanceMembers = {
           }
         });
 
-        // Expose the dynamic model api on the data service
-        modelKeys.forEach(function(modelKey) {
-          that._db.addCollection(modelKey);
-          that["get" + modelKey.capitalizeFirstLetter() + "Collection"] = function(){
-            return that._db.getCollection(modelKey);
-          };
-        });
-
         // load the db
         that._db.loadDatabase(creationFactoryMapping,
           function(resp) {
-            if (resp === 'Database not found')
-              that._db.saveDatabase(function() {
-                return complete();
+
+            async.waterfall([
+              function(done) {
+                if (resp === 'Database not found') {
+                  that._db.saveDatabase(function() {
+                    return done();
+                  });
+                } else
+                  return done();
+              }
+            ], function(err) {
+              if (err)
+                return error(err);
+
+              // Expose the dynamic model api on the data service
+              modelKeys.forEach(function(modelKey) {
+                if (!that._db.getCollection(modelKey)) {
+                  that._db.addCollection(modelKey);
+                }
+                that["get" + modelKey.capitalizeFirstLetter() + "Collection"] = function() {
+                  return that._db.getCollection(modelKey);
+                };
               });
-            else
+
               return complete();
+            });
           });
       });
     });
