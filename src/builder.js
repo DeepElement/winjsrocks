@@ -19,17 +19,17 @@ export default class {
     winjsHelper.pageDefine(key, templateUri, viewConstructor);
   }
 
-  static unregisterModelView(key) {
+  unregisterModelView(key) {
     console.log("TODO:impl");
   }
 
-  static registerView(key, viewConstructor, viewModelConstructor, templateUri) {
+  registerView(key, viewConstructor, viewModelConstructor, templateUri) {
     this._application.container.registerView(key, viewConstructor);
     this._application.container.registerViewModel(key, viewModelConstructor);
     winjsHelper.pageDefine(key, templateUri, viewConstructor);
   }
 
-  static unregisterView(key) {
+  unregisterView(key) {
     console.log("TODO:impl");
   }
 };
