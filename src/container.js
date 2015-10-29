@@ -48,9 +48,7 @@ export default class {
       };
 
       that["get" + caseType] = function(key) {
-        var result = that._momentr.get(config.prefix + key);
-        result.application = that._application;
-        return result;
+        return that._momentr.get(config.prefix + key, that._application);
       };
 
       that["override" + caseType] = function(key, classDef) {
@@ -80,18 +78,11 @@ export default class {
   };
 
   getAllInstances() {
-    var that = this;
-    var values = this._momentr.getAllInstances();
-    values.forEach(function(v){
-      v.application = that._application;
-    });
-    return values;
+    return this._momentr.getAllInstances();
   };
 
   get(key) {
-    var result = this._momentr.get(key);
-    result.application = this._application;
-    return result;
+    return this._momentr.get(key, this.application);
   };
 
   clear() {

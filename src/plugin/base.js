@@ -3,7 +3,7 @@ export default class {
 
   }
 
-  get application {
+  get application() {
     return this._application;
   }
 

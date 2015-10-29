@@ -1,5 +1,5 @@
 var WinJS = require('winjs'),
-  ioc = require('../ioc'),
+  ioc = null,
   config = require('../config'),
   winjsHelper = require('../helper/winjs');
 

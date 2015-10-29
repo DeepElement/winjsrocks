@@ -1,8 +1,8 @@
 import Loadable from "./loadable";
 
 export default class extends Loadable {
-  constructor() {
-    super();
+  constructor(application) {
+    super(application);
   }
 
   pause(options, callback) {

@@ -50,29 +50,3 @@ exports.autoProperty = {
     }
   }
 };
-
-exports.managedEvents = {
-  addManagedEventListener: function(subject, property, handler) {
-    if (subject && property && handler) {
-      var binding = handler.bind(this);
-      this._managedEvents = this._managedEvents || [];
-      this._managedEvents.push({
-        subject: subject,
-        property: property,
-        handler: handler,
-        binding: binding
-      });
-      subject.addEventListener(property, binding);
-    }
-  },
-
-  removeAllManagedEventListeners : function() {
-    if (this._managedEvents) {
-      this._managedEvents.forEach(function(ctx) {
-        if (ctx.subject && ctx.property && ctx.binding && ctx.subject.removeEventListener)
-          ctx.subject.removeEventListener(ctx.property, ctx.binding);
-      });
-      this._managedEvents = null;
-    }
-  }
-};

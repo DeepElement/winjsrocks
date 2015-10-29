@@ -1,71 +1,42 @@
-var WinJS = require('winjs'),
-  ioc = require('../ioc'),
-  mixins = require('../helper/mixins'),
-  log = require('../log');
+import Component from "../common/component";
 
-var _constructor = function(options) {
-  var that = this;
-  this._loadingState = "loading";
-  this._itemViewModels = [];
+export default class extends Component {
+  constructor(application) {
+    super(application);
+    var that = this;
 
-  ioc.getServiceKeys().forEach(function(key) {
-    var apiKey = key.capitalizeFirstLetter() + "Service";
-    Object.defineProperty(that, apiKey, {
-      value: ioc.getService(key),
-      writable: false,
-      configurable: false,
-      enumerable: false
-    });
-  });
+    this._loadingState = "loading";
+    this._itemViewModels = [];
 
-  this._initialLoadTimerId = this.ApplicationService.setTimeout(function() {
-    if (that._loadingState != "loaded")
-      that.MessageService.send("viewLoadTimeoutMessage", this.key);
-    that.ApplicationService.clearTimeout(this._initialLoadTimerId);
-  }, 10000);
-};
-
-var instanceMembers = {
-  addManagedEventListener: function(subject, property, handler) {
-    if (subject && property && handler) {
-      var binding = handler.bind(this);
-      this._managedEvents = this._managedEvents || [];
-      this._managedEvents.push({
-        subject: subject,
-        property: property,
-        handler: handler,
-        binding: binding
+    this.application.container.getServiceKeys().forEach(function(key) {
+      var apiKey = key.capitalizeFirstLetter() + "Service";
+      Object.defineProperty(that, apiKey, {
+        value: that.application.container.getService(key),
+        writable: false,
+        configurable: false,
+        enumerable: false
       });
-      subject.addEventListener(property, binding);
-    }
-  },
+    });
 
-  _super: {
-    get: function() {
-      return Object.getPrototypeOf(this);
-    }
-  },
+    this._initialLoadTimerId = this.ApplicationService.setTimeout(function() {
+      if (that._loadingState != "loaded")
+        that.MessageService.send("viewLoadTimeoutMessage", that.key);
+      that.ApplicationService.clearTimeout(that._initialLoadTimerId);
+    }, 10000);
+  }
 
-  application: {
-    get: function() {
-      return this._application;
-    },
-    set: function(value) {
-      this._application = value;
-    }
-  },
 
-  addItemViewModels: function(models) {
+  addItemViewModels(models) {
     var that = this;
     var results = [];
     models.forEach(function(model) {
       results.push(that.addItemViewModel(model));
     });
     return results;
-  },
+  }
 
-  addItemViewModel: function(model) {
-    var itemViewModel = ioc.getItemViewModel(model.getContentType().toLowerCase());
+  addItemViewModel(model) {
+    var itemViewModel = this.application.container.getItemViewModel(model.getContentType().toLowerCase());
     if (itemViewModel) {
       itemViewModel.setData(model);
       this._itemViewModels.push(itemViewModel);
@@ -74,9 +45,9 @@ var instanceMembers = {
     }
     log.warn("ItemViewModel for " + model.getContentType() + " not found");
     return null;
-  },
+  }
 
-  removeItemViewModel: function(instance) {
+  removeItemViewModel(instance) {
     var instanceIdx = this._itemViewModels.indexOf(instance);
     if (instanceIdx > -1) {
       this._itemViewModels.slice(instanceIdx, 1);
@@ -84,89 +55,81 @@ var instanceMembers = {
       return true;
     }
     return false;
-  },
+  }
 
-  getItemViewModels: function() {
+  get itemViewModels() {
     return this._itemViewModels;
-  },
+  }
 
-  getBackNavigationDisabled: function() {
-    return this._backNavigationDisabled || false;
-  },
+  get overrideBackNavigation() {
+    return this._overrideBackNavigation || false;
+  }
 
-  setBackNavigationDisabled: function(val) {
-    this._backNavigationDisabled = val;
-    this.notify("backNavigationDisabled");
-  },
+  set overrideBackNavigation(val) {
+    this._overrideBackNavigation = val;
+    this.notify("overrideBackNavigation");
+  }
 
-  getKey: function() {
+  get key() {
     return this._key;
-  },
+  }
 
-  setKey: function(val) {
+  set key(val) {
     this._key = val;
     this.notify("key");
-  },
+  }
 
-  onDataSet: function() {
-    return WinJS.Promise.as();
-  },
+  onDataSet(callback) {
+    return callback();
+  }
 
-  getData: function() {
+  get data() {
     return this._data;
-  },
+  }
 
-  setData: function(val) {
+  set data(val) {
     var that = this;
     that._data = val;
     that.notifyLoading();
     that.notify('data');
-    WinJS.Promise.as(that.onDataSet()).done(function() {
+    that.onDataSet(function() {
       that.notifyLoaded();
-    })
-  },
+    });
+  }
 
-  onNavigateTo: function() {
+  onNavigateTo() {
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateTo();
     });
-  },
+  }
 
-  onNavigateFrom: function() {
-
-  },
-
-  getLoadingState: function() {
-    return this._loadingState;
-  },
-
-  notifyLoading: function() {
-    this._loadingState = "loading";
-    this.notify("loadingState");
-  },
-
-  notifyLoaded: function() {
-    this._loadingState = "loaded";
-    this.notify("loadingState");
-  },
-
-  dispose: function() {
+  onNavigateFrom() {
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
-      ioc.delItemViewModelInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);
+    });
+  }
+
+  get loadingState() {
+    return this._loadingState;
+  }
+
+  notifyLoading() {
+    this._loadingState = "loading";
+    this.notify("loadingState");
+  }
+
+  notifyLoaded() {
+    this._loadingState = "loaded";
+    this.notify("loadingState");
+  }
+
+  dispose() {
+    var that = this;
+    this._itemViewModels.forEach(function(itemViewModel) {
+      itemViewModel.onNavigateFrom();
+      that.application.container.delItemViewModelInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);
     });
 
     this.removeAllManagedEventListeners();
   }
 };
-
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.define(_constructor,
-  instanceMembers, staticMembers);
-WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
-WinJS.Class.mix(module.exports, mixins.notify);
-WinJS.Class.mix(module.exports, mixins.autoProperty);
-WinJS.Class.mix(module.exports, mixins.managedEvents);
