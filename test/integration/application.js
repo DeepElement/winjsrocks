@@ -86,6 +86,24 @@ describe('Integration', function() {
         });
       });
 
+      it('error before pause call', function(done) {
+        // arrange
+        var Application = resolver.resolve('./application');
+        var subject = new Application();
+
+        // act
+        subject.configure({}, function(err) {
+          should.not.exist(err);
+          subject.load({}, function(err) {
+            should.not.exist(err);
+            subject.resume({}, function(err) {
+              should.exist(err);
+              return done();
+            });
+          });
+        });
+      });
+
       it('success after config, load and pause call', function(done) {
         // arrange
         var Application = resolver.resolve('./application');
