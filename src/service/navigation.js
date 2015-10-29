@@ -1,4 +1,5 @@
 import BaseService from "./base"
+import WinJS from "winjs";
 
 export default class extends BaseService {
   constructor(application) {
@@ -34,6 +35,8 @@ export default class extends BaseService {
       messageService.register("navigateBackMessage", that._onNavigateBackMessageBinding);
       window.addEventListener("resize", that._onResizedBinding);
       window.addEventListener("popstate", that._onPopStateBinding);
+
+      return callback();
     });
   }
 

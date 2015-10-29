@@ -33,6 +33,7 @@ var exportsConfig = [{
 export default class {
   constructor(application) {
     var that = this;
+
     this._application = application;
     this._momentr = new Momentr();
 
@@ -48,7 +49,8 @@ export default class {
       };
 
       that["get" + caseType] = function(key) {
-        return that._momentr.get(config.prefix + key, that._application);
+        var instance = that._momentr.get(config.prefix + key, that._application);
+        return instance;
       };
 
       that["override" + caseType] = function(key, classDef) {

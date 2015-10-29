@@ -31,7 +31,6 @@ describe('Integration', function() {
           should.not.exist(err);
           subject.load({}, function(err) {
             should.not.exist(err);
-
             return done();
           });
         });

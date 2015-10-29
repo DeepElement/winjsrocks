@@ -7,10 +7,12 @@ import Configuration from "./configuration";
 import Builder from "./builder";
 import ApplicationException from "./exception/base";
 import MathHelper from "./helper/math";
+import Package from '../package.json';
 
 export default class extends LifeCycle {
   constructor() {
     super();
+    this._application = this;
 
     this._builder = new Builder(this);
     this._container = new Container(this);
@@ -19,6 +21,7 @@ export default class extends LifeCycle {
     this._isLoaded = false;
     this._isPaused = false;
     this._instanceKey = MathHelper.v4;
+    this._package = Package;
 
     // TODO: make instance based
     this._logger = Logging;
@@ -114,7 +117,7 @@ export default class extends LifeCycle {
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.start({}).done(keyCb);
+          serviceInstance.load({}, keyCb);
         },
         function(err) {
           if (err)
@@ -156,7 +159,7 @@ export default class extends LifeCycle {
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.stop({}).done(keyCb);
+          serviceInstance.unload({}, keyCb);
         },
         function(err) {
           if (err)
@@ -189,7 +192,7 @@ export default class extends LifeCycle {
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.pause({}).done(keyCb);
+          serviceInstance.pause({}, keyCb);
         },
         function(err) {
           if (err)
@@ -221,7 +224,7 @@ export default class extends LifeCycle {
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.resume({}).done(keyCb);
+          serviceInstance.resume({}, keyCb);
         },
         function(err) {
           if (err)

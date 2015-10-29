@@ -1,9 +1,13 @@
-export default class {
+import WinJS from "winjs";
+
+var classDef = class {
   constructor() {
-    WinJS.Class.mix(this, WinJS.Utilities.eventMixin);
   }
 
   notify(eventName) {
     this.dispatchEvent(eventName, this[eventName]);
   }
 };
+
+WinJS.Class.mix(classDef, WinJS.Utilities.eventMixin);
+export default classDef;
