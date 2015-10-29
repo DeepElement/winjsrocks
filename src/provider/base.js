@@ -5,11 +5,19 @@ var _constructor = function(options) {
 };
 
 var instanceMembers = {
-    _super: {
-        get: function() {
-            return Object.getPrototypeOf(this);
-        }
+  _super: {
+    get: function() {
+      return Object.getPrototypeOf(this);
     }
+  },
+  application: {
+    get: function() {
+      return this._application;
+    },
+    set: function(value) {
+      this._application = value;
+    }
+  }
 };
 
 var staticMembers = {

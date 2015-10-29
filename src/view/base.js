@@ -34,6 +34,16 @@ var instanceMembers = {
     return null;
   },
 
+  application: {
+    get: function() {
+      return this._application;
+    },
+    set: function(value) {
+      this._application = value;
+    }
+  },
+
+
   render: function(element, options, loadResult) {
     return this._super.prototype.render.apply(this, arguments);
   },

@@ -46,6 +46,15 @@ var instanceMembers = {
     }
   },
 
+  application: {
+    get: function() {
+      return this._application;
+    },
+    set: function(value) {
+      this._application = value;
+    }
+  },
+
   addItemViewModels: function(models) {
     var that = this;
     var results = [];
@@ -141,7 +150,7 @@ var instanceMembers = {
     this.notify("loadingState");
   },
 
-  dispose: function(){
+  dispose: function() {
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
       ioc.delItemViewModelInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);

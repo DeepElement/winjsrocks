@@ -12,6 +12,16 @@ var instanceMembers = {
         }
     },
 
+    application: {
+      get: function() {
+        return this._application;
+      },
+      set: function(value) {
+        this._application = value;
+      }
+    },
+
+
     start: function(options) {
         return WinJS.Promise.as();
     },

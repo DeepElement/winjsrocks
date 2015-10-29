@@ -1,21 +1,21 @@
+import "./runtime";
 import LifeCycle from "./common/lifecycle";
-import Container from "./ioc";
+import Container from "./container";
 import async from "async";
 import Logging from "./log";
 import Configuration from "./config";
 import Builder from "./builder";
+import ApplicationException from "./exception/base";
 
 export default class extends LifeCycle {
   constructor() {
     super();
 
     this._builder = new Builder(this);
+    this._container = new Container(this);
 
     // TODO: make instance based
     this._logger = Logging;
-
-    // TODO: make instance based
-    this._container = Container;
 
     // TODO: make instance based
     this._configuration = Configuration;
@@ -35,6 +35,10 @@ export default class extends LifeCycle {
 
   get configuration() {
     return this._configuration;
+  }
+
+  get isConfigured(){
+    return this._isConfigured;
   }
 
   configure(options, done) {
@@ -74,15 +78,22 @@ export default class extends LifeCycle {
         that.container.registerService("application", require('./service/application'));
         that.container.registerService("data", require('./service/data'));
 
+        that._isConfigured = true;
+
         return done();
       });
   }
 
   load(options, done) {
     var that = this;
+
+    if(!this.isConfigured)
+      return done(new ApplicationException("Call configure before life-cycle events"));
+
     super.load(options, function(err) {
       if (err)
         return done(err);
+
       var messageHooks = options.messageHooks || {};
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {

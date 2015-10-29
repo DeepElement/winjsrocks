@@ -1,4 +1,4 @@
-var ioc = require('./ioc'),
+var ioc = require('./container'),
   async = require('async'),
   extend = require('extend-object'),
   WinJS = require('winjs');

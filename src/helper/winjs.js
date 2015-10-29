@@ -1,4 +1,4 @@
-var ioc = require("../ioc"),
+var ioc = require("../container"),
   WinJS = require('winjs'),
   config = require('../config');
 
