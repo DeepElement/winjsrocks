@@ -1,27 +1,29 @@
-var WinJS = require('winjs'),
-  config = require('../config'),
-  base = require('./base'),
-  log = require('../log'),
-  winjsHelper = require("../helper/winjs");
+import BaseService from "./base"
 
-var _constructor = function(options) {
-  base.call(this, arguments);
-  this._onNavigatingBinding = this._onNavigating.bind(this);
-  this._onNavigatedBinding = this._onNavigated.bind(this);
-  this._onNavigateBackMessageBinding = this._onNavigateBackMessage.bind(this);
-  this._onBeforeNavigateBinding = this._onBeforeNavigate.bind(this);
-  this._onResizedBinding = this._onResized.bind(this);
-  this._onPopStateBinding = this._onPopState.bind(this);
-  this._onNavigateToMessageBinding = this._onNavigateToMessage.bind(this);
-  this._lastNavigationPromise = WinJS.Promise.as();
-  this._element = document.createElement("div");
-};
+export default class extends BaseService {
+  constructor(application) {
+    super(application);
 
-var instanceMembers = {
-  start: function() {
+    this._onNavigatingBinding = this._onNavigating.bind(this);
+    this._onNavigatedBinding = this._onNavigated.bind(this);
+    this._onNavigateBackMessageBinding = this._onNavigateBackMessage.bind(this);
+    this._onBeforeNavigateBinding = this._onBeforeNavigate.bind(this);
+    this._onResizedBinding = this._onResized.bind(this);
+    this._onPopStateBinding = this._onPopState.bind(this);
+    this._onNavigateToMessageBinding = this._onNavigateToMessage.bind(this);
+    this._lastNavigationPromise = WinJS.Promise.as();
+
+    // TODO: pull the default element from the app config
+    this._element = document.createElement("div");
+  }
+
+  load(options, callback) {
     var that = this;
-    var messageService = this.application.container.getService("message");
-    return base.prototype.start.apply(this, arguments).then(function() {
+    super.load(options, function(err) {
+      if (err)
+        return callback(err);
+
+      var messageService = that.application.container.getService("message");
       WinJS.Navigation.addEventListener("navigating",
         that._onNavigatingBinding);
       WinJS.Navigation.addEventListener("navigated",
@@ -33,23 +35,23 @@ var instanceMembers = {
       window.addEventListener("resize", that._onResizedBinding);
       window.addEventListener("popstate", that._onPopStateBinding);
     });
-  },
+  }
 
-  _onPopState: function(event) {
+  _onPopState(event) {
     var messageService = this.application.container.getService("message");
     messageService.send("navigateBackMessage");
-  },
+  }
 
-  _onNavigateBackMessage: function(type, args) {
-    if (this.getViewModel() && this.getViewModel().getBackNavigationDisabled()) {
+  _onNavigateBackMessage(type, args) {
+    if (this.viewModel && this.viewModel.overrideBackNavigation) {
       log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
     }
     args = args || {};
     var steps = args.steps || 1;
     return WinJS.Navigation.back(steps);
-  },
+  }
 
-  _onNavigateToMessage: function(type, args) {
+  _onNavigateToMessage(type, args) {
     var that = this;
     var viewKey = args.viewKey;
     var state = args.state;
@@ -61,8 +63,8 @@ var instanceMembers = {
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
 
-      if (this.getViewModel())
-        this.getViewModel().onNavigateFrom();
+      if (this.viewModel)
+        this.viewModel.onNavigateFrom();
 
       if (window["history"]) {
         window.history.pushState({
@@ -72,16 +74,16 @@ var instanceMembers = {
       }
       WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
-  },
+  }
 
-  _onBeforeNavigate: function(args) {
-    if (this.getViewModel() && this.getViewModel().getBackNavigationDisabled()) {
+  _onBeforeNavigate(args) {
+    if (this.viewModel && this.viewModel.overrideBackNavigation) {
       log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
       args.preventDefault();
     }
-  },
+  }
 
-  _onNavigating: function(args) {
+  _onNavigating(args) {
     var that = this;
     var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
@@ -90,13 +92,13 @@ var instanceMembers = {
 
     function cleanup() {
       if (args.detail.delta == -1) {
-        if (that.getView())
-          that.application.container.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
-        if (that.getViewModel())
-          that.application.container.delViewModelInstance(that.getViewModel().getKey(), that.getViewModel());
+        if (that.view)
+          that.application.container.delViewInstance(that.view.viewModel.key, that.view);
+        if (that.viewModel)
+          that.application.container.delViewModelInstance(that.viewModel.key, that.viewModel);
 
-        if (that.getView() && that.getViewModel())
-          that.getViewModel().dispose();
+        if (that.view && that.viewModel)
+          that.viewModel.dispose();
       }
 
       if (that._element.childElementCount > 1) {
@@ -123,83 +125,69 @@ var instanceMembers = {
         args.detail.state);
     });
     args.detail.setPromise(this._lastNavigationPromise);
-  },
+  }
 
-  _onNavigated: function() {
+  _onNavigated() {
     var messageService = this.application.container.getService("message");
     messageService.send("navigatedMessage");
-    this.getViewModel().onNavigateTo();
-  },
+    this.viewModel.onNavigateTo();
+  }
 
-  _onResized: function() {
-    var view = this.getView();
-    if (view && view.updateLayout)
-      view.updateLayout();
-  },
+  _onResized() {
+    if (this.view && this.view.updateLayout)
+      this.view.updateLayout();
+  }
 
-  getRootElement: function() {
+  get rootElement() {
     return this._element;
-  },
+  }
 
-  setRootElement: function(val) {
-    this._element = val;
-  },
-
-  createDefaultPageElement: function() {
+  createDefaultPageElement() {
     var element = document.createElement("div");
     element.setAttribute("dir", window.getComputedStyle(this._element, null).direction);
     element.style.position = "absolute";
     element.style.width = "100%";
     element.style.height = "100%";
     return element;
-  },
+  }
 
-  getView: function() {
-    var viewElem = this.getViewElement();
-    if (viewElem && viewElem.winControl)
-      return viewElem.winControl
+  get view() {
+    if (this.viewElement && this.viewElement.winControl)
+      return this.viewElement.winControl
     return null;
-  },
+  }
 
-  getViewElement: function() {
+  get viewElement() {
     return this._element.firstElementChild;
-  },
+  }
 
-  getViewModel: function() {
-    var view = this.getView();
-    if (view) {
-      var viewModel = view.getViewModel();
-      if (viewModel)
-        return viewModel;
+  get viewModel() {
+    if (this.view) {
+      if (this.view.viewModel)
+        return this.view.viewModel;
     }
     return null;
-  },
-
-  stop: function() {
-    var that = this;
-    var messageService = this.application.container.getService("message");
-    return base.prototype.start.apply(this, arguments)
-      .then(function() {
-        WinJS.Navigation.removeEventListener("navigating",
-          that._onNavigatingBinding);
-        WinJS.Navigation.removeEventListener("navigated",
-          that._onNavigatedBinding);
-        WinJS.Navigation.removeEventListener("beforenavigate",
-          that._onBeforeNavigateBinding);
-        messageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
-        messageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
-        window.removeEventListener("resize", that._onResizedBinding);
-        window.removeEventListener("popstate", that._onPopStateBinding)
-
-        if (that._element)
-          WinJS.Utilities.disposeSubTree(that._element);
-      });
   }
-};
 
-var staticMembers = {
+  unload() {
+    var that = this;
+    super.upload(options, function(err) {
+      if (err)
+        return callback(err);
+      var messageService = that.application.container.getService("message");
+      WinJS.Navigation.removeEventListener("navigating",
+        that._onNavigatingBinding);
+      WinJS.Navigation.removeEventListener("navigated",
+        that._onNavigatedBinding);
+      WinJS.Navigation.removeEventListener("beforenavigate",
+        that._onBeforeNavigateBinding);
+      messageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
+      messageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
+      window.removeEventListener("resize", that._onResizedBinding);
+      window.removeEventListener("popstate", that._onPopStateBinding)
 
-};
-
-module.exports = WinJS.Class.derive(base, _constructor,
-  instanceMembers, staticMembers);
+      if (that._element)
+        WinJS.Utilities.disposeSubTree(that._element);
+    });
+  }
+}

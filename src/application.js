@@ -6,6 +6,7 @@ import Logging from "./log";
 import Configuration from "./config";
 import Builder from "./builder";
 import ApplicationException from "./exception/base";
+import MathHelper from "./helper/math";
 
 export default class extends LifeCycle {
   constructor() {
@@ -16,6 +17,7 @@ export default class extends LifeCycle {
     this._isConfigured = false;
     this._isLoaded = false;
     this._isPaused = false;
+    this._instanceKey = MathHelper.v4;
 
     // TODO: make instance based
     this._logger = Logging;
@@ -52,9 +54,14 @@ export default class extends LifeCycle {
     return this._isPaused;
   }
 
+  get instanceKey() {
+    return this._instanceKey;
+  }
+
   configure(options, done) {
     var that = this;
     options = options || {};
+    options.instanceKey = options.instanceKey || this.instanceKey;
     async.waterfall([
         function(cb) {
           var appConfig = options["app-config"];

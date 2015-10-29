@@ -1,67 +1,63 @@
-var WinJS = require('winjs'),
-    config = require('../config'),
-    base = require('./base');
+import BaseService from "./base"
 
-var _constructor = function(options) {
+export default class extends BaseService {
+  constructor(application) {
+    super(application);
+
     this._timeoutIds = [];
     this._intervalIds = [];
     this._immediateIds = [];
-};
+  }
 
-var instanceMembers = {
+  unload(options, callback) {
+    var that = this;
+    super.upload(options, function(err) {
+      if (err)
+        return callback(err);
 
-    stop: function() {
-        var that = this;
-        return base.prototype.start.apply(this, arguments)
-            .then(function() {
-                that._timeoutIds.forEach(function(t){
-                    that.clearTimeout(t);
-                });
-                that._intervalIds.forEach(function(t){
-                    that.clearInterval(t);
-                });
-                that._immediateIds.forEach(function(t){
-                    that.clearImmediate(t);
-                });
-            });
-    },
+      that._timeoutIds.forEach(function(t) {
+        that.clearTimeout(t);
+      });
+      that._intervalIds.forEach(function(t) {
+        that.clearInterval(t);
+      });
+      that._immediateIds.forEach(function(t) {
+        that.clearImmediate(t);
+      });
 
-    setTimeout: function(delegate, timeout) {
-        var timerId = window.setTimeout(delegate, timeout);
-        this._timeoutIds.push(timerId);
-        return timerId;
-    },
+      return callback();
+    });
+  }
 
-    setInterval: function(delegate, interval) {
-        var intervalId = window.setInterval(delegate, interval);
-        this._intervalIds.push(intervalId);
-        return intervalId;
-    },
+  setTimeout(delegate, timeout) {
+    var timerId = window.setTimeout(delegate, timeout);
+    this._timeoutIds.push(timerId);
+    return timerId;
+  }
 
-    setImmediate: function(delegate){
-      if (typeof window.setImmediate !== 'function')
-        window.setImmediate = window.setTimeout;
-      var refId = window.setImmediate(delegate);
-      this._immediateIds.push(refId);
-      return refId;
-    },
+  setInterval(delegate, interval) {
+    var intervalId = window.setInterval(delegate, interval);
+    this._intervalIds.push(intervalId);
+    return intervalId;
+  }
 
-    clearTimeout: function(timerId) {
-        return window.clearTimeout(timerId);
-    },
+  setImmediate(delegate) {
+    if (typeof window.setImmediate !== 'function')
+      window.setImmediate = window.setTimeout;
+    var refId = window.setImmediate(delegate);
+    this._immediateIds.push(refId);
+    return refId;
+  }
 
-    clearImmediate: function(refId){
-      return window.clearImmediate(refId);
-    },
+  clearTimeout(timerId) {
+    return window.clearTimeout(timerId);
+  }
 
-    clearInterval: function(timerId) {
-        return window.clearInterval(timerId);
-    }
-};
+  clearImmediate(refId) {
+    return window.clearImmediate(refId);
+  }
 
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.derive(base, _constructor,
-    instanceMembers, staticMembers);
+  clearInterval(timerId) {
+    return window.clearInterval(timerId);
+  }
+}
