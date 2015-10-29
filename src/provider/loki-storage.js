@@ -17,7 +17,7 @@ var instanceMembers = {
       function(err, resp) {
         if (err) {
           if (err === 'does-not-exist')
-            return callback();
+            return callback({});
           return callback(err);
         }
         var resultStr = "";
@@ -25,12 +25,13 @@ var instanceMembers = {
           resultStr = JSON.stringify(resp.data);
         else
           resultStr = String(resp.data);
+
         return callback(resultStr);
       });
   },
   saveDatabase: function(dbname, dbstring, callback) {
-    var dbStorageKey = dbname + this._lokiStorageKey;
     var storageProvider = this.application.container.getProvider("localStorage");
+    var dbStorageKey = dbname + this._lokiStorageKey;
     var storageStr = "";
 
     if (typeof dbstring === 'string' || dbstring instanceof String)

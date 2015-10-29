@@ -13,6 +13,9 @@ export default class extends LifeCycle {
 
     this._builder = new Builder(this);
     this._container = new Container(this);
+    this._isConfigured = false;
+    this._isLoaded = false;
+    this._isPaused = false;
 
     // TODO: make instance based
     this._logger = Logging;
@@ -37,8 +40,16 @@ export default class extends LifeCycle {
     return this._configuration;
   }
 
-  get isConfigured(){
+  get isConfigured() {
     return this._isConfigured;
+  }
+
+  get isLoaded() {
+    return this._isLoaded;
+  }
+
+  get isPaused() {
+    return this._isPaused;
   }
 
   configure(options, done) {
@@ -87,8 +98,8 @@ export default class extends LifeCycle {
   load(options, done) {
     var that = this;
 
-    if(!this.isConfigured)
-      return done(new ApplicationException("Call configure before life-cycle events"));
+    if (!this.isConfigured)
+      return done(new ApplicationException("Call configure before load"));
 
     super.load(options, function(err) {
       if (err)
@@ -114,6 +125,9 @@ export default class extends LifeCycle {
             // notify of app ready
             MessageService.send("applicationReadyMessage");
 
+            that._isLoaded = true;
+            that._isPaused = false;
+
             return done();
           });
         });
@@ -122,6 +136,14 @@ export default class extends LifeCycle {
 
   unload(options, done) {
     var that = this;
+
+    if (!this.isConfigured)
+      return done(new ApplicationException("Call configure calling unload"));
+
+    if (!this.isLoaded)
+      return done(new ApplicationException("Call load before calling unload"));
+
+
     super.unload(options, function(err) {
       if (err)
         return done(err);
@@ -134,6 +156,10 @@ export default class extends LifeCycle {
         function(err) {
           if (err)
             return done(err);
+
+          that._isLoaded = false;
+          that._isPaused = false;
+
           return done();
         });
     })
@@ -141,6 +167,16 @@ export default class extends LifeCycle {
 
   pause(options, done) {
     var that = this;
+
+    if (!this.isConfigured)
+      return done(new ApplicationException("Call configure calling pause"));
+
+    if (!this.isLoaded)
+      return done(new ApplicationException("Call load before calling pause"));
+
+    if (this.isPaused)
+      return done(new ApplicationException("Application already paused"));
+
     super.pause(options, function(err) {
       if (err)
         return done(err);
@@ -153,6 +189,9 @@ export default class extends LifeCycle {
         function(err) {
           if (err)
             return done(err);
+
+          that._isPaused = true;
+
           return done();
         });
     })
@@ -160,6 +199,17 @@ export default class extends LifeCycle {
 
   resume(options, done) {
     var that = this;
+
+    if (!this.isConfigured)
+      return done(new ApplicationException("Call configure calling resume"));
+
+    if (!this.isLoaded)
+      return done(new ApplicationException("Call load before calling resume"));
+
+    if (!this.isPaused)
+      return done(new ApplicationException("Call pause before calling resume"));
+
+
     super.resume(options, function(err) {
       if (err)
         return done(err);
@@ -171,6 +221,9 @@ export default class extends LifeCycle {
         function(err) {
           if (err)
             return done(err);
+
+          that._isPaused = false;
+
           return done();
         });
     })

@@ -16,7 +16,8 @@ var instanceMembers = {
         // Init the loki db
         var lokiStorageProvider = that.application.container.getProvider("lokiStorage");
         that._db = new loki(that._lokiDbName, {
-          adapter: lokiStorageProvider
+          adapter: lokiStorageProvider,
+          autosave: true
         });
 
         // Build the dynamic creation factory for Loki deserialization
