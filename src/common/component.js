@@ -1,14 +1,12 @@
-export default class {
+import Eventable from "./eventable";
+
+export default class extends Eventable {
   constructor(application) {
+    super();
     this._application = application;
-    WinJS.Class.mix(this, WinJS.Utilities.eventMixin);
   }
 
   get application() {
     return this._application;
-  }
-
-  notify(eventName) {
-    this.dispatchEvent(eventName, this[eventName]);
   }
 };

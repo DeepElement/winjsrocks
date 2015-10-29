@@ -1,36 +1,16 @@
-var WinJS = require('winjs'),
-  mixins = require('../helper/mixins');
+import Eventable from "../common/eventable";
 
-var _constructor = function(options) {
-  options = options || {};
-  this._contentType = options.contentType || "none";
-};
+export default class extends Eventable {
+  constructor() {
+    super();
+  }
 
-var instanceMembers = {
-  _super: {
-    get: function() {
-      return Object.getPrototypeOf(this);
-    }
-  },
-  getContentType: function() {
+  get contentType(){
     return this._contentType;
-  },
-  application: {
-    get: function() {
-      return this._application;
-    },
-    set: function(value) {
-      this._application = value;
-    }
+  }
+
+  set contentType(val){
+    this._contentType = val;
+    this.notify("contentType");
   }
 };
-
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.define(_constructor,
-  instanceMembers, staticMembers);
-WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
-WinJS.Class.mix(module.exports, mixins.notify);
-WinJS.Class.mix(module.exports, mixins.autoProperty);
