@@ -3,7 +3,7 @@ import LifeCycle from "./common/lifecycle";
 import Container from "./container";
 import async from "async";
 import Logging from "./log";
-import Configuration from "./config";
+import Configuration from "./configuration";
 import Builder from "./builder";
 import ApplicationException from "./exception/base";
 import MathHelper from "./helper/math";
@@ -14,6 +14,7 @@ export default class extends LifeCycle {
 
     this._builder = new Builder(this);
     this._container = new Container(this);
+    this._configuration = new Configuration(this);
     this._isConfigured = false;
     this._isLoaded = false;
     this._isPaused = false;
@@ -21,9 +22,6 @@ export default class extends LifeCycle {
 
     // TODO: make instance based
     this._logger = Logging;
-
-    // TODO: make instance based
-    this._configuration = Configuration;
   }
 
   get container() {

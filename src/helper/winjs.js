@@ -1,6 +1,6 @@
 var ioc = require("../container"),
   WinJS = require('winjs'),
-  config = require('../config');
+  config = require('../configuration');
 
 exports.pageDefine = function(viewKey, templateUri, baseClassDef) {
   var existingBaseClass = WinJS.UI.Pages.define(templateUri);
