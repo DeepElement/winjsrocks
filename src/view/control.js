@@ -1,17 +1,7 @@
-var WinJS = require('winjs'),
-    base = require('./base');
+import BaseView from "./base"
 
-var _constructor = function(options) {
-    base.apply(this, arguments);
-};
-
-var instanceMembers = {
-
-};
-
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.derive(base, _constructor,
-    instanceMembers, staticMembers);
+export default class extends BaseView {
+  constructor(element, viewModel) {
+    super(element,viewModel);
+  }
+}

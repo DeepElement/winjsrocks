@@ -11,7 +11,7 @@ WinJS.UI.Pages.define = function(uri, members, baseClassDef) {
   var absUri = abs(uri);
   var pageClassDef = _pageDefine(absUri, members);
   if (baseClassDef) {
-    baseClassDef.prototype._super = pageClassDef;
+    baseClassDef.prototype._winjsPagePrototype = pageClassDef;
 
     // migrate props that are not override
     var propertyNames = Object.getOwnPropertyNames(pageClassDef.prototype);
