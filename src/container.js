@@ -49,8 +49,7 @@ export default class {
       };
 
       that["get" + caseType] = function(key) {
-        var instance = that._momentr.get(config.prefix + key, that._application);
-        return instance;
+        return that._momentr.get(config.prefix + key, that._application);
       };
 
       that["override" + caseType] = function(key, classDef) {
@@ -59,6 +58,10 @@ export default class {
 
       that["get" + caseType + "Def"] = function(key) {
         return that._momentr.def(config.prefix + key).type;
+      };
+
+      that["is" + caseType + "Registered"] = function(key) {
+        return that._momentr.def(config.prefix + key) != null;
       };
 
       that["register" + caseType] = function(key, clazz) {

@@ -89,13 +89,19 @@ export default class extends LifeCycle {
           return done(err);
 
         // setup the framework services/providers
-        that.container.registerProvider("lokiStorage", require('./provider/loki-storage'));
-        that.container.registerProvider("localStorage", require('./provider/local-storage'));
+        if (!that.container.isProviderRegistered("lokiStorage"))
+          that.container.registerProvider("lokiStorage", require('./provider/loki-storage'));
+        if (!that.container.isProviderRegistered("localStorage"))
+          that.container.registerProvider("localStorage", require('./provider/local-storage'));
 
-        that.container.registerService("navigation", require('./service/navigation'));
-        that.container.registerService("message", require('./service/message'));
-        that.container.registerService("application", require('./service/application'));
-        that.container.registerService("data", require('./service/data'));
+        if (!that.container.isServiceRegistered("navigation"))
+          that.container.registerService("navigation", require('./service/navigation'));
+        if (!that.container.isServiceRegistered("message"))
+          that.container.registerService("message", require('./service/message'));
+        if (!that.container.isServiceRegistered("application"))
+          that.container.registerService("application", require('./service/application'));
+        if (!that.container.isServiceRegistered("data"))
+          that.container.registerService("data", require('./service/data'));
 
         that._isConfigured = true;
 
