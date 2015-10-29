@@ -1,12 +1,7 @@
-export default class {
-  constructor() {}
+import Component from "../common/component";
 
-  get application() {
-    return this._application;
+export default class extends Component {
+  constructor(application) {
+    super(application);
   }
-
-  set application(val) {
-    this._application = val;
-  }
-
 };

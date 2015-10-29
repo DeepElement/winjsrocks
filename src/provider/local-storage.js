@@ -1,28 +1,28 @@
-var WinJS = require('winjs'),
-  base = require('./base'),
-  log = require('../log');
+import BaseProvider from "./base";
 
-var _constructor = function(options) {
-  base.call(this, arguments);
-  this._repo = {
-    /*
-    fileName: {
-      created: new Date(),
-      data: content,
-      lastModified: new Date()
-    }
-    */
-  };
-  log.warn("LocalStorage Provider using in-memory strategy. Override with concrete impl to persist data between app sessions");
-};
+export default class extends BaseProvider {
+  constructor(application) {
+    super(application);
 
-var instanceMembers = {
-  get: function(options, callback) {
+    this._repo = {
+      /*
+      fileName: {
+        created: new Date(),
+        data: content,
+        lastModified: new Date()
+      }
+      */
+    };
+    log.warn("LocalStorage Provider using in-memory strategy. Override with concrete impl to persist data between app sessions");
+  }
+
+  get(options, callback) {
     if (this._repo[options.fileName])
       return callback(null, this._repo[options.fileName]);
     return callback('does-not-exist');
-  },
-  createOrUpdate: function(options, callback) {
+  }
+
+  createOrUpdate(options, callback) {
     options.data = options.data || {};
     var subject = this._repo[options.fileName];
     if (!subject) {
@@ -34,8 +34,9 @@ var instanceMembers = {
     subject.data = options.data;
     subject.lastModified = new Date();
     return callback(null, subject);
-  },
-  del: function(options, callback) {
+  }
+
+  del(options, callback) {
     if (this._repo[options.fileName]) {
       delete this._repo[options.fileName];
       this._repo[options.fileName] = null;
@@ -43,6 +44,3 @@ var instanceMembers = {
     return callback(null, true);
   }
 };
-
-module.exports = WinJS.Class.derive(base,
-  _constructor, instanceMembers);

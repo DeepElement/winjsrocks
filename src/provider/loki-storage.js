@@ -1,14 +1,12 @@
-var WinJS = require('winjs'),
-  base = require('./base'),
-  log = require("../log");
+import BaseProvider from "./base";
 
-var _constructor = function(options) {
-  base.call(this, arguments);
-  this._lokiStorageKey = "-lokiStorage.json";
-};
+export default class extends BaseProvider {
+  constructor(application) {
+    super(application);
+    this._lokiStorageKey = application.instanceKey + "-lokiStorage.json";
+  }
 
-var instanceMembers = {
-  loadDatabase: function(dbname, callback) {
+  loadDatabase(dbname, callback) {
     var storageProvider = this.application.container.getProvider("localStorage");
     var dbStorageKey = dbname + this._lokiStorageKey;
     storageProvider.get({
@@ -28,8 +26,9 @@ var instanceMembers = {
 
         return callback(resultStr);
       });
-  },
-  saveDatabase: function(dbname, dbstring, callback) {
+  }
+
+  saveDatabase(dbname, dbstring, callback) {
     var storageProvider = this.application.container.getProvider("localStorage");
     var dbStorageKey = dbname + this._lokiStorageKey;
     var storageStr = "";
@@ -49,7 +48,4 @@ var instanceMembers = {
         return callback();
       });
   }
-};
-
-module.exports = WinJS.Class.derive(base,
-  _constructor, instanceMembers);
+}
