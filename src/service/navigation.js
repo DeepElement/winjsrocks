@@ -1,5 +1,4 @@
 var WinJS = require('winjs'),
-  ioc = require('../ioc'),
   config = require('../config'),
   base = require('./base'),
   log = require('../log'),
@@ -15,13 +14,13 @@ var _constructor = function(options) {
   this._onPopStateBinding = this._onPopState.bind(this);
   this._onNavigateToMessageBinding = this._onNavigateToMessage.bind(this);
   this._lastNavigationPromise = WinJS.Promise.as();
-  this.MessageService = ioc.getService("message");
   this._element = document.createElement("div");
 };
 
 var instanceMembers = {
   start: function() {
     var that = this;
+    var messageService = this.application.container.getService("message");
     return base.prototype.start.apply(this, arguments).then(function() {
       WinJS.Navigation.addEventListener("navigating",
         that._onNavigatingBinding);
@@ -29,15 +28,16 @@ var instanceMembers = {
         that._onNavigatedBinding);
       WinJS.Navigation.addEventListener("beforenavigate",
         that._onBeforeNavigateBinding);
-      that.MessageService.register("navigateToMessage", that._onNavigateToMessageBinding);
-      that.MessageService.register("navigateBackMessage", that._onNavigateBackMessageBinding);
+      messageService.register("navigateToMessage", that._onNavigateToMessageBinding);
+      messageService.register("navigateBackMessage", that._onNavigateBackMessageBinding);
       window.addEventListener("resize", that._onResizedBinding);
       window.addEventListener("popstate", that._onPopStateBinding);
     });
   },
 
   _onPopState: function(event) {
-    this.MessageService.send("navigateBackMessage");
+    var messageService = this.application.container.getService("message");
+    messageService.send("navigateBackMessage");
   },
 
   _onNavigateBackMessage: function(type, args) {
@@ -50,13 +50,14 @@ var instanceMembers = {
   },
 
   _onNavigateToMessage: function(type, args) {
+    var that = this;
     var viewKey = args.viewKey;
     var state = args.state;
     var viewTemplateUri = config.get("pages:" + viewKey + ":template");
     if (viewTemplateUri) {
-      var viewClassDef = ioc.getViewDef(viewKey);
+      var viewClassDef = that.application.container.getViewDef(viewKey);
       winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
-      var vmInstance = ioc.getViewModel(viewKey);
+      var vmInstance = that.application.container.getViewModel(viewKey);
       vmInstance.setKey(viewKey);
       vmInstance.setData(args.state);
 
@@ -82,6 +83,7 @@ var instanceMembers = {
 
   _onNavigating: function(args) {
     var that = this;
+    var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
     this._lastNavigationPromise.cancel();
@@ -89,9 +91,9 @@ var instanceMembers = {
     function cleanup() {
       if (args.detail.delta == -1) {
         if (that.getView())
-          ioc.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
+          that.application.container.delViewInstance(that.getView().getViewModel().getKey(), that.getView());
         if (that.getViewModel())
-          ioc.delViewModelInstance(that.getViewModel().getKey(), that.getViewModel());
+          that.application.container.delViewModelInstance(that.getViewModel().getKey(), that.getViewModel());
 
         if (that.getView() && that.getViewModel())
           that.getViewModel().dispose();
@@ -115,7 +117,7 @@ var instanceMembers = {
 
     // TODO: archive the old view/viewModel
     this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
-      that.MessageService.send("navigatingMessage", args);
+      messageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
         args.detail.state);
@@ -124,7 +126,8 @@ var instanceMembers = {
   },
 
   _onNavigated: function() {
-    this.MessageService.send("navigatedMessage");
+    var messageService = this.application.container.getService("message");
+    messageService.send("navigatedMessage");
     this.getViewModel().onNavigateTo();
   },
 
@@ -174,6 +177,7 @@ var instanceMembers = {
 
   stop: function() {
     var that = this;
+    var messageService = this.application.container.getService("message");
     return base.prototype.start.apply(this, arguments)
       .then(function() {
         WinJS.Navigation.removeEventListener("navigating",
@@ -182,8 +186,8 @@ var instanceMembers = {
           that._onNavigatedBinding);
         WinJS.Navigation.removeEventListener("beforenavigate",
           that._onBeforeNavigateBinding);
-        that.MessageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
-        that.MessageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
+        messageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
+        messageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
         window.removeEventListener("resize", that._onResizedBinding);
         window.removeEventListener("popstate", that._onPopStateBinding)
 

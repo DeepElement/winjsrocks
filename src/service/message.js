@@ -1,7 +1,5 @@
-var ioc = require('../ioc'),
-    base = require('./base'),
+var base = require('./base'),
     async = require('async'),
-    aop = require('../helper/aop'),
     WinJS = require("winjs");
 
 var _constructor = function(options) {
@@ -41,8 +39,6 @@ var instanceMembers = {
         that._registery[messageType].forEach(function(delegate){
             delegate(messageType, args);
         });
-
-        aop.notifyServices(messageType, [messageType, args]);
     },
 
     stop: function() {

@@ -1,5 +1,4 @@
-var ioc = require('../ioc'),
-  base = require('./base'),
+var base = require('./base'),
   async = require('async'),
   WinJS = require("winjs"),
   loki = require('lokijs');
@@ -7,7 +6,6 @@ var ioc = require('../ioc'),
 var _constructor = function(options) {
   base.call(this, arguments);
   this._lokiDbName = "winjs-rocks";
-  this._lokiStorageProvider = ioc.getProvider("lokiStorage");
 }
 
 var instanceMembers = {
@@ -16,16 +14,17 @@ var instanceMembers = {
     return base.prototype.start.apply(this, arguments).then(function() {
       return new WinJS.Promise(function(complete, error) {
         // Init the loki db
+        var lokiStorageProvider = that.application.container.getProvider("lokiStorage");
         that._db = new loki(that._lokiDbName, {
-          adapter: that._lokiStorageProvider
+          adapter: lokiStorageProvider
         });
 
         // Build the dynamic creation factory for Loki deserialization
         var creationFactoryMapping = {};
-        var modelKeys = ioc.getItemModelKeys();
+        var modelKeys = that.application.container.getItemModelKeys();
         modelKeys.forEach(function(modelKey) {
           creationFactoryMapping[modelKey] = {
-            proto: ioc.getItemModelDef(modelKey)
+            proto: that.application.container.getItemModelDef(modelKey)
           }
         });
 

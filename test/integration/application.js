@@ -21,14 +21,24 @@ describe('Integration', function() {
         });
       });
     });
-    //
-    // describe("unload", function() {
-    //   it('callback fired', function(done) {
-    //     var subject = require('../../src/main');
-    //     subject.unload({}, done);
-    //   });
-    // });
-    //
+
+    describe("config", function() {
+      it('callback fired', function(done) {
+        // arrange
+        var Application = resolver.resolve('./application');
+        var subject = new Application();
+
+        // act
+        subject.configure({}, function(err) {
+
+          // assert
+          should.not.exist(err);
+
+          return done();
+        });
+      });
+    });
+
     // describe("resume", function() {
     //   it('callback fired', function(done) {
     //     var subject = require('../../src/main');
