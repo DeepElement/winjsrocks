@@ -9,14 +9,13 @@ export default class extends LifeCycle {
   constructor() {
     super();
 
+    this._builder = new Builder(this);
+
     // TODO: make instance based
     this._logger = Logging;
 
     // TODO: make instance based
     this._container = Container;
-
-    // make instance based
-    this._builder = Builder;
 
     // TODO: make instance based
     this._configuration = Configuration;

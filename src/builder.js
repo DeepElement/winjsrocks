@@ -1,19 +1,21 @@
-import ioc from "./ioc";
 import winjsHelper from "./helper/winjs";
 
 export default class {
-
-  static registerDomainModel(key, constructor) {
-    ioc.registerItemModel(key, constructor);
+  constructor(application) {
+    this._application = application;
   }
 
-  static unregisterDomainModel(key) {
+  registerDomainModel(key, constructor) {
+    this._application.container.registerItemModel(key, constructor);
+  }
+
+  unregisterDomainModel(key) {
     console.log("TODO:impl");
   }
 
-  static registerDomainModelView(key, viewConstructor, viewModelConstructor, templateUri) {
-    ioc.registerItemView(key, viewConstructor);
-    ioc.registerItemViewModel(key, viewModelConstructor);
+  registerDomainModelView(key, viewConstructor, viewModelConstructor, templateUri) {
+    this._application.container.registerItemView(key, viewConstructor);
+    this._application.container.registerItemViewModel(key, viewModelConstructor);
     winjsHelper.pageDefine(key, templateUri, viewConstructor);
   }
 
@@ -22,8 +24,8 @@ export default class {
   }
 
   static registerView(key, viewConstructor, viewModelConstructor, templateUri) {
-    ioc.registerView(key, viewConstructor);
-    ioc.registerViewModel(key, viewModelConstructor);
+    this._application.container.registerView(key, viewConstructor);
+    this._application.container.registerViewModel(key, viewModelConstructor);
     winjsHelper.pageDefine(key, templateUri, viewConstructor);
   }
 
