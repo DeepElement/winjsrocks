@@ -1,21 +1,7 @@
-export default class {
-  constructor() {
+import Loadable from "../common/loadable";
 
-  }
-
-  get application() {
-    return this._application;
-  }
-
-  set application(val) {
-    this._application = val;
-  }
-
-  load(callback) {
-
-  }
-
-  unload(callback) {
-
+export default class extends Loadable {
+  constructor(application) {
+    super(application);
   }
 };
