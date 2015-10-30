@@ -242,4 +242,18 @@ export default class extends LifeCycle {
         });
     })
   }
+
+  WinJSPageDefine(viewKey, templateUri, baseClassDef) {
+    var existingBaseClass = WinJS.UI.Pages.define(templateUri);
+    if (baseClassDef && existingBaseClass != baseClassDef) {
+      var extendedClassDef = WinJS.UI.Pages.define(templateUri, {}, baseClassDef);
+      this.application.container.overrideView(viewKey, extendedClassDef);
+
+      // Add the config entry for the navigation service pre-nav validation
+      config.set("pages:" + viewKey + ":template", templateUri);
+
+      return extendedClassDef;
+    }
+    return existingBaseClass;
+  }
 };

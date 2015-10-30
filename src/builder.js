@@ -1,5 +1,3 @@
-import winjsHelper from "./helper/winjs";
-
 export default class {
   constructor(application) {
     this._application = application;
@@ -16,7 +14,7 @@ export default class {
   registerDomainModelView(key, viewConstructor, viewModelConstructor, templateUri) {
     this._application.container.registerItemView(key, viewConstructor);
     this._application.container.registerItemViewModel(key, viewModelConstructor);
-    winjsHelper.pageDefine(key, templateUri, viewConstructor);
+    this._application.WinJSPageDefine(key, templateUri, viewConstructor);
   }
 
   unregisterModelView(key) {
@@ -26,7 +24,7 @@ export default class {
   registerView(key, viewConstructor, viewModelConstructor, templateUri) {
     this._application.container.registerView(key, viewConstructor);
     this._application.container.registerViewModel(key, viewModelConstructor);
-    winjsHelper.pageDefine(key, templateUri, viewConstructor);
+    this._application.WinJSPageDefine(key, templateUri, viewConstructor);
   }
 
   unregisterView(key) {
