@@ -8,6 +8,7 @@ import Builder from "./builder";
 import ApplicationException from "./exception/base";
 import MathHelper from "./helper/math";
 import Package from '../package.json';
+import PluginBase from "./plugin/base";
 
 export default class extends LifeCycle {
   constructor() {
@@ -73,11 +74,9 @@ export default class extends LifeCycle {
         },
         function(cb) {
           if (options.plugins) {
-            async.each(options.plugins.filter(function(p) {
-                return p instanceof require('./plugin/base');
-              }),
+            async.each(options.plugins,
               function(plugin, pluginCb) {
-                plugin.load(pluginCb);
+                plugin.load(options, pluginCb);
               },
               cb);
           } else
@@ -133,17 +132,12 @@ export default class extends LifeCycle {
           for (var handler in messageHooks)
             MessageService.register(handler, messageHooks[handler]);
 
-          // Enable features
-          // TODO: dynamically add features
-          require('./feature/platform').execute({}, function() {
-            // notify of app ready
-            MessageService.send("applicationReadyMessage");
+          that._isLoaded = true;
+          that._isPaused = false;
 
-            that._isLoaded = true;
-            that._isPaused = false;
+          MessageService.send("applicationReadyMessage");
 
-            return done();
-          });
+          return done();
         });
     });
   }
