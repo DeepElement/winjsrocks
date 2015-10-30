@@ -10,11 +10,10 @@ Built to support amazing apps targetting:
 - FireTV
 - Web
 
-[![Build Status][travis-shield]][travis]
-[![Build Status][travis-shield-develop]][travis]
-[![Dependency Status][dependencies-shield]][dependencies]
-[![devDependency Status][dependencies-dev-shield]][dependencies-dev]
-![yo](https://img.shields.io/npm/dm/winjsrocks.svg)
+----
+
+[![Dependency Status][dependencies-shield]][dependencies] [![Build Status][travis-shield]][travis] [![Download Status][travis-sheild-2]][travis-sheild-2] [![Build Status][travis-shield-develop]][travis] [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
+
 -----
 
 # IN DEVELOPMENT (UNSTABLE)
@@ -23,6 +22,7 @@ Built to support amazing apps targetting:
 [travis]:                  https://travis-ci.org/deepelement/winjsrocks
 [travis-shield]:           https://img.shields.io/travis/DeepElement/winjsrocks.svg?branch=stable
 [travis-shield-develop]:   https://img.shields.io/travis/DeepElement/winjsrocks.svg?branch=master
+[travis-sheild-2]:         https://img.shields.io/npm/dm/winjsrocks.svg
 [dependencies]:            https://david-dm.org/deepelement/winjsrocks
 [dependencies-dev]:        https://david-dm.org/deepelement/winjsrocks#info=devDependencies
 [dependencies-shield]:     https://img.shields.io/david/deepelement/winjsrocks.svg
