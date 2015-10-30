@@ -7,9 +7,9 @@ export default class extends BaseService {
     this._registery = {};
   }
 
-  load(options, callback) {
+  loadComponent(options, callback) {
     var that = this;
-    super.load(options, function(err) {
+    super.loadComponent(options, function(err) {
       if (err)
         return callback(err);
       that._registery = that._registery || {};
@@ -43,9 +43,9 @@ export default class extends BaseService {
     });
   }
 
-  unload(options, callback) {
+  unloadComponent(options, callback) {
     var that = this;
-    super.upload(options, function(err) {
+    super.unloadComponent(options, function(err) {
       if (err)
         return callback(err);
       that._registery = {};

@@ -5,11 +5,11 @@ export default class extends Component {
     this._managedEvents = [];
   }
 
-  load(options, callback) {
+  loadComponent(options, callback) {
     return callback();
   }
 
-  unload(options, callback) {
+  unloadComponent(options, callback) {
     this.removeAllManagedEventListeners();
     return callback();
   }

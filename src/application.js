@@ -1,4 +1,5 @@
 import "./runtime";
+import WinJS from "winjs";
 import LifeCycle from "./common/lifecycle";
 import Container from "./container";
 import async from "async";
@@ -26,6 +27,8 @@ export default class extends LifeCycle {
 
     // TODO: make instance based
     this._logger = Logging;
+
+    require("./winjs.shim");
   }
 
   get container() {
@@ -76,7 +79,7 @@ export default class extends LifeCycle {
           if (options.plugins) {
             async.each(options.plugins,
               function(plugin, pluginCb) {
-                plugin.load(options, pluginCb);
+                plugin.loadComponent(options, pluginCb);
               },
               cb);
           } else
@@ -114,7 +117,7 @@ export default class extends LifeCycle {
     if (!this.isConfigured)
       return done(new ApplicationException("Call configure before load"));
 
-    super.load(options, function(err) {
+    super.loadComponent(options, function(err) {
       if (err)
         return done(err);
 
@@ -122,7 +125,7 @@ export default class extends LifeCycle {
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.load({}, keyCb);
+          serviceInstance.loadComponent({}, keyCb);
         },
         function(err) {
           if (err)
@@ -152,14 +155,14 @@ export default class extends LifeCycle {
       return done(new ApplicationException("Call load before calling unload"));
 
 
-    super.unload(options, function(err) {
+    super.unloadComponent(options, function(err) {
       if (err)
         return done(err);
 
       async.each(that.container.getServiceKeys(),
         function(key, keyCb) {
           var serviceInstance = that.container.getService(key);
-          serviceInstance.unload({}, keyCb);
+          serviceInstance.unloadComponent({}, keyCb);
         },
         function(err) {
           if (err)
@@ -238,16 +241,15 @@ export default class extends LifeCycle {
   }
 
   WinJSPageDefine(viewKey, templateUri, baseClassDef) {
+    var that = this;
     var existingBaseClass = WinJS.UI.Pages.define(templateUri);
     if (baseClassDef && existingBaseClass != baseClassDef) {
       var extendedClassDef = WinJS.UI.Pages.define(templateUri, {}, baseClassDef);
-      this.application.container.overrideView(viewKey, extendedClassDef);
-
-      // Add the config entry for the navigation service pre-nav validation
-      this.configuration.set("pages:" + viewKey + ":template", templateUri);
-
+      that.application.container.overrideView(viewKey, extendedClassDef);
+      that.configuration.set("pages:" + viewKey + ":template", templateUri);
       return extendedClassDef;
     }
     return existingBaseClass;
   }
+
 };

@@ -9,9 +9,9 @@ export default class extends BaseService {
     this._immediateIds = [];
   }
 
-  unload(options, callback) {
+  unloadComponent(options, callback) {
     var that = this;
-    super.upload(options, function(err) {
+    super.unloadComponent(options, function(err) {
       if (err)
         return callback(err);
 

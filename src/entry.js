@@ -1,5 +1,4 @@
 import "./runtime";
-import "./winjs.shim";
 
 import Application from "./application";
 import BaseViewModel from "./view-model/base";
@@ -13,46 +12,70 @@ import BasePlugin from "./plugin/base";
 import BaseModel from "./model/base";
 import BaseCommand from "./command/base";
 import Builder from "./builder";
+import BindingMode from "./binding/mode";
+import WinJSHelper from "./helper/winjs";
 
-var ViewModel = {
-  Base: BaseViewModel,
-  Item: ItemViewModel
+class EntryClass {
+  static get Application() {
+    return Application;
+  }
+
+  static get ViewModel() {
+    return {
+      Base: BaseViewModel,
+      Item: ItemViewModel
+    }
+  }
+
+  static get View() {
+    return {
+      Base: BaseView,
+      Control: ControlView,
+      Page: PageView
+    }
+  }
+
+  static get Service() {
+    return {
+      Base: BaseService
+    }
+  }
+
+  static get Provider() {
+    return {
+      Base: BaseProvider
+    }
+  }
+
+  static get Plugin() {
+    return {
+      Base: BasePlugin
+    }
+  }
+
+  static get Model() {
+    return {
+      Base: BaseModel
+    }
+  }
+
+  static get Command() {
+    return {
+      Base: BaseCommand
+    }
+  }
+
+  static get Binding() {
+    return {
+      Mode: BindingMode
+    }
+  }
+
+  static markForProcessing(subject) {
+    return WinJSHelper.markForProcessing(subject);
+  }
 }
 
-var View = {
-  Base: BaseView,
-  Control: ControlView,
-  Page: PageView
-}
+EntryClass.markForProcessing(EntryClass);
 
-var Service = {
-  Base: BaseService
-}
-
-var Provider ={
-  Base: BaseProvider
-}
-
-var Plugin = {
-  Base: BasePlugin
-}
-
-var Model= {
-  Base: BaseModel
-}
-
-var Command = {
-  Base: BaseCommand
-}
-
-// The surface API
-export default {
-  Application,
-  ViewModel,
-  View,
-  Service,
-  Provider,
-  Plugin,
-  Model,
-  Command
-}
+export default EntryClass;

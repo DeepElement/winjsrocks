@@ -18,9 +18,9 @@ export default class extends BaseService {
     this._element = document.createElement("div");
   }
 
-  load(options, callback) {
+  loadComponent(options, callback) {
     var that = this;
-    super.load(options, function(err) {
+    super.loadComponent(options, function(err) {
       if (err)
         return callback(err);
 
@@ -74,6 +74,7 @@ export default class extends BaseService {
           key: viewKey
         }, viewKey, "#" + viewKey);
       }
+
       WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
   }
@@ -109,7 +110,7 @@ export default class extends BaseService {
         if (oldElement.winControl) {
 
           if (oldElement.winControl.unload) {
-            oldElement.winControl.unload();
+            oldElement.winControl.unloadComponent();
           }
           oldElement.winControl.dispose();
         }
@@ -171,9 +172,9 @@ export default class extends BaseService {
     return null;
   }
 
-  unload() {
+  unloadComponent() {
     var that = this;
-    super.upload(options, function(err) {
+    super.unloadComponent(options, function(err) {
       if (err)
         return callback(err);
       var messageService = that.application.container.getService("message");
