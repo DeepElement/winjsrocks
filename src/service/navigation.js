@@ -61,10 +61,9 @@ export default class extends BaseService {
     var viewTemplateUri = this.application.configuration.get("pages:" + viewKey + ":template");
     if (viewTemplateUri) {
       var viewClassDef = that.application.container.getViewDef(viewKey);
-      winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
       var vmInstance = that.application.container.getViewModel(viewKey);
-      vmInstance.setKey(viewKey);
-      vmInstance.setData(args.state);
+      vmInstance.key = viewKey;
+      vmInstance.data = args.state;
 
       if (this.viewModel)
         this.viewModel.onNavigateFrom();

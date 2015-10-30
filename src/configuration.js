@@ -46,7 +46,7 @@ export default class extends Component {
     extend(this.store, defaultConfig);
   }
 
-  _resolve(path) {
+  resolve(path) {
     var parts = path.split(':');
     var scope = this.store;
     if (parts.length > 1) {
