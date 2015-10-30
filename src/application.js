@@ -251,6 +251,7 @@ export default class extends LifeCycle {
 
       // Add the config entry for the navigation service pre-nav validation
       this.configuration.set("pages:" + viewKey + ":template", templateUri);
+      console.log("pages:" + viewKey + ":template", templateUri);
 
       return extendedClassDef;
     }
