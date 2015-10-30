@@ -30,7 +30,7 @@ export default class extends Component {
   set(path, value) {
     var that = this;
     var parts = path.split(':');
-    var scope = store;
+    var scope = this.store;
     if (parts.length > 1) {
       for (var i = 0; i <= parts.length - 2; i++) {
         if (!scope[parts[i]])
@@ -43,12 +43,12 @@ export default class extends Component {
   }
 
   defaults(defaultConfig) {
-    extend(store, defaultConfig);
+    extend(this.store, defaultConfig);
   }
 
   _resolve(path) {
     var parts = path.split(':');
-    var scope = store;
+    var scope = this.store;
     if (parts.length > 1) {
       for (var i = 0; i <= parts.length - 2; i++) {
         scope = scope[parts[i]];
@@ -70,7 +70,7 @@ export default class extends Component {
       function(err, respObj) {
         if (err)
           return callback(err);
-        extend(store, respObj);
+        extend(this.store, respObj);
         return callback();
       });
   }

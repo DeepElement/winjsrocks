@@ -58,7 +58,7 @@ export default class extends BaseService {
     var that = this;
     var viewKey = args.viewKey;
     var state = args.state;
-    var viewTemplateUri = config.get("pages:" + viewKey + ":template");
+    var viewTemplateUri = this.application.configuration.get("pages:" + viewKey + ":template");
     if (viewTemplateUri) {
       var viewClassDef = that.application.container.getViewDef(viewKey);
       winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);

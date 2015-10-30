@@ -250,7 +250,7 @@ export default class extends LifeCycle {
       this.application.container.overrideView(viewKey, extendedClassDef);
 
       // Add the config entry for the navigation service pre-nav validation
-      config.set("pages:" + viewKey + ":template", templateUri);
+      this.configuration.set("pages:" + viewKey + ":template", templateUri);
 
       return extendedClassDef;
     }
