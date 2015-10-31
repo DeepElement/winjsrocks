@@ -1,13 +1,25 @@
 [![logo]][winjsrocks-adddress]
 An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
-=====
+----
 
 - [Getting Started](#getting-started)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
 
+----
 ## Getting Started
 
-TBD
+### Install packages
+
+Install the framework, winjs and plugin packages.
+
+NPM:
+```
+npm install winjs --save
+npm install winjsrocks --save
+npm install winsrocks-extras --save
+```
+TODO: Bower
+TODO: JSPM
 
 
 ## The Holy Triad (Models, Views and ViewModels)
