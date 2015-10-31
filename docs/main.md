@@ -4,6 +4,17 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
 
 - [Getting Started](#getting-started)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
+  - [ViewModels](#viewmodels)
+  - [Views](#views)
+  - [Models](#models)
+- [Messages](#messages)
+- [Navigation](#navigation)
+- [Providers](#providers)
+- [Services](#services)
+- [Plugins](#plugins)
+- [Item Templates](#item-templates)
+  - [Item ViewModels](#item-view-models)
+  - [Item Templates](#item-templates)
 
 ----
 ## Getting Started
