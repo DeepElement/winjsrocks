@@ -2,7 +2,7 @@
 An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 =====
 
-Built to support amazing apps developers targetting:
+Built to support amazing app developers targetting:
   - Windows 10
   - XboxOne
   - Windows Phone 10
