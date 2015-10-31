@@ -1,5 +1,4 @@
 <img align="right" src="logos/WinJS.rocks-256x256.png">
-Topics:
 - [Project Setup](#project-setup)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
