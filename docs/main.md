@@ -2,10 +2,10 @@
 An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 =====
 
-- [Project Setup](#projectsetup)
+- [Getting Started](#getting-started)
 - [MVVM](#mvvm)
 
-## Project Setup
+## Getting Started
 
 TBD
 
