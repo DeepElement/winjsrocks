@@ -141,5 +141,5 @@ export default class extends WinJSRocks.ViewModel.Base {
 ```
 
 
-[logo]: winjsrocks_animated.gif "WinJSRocks"
+[logo]: logos/WinJS.rocks-256x256.png "WinJSRocks"
 [winjsrocks-adddress]:    http://winjs.rocks
