@@ -16,7 +16,7 @@ Built to support amazing apps targetting:
 
 -----
 
-# IN DEVELOPMENT (UNSTABLE)
+
 
 [npm]:                     https://www.npmjs.com/package/winjsrocks
 [travis]:                  https://travis-ci.org/deepelement/winjsrocks
