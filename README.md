@@ -1,8 +1,6 @@
 [![logo]][winjsrocks-adddress]
-An MVVM framework optimized for WinJS
+An ES6 MVVM framework optimized for WinJS
 =====
-
-Written in ES6.
 
 Built to support amazing apps developers targetting:
   - Windows 10
