@@ -18,7 +18,37 @@ Built to support amazing app developers targetting:
 
 -----
 
-# Getting Started
+`view.js:`
+``` javascript
+import WinJSRocks from "winjsrocks";
+
+export default class extends WinJSRocks.View.Page {
+  // Polymorphic constructor that already integrates into the WinJS.Page base structure
+  constructor(element, viewModel) {
+    super(element, viewModel);
+  }
+
+  // Ready is supsensed until both:
+  //  - View element (this.element) has been loaded into the DOM
+  //  - ViewModel loading state has fired
+  ready(element, options) {
+  
+    // Managed events automatically get disconnected when the view unloads
+    // The binding context is managed too!
+    this.addManagedEventListener(landingPivot.winControl, "selectionchanged",
+      this._onPivotSelectionChanged);
+  
+    return super.ready(element, options);
+  }
+
+  _onPivotSelectionChanged() {
+    // ViewModel is already bound to the View and can be used to monitor events 
+    // and send commands
+    this.viewModel.onPivotSelectedCommand.execute();
+  }
+}
+
+```
 
 Ready to get started? see the full [docs](docs/main.md)
 
