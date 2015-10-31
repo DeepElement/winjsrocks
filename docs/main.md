@@ -2,7 +2,7 @@
 An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 ----
 
-- [Getting Started](#getting-started)
+- [Project Setup](#project-setup)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
   - [Views](#views)
@@ -17,7 +17,7 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
   - [Item Templates](#item-templates)
 
 ----
-## Getting Started
+## Project Setup
 
 ### Install packages
 
