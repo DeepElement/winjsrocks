@@ -3,7 +3,7 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
 =====
 
 - [Getting Started](#getting-started)
-- [The Holy Triad](#mvvm)
+- [The Holy Triad](#the-holy-triad-mvvm)
 
 ## Getting Started
 
