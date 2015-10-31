@@ -13,7 +13,7 @@ Built to support amazing app developers targetting:
   - Web
 
 
-Features:
+Featuring the Commandments of great code:
   - View, ViewModel, Model coordination
   - Message based Communication
   - Navigation Framework
