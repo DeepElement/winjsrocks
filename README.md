@@ -18,6 +18,10 @@ Built to support amazing apps developers targetting:
 
 -----
 
+# Getting Started
+
+Ready to get started? see the full [docs](docs/main.md)
+
 
 
 [npm]:                     https://www.npmjs.com/package/winjsrocks
