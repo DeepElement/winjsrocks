@@ -9,9 +9,6 @@
 - [Providers](#providers)
 - [Services](#services)
 - [Plugins](#plugins)
-- [Item Templates](#item-templates)
-  - [Item ViewModels](#item-view-models)
-  - [Item Templates](#item-templates)
 
 ----
 ## Project Setup
