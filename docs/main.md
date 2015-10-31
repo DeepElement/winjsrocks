@@ -4,7 +4,6 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
 
 - [Project Setup](#projectsetup)
 - [MVVM](#mvvm)
--
 
 ## Project Setup
 
