@@ -1,5 +1,5 @@
 [![logo]][winjsrocks-adddress]
-An ES6 MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
+An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 =====
 
 Built to support amazing apps developers targetting:
