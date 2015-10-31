@@ -22,7 +22,6 @@ Featuring the Commandments of great code:
   - Providers
   - Services
   - Plugins
-  - Items (Managed Template, ViewModel orchestration)
   - Domain model indexing with [Lokijs](https://github.com/techfort/LokiJS)
 
 Ready to get started? see the full [docs](docs/main.md)
