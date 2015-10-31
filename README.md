@@ -10,6 +10,7 @@ Built to support amazing apps developers targetting:
   - iOS
   - FireTV
   - Playstation 3/4/tv
+  - Web
 
 ----
 
