@@ -2,13 +2,16 @@
 An MVVM framework optimized for WinJS
 =====
 
-Built to support amazing apps targetting:
-- Windows 10
-- XboxOne
-- Windows Phone 10
-- Cordova
-- FireTV
-- Web
+Written in ES6.
+
+Built to support amazing apps developers targetting:
+  - Windows 10
+  - XboxOne
+  - Windows Phone 10
+  - Android
+  - iOS
+  - FireTV
+  - Playstation 3/4/tv
 
 ----
 
