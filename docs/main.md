@@ -23,9 +23,6 @@ npm install winjs --save
 npm install winjsrocks --save
 npm install winsrocks-extras --save
 ```
-TODO: Bower
-TODO: JSPM
-
 
 ## The Holy Triad (Models, Views and ViewModels)
 The MVVM pattern is a close variant of the Presentation Model pattern, optimized to leverage some of the core capabilities of WinJS, such as data binding, data templates and commands.
