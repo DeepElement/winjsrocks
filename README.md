@@ -1,5 +1,5 @@
 [![logo]][winjsrocks-adddress]
-An ES6 MVVM framework optimized for WinJS
+An ES6 MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 =====
 
 Built to support amazing apps developers targetting:
