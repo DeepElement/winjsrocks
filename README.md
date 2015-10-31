@@ -44,5 +44,5 @@ Ready to get started? see the full [docs](docs/main.md)
 [dependencies-dev]:        https://david-dm.org/deepelement/winjsrocks#info=devDependencies
 [dependencies-shield]:     https://img.shields.io/david/deepelement/winjsrocks.svg
 [dependencies-dev-shield]: https://img.shields.io/david/dev/deepelement/winjsrocks.svg
-[logo]: docs/winjsrocks_animated.gif "WinJSRocks"
+[logo]: docs/logos/winjsrocks_animated.gif "WinJSRocks"
 [winjsrocks-adddress]:    http://winjs.rocks
