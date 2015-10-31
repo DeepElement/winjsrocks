@@ -12,13 +12,31 @@ Built to support amazing app developers targetting:
   - Playstation 3/4/tv
   - Web
 
+
+Features:
+  - View, ViewModel, Model coordination
+  - Message based Communication
+  - Navigation Framework
+  - Command Pattern
+  - Event/Dispatch Pattern
+  - Providers
+  - Services
+  - Plugins
+  - Advanced Item template API
+  - Domain model indexing with [Lokijs](https://github.com/techfort/LokiJS)
+
+Ready to get started? 
+
+see the full [docs](docs/main.md)
+
 ----
 
 [![Dependency Status][dependencies-shield]][dependencies] [![Build Status][travis-shield]][travis] [![Download Status][travis-sheild-2]][travis-sheild-2] [![Build Status][travis-shield-develop]][travis] [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
 
 -----
 
-`view.js:`
+# The Holy Triad
+## view.js
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -49,7 +67,7 @@ export default class extends WinJSRocks.View.Page {
 }
 ```
 
-`view-model.js`
+## view-model.js
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -87,7 +105,7 @@ export default class extends WinJSRocks.ViewModel.Base {
 }
 ```
 
-`view.html:`
+## view.html
 ``` html
 <!DOCTYPE html>
 <html>
@@ -118,9 +136,6 @@ export default class extends WinJSRocks.ViewModel.Base {
 </html>
 ```
 
-
-
-Ready to get started? see the full [docs](docs/main.md)
 
 
 
