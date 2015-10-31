@@ -87,6 +87,39 @@ export default class extends WinJSRocks.ViewModel.Base {
 }
 ```
 
+`view.html:`
+``` html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Landing Screen</title>
+</head>
+
+<body>
+  <h1>Landing Screen</h1>
+  <!-- Bind directly to the ViewModel using ES6 property compatible Binding Helpers  -->
+  <div data-win-bind="innerHTML: sampleData WinJSRocks.Binding.Mode.Property"></div>
+  
+  <!-- Execute ViewModel Commands directly from markup -->
+  <button data-win-bind="onclick: navigateToListPageCommand WinJSRocks.Binding.Mode.Command">Navigate To List Page</button>
+  
+  <div id="landingPivot" data-win-control="WinJS.UI.Pivot">
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem1'}">
+      PivotItem1 Content
+    </div>
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem2'}">
+      PivotItem2 Content
+    </div>
+  </div>
+</body>
+
+</html>
+```
+
+
+
 Ready to get started? see the full [docs](docs/main.md)
 
 
