@@ -47,7 +47,44 @@ export default class extends WinJSRocks.View.Page {
     this.viewModel.onPivotSelectedCommand.execute();
   }
 }
+```
 
+`view-model.js`
+``` javascript
+import WinJSRocks from "winjsrocks";
+
+export default class extends WinJSRocks.ViewModel.Base {
+  constructor(application) {
+    super(application);
+  }
+
+  // All ViewModel classes have a Data property that is 
+  // posted during navigation events
+  onDataSet(callback) {
+    var that = this;
+    super.onDataSet(function() {
+      return callback();
+    });
+  }
+
+  // Encapsulate your data with Getters/Setters for view binding
+  get sampleData(){
+    return this._sampleData;
+  }
+  
+  // Dispatch events when properties are set
+  set sampleData(val){
+    this._sampleData = val;
+    this.notify("sampleData");
+  }
+
+  // Expose commands for execution
+  get navigateToListPageCommand() {
+    return new WinJSRocks.Command.Base(function() {
+      console.log("navigateToListPageCommand command called!");
+    });
+  }
+}
 ```
 
 Ready to get started? see the full [docs](docs/main.md)
