@@ -1,6 +1,6 @@
 var WinJS = require('winjs'),
-  ioc = require('../ioc'),
-  config = require('../config'),
+  ioc = null,
+  config = require('../configuration'),
   winjsHelper = require('../helper/winjs');
 
 exports.itemTemplateSelector = function(itemPromise) {

@@ -1,61 +1,47 @@
-WinJSRocks - an MVVM framework optimized for WinJS
+[![logo]][winjsrocks-adddress]
+An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimized for [WinJS](https://github.com/winjs/winjs)
 =====
-http://winjs.rocks http://winjsrocks.com
+
+Built to support amazing app developers targetting:
+  - Windows 10
+  - XboxOne
+  - Windows Phone 10
+  - Android
+  - iOS
+  - FireTV
+  - Playstation 3/4/tv
+  - Web
 
 
-Built to support amazing apps targetting:
-- Windows 10
-- XboxOne
-- Windows Phone 10
-- Cordova
-- FireTV
-- Web
+Featuring the Commandments of great code:
+  - View, ViewModel, Model coordination
+  - Message based Communication
+  - Navigation Framework
+  - Command Pattern
+  - Event/Dispatch Pattern
+  - Providers
+  - Services
+  - Plugins
+  - Domain model indexing with [Lokijs](https://github.com/techfort/LokiJS)
 
-[![Build Status][travis-shield]][travis]
-[![Build Status][travis-shield-develop]][travis]
-[![Dependency Status][dependencies-shield]][dependencies]
-[![devDependency Status][dependencies-dev-shield]][dependencies-dev]
-![yo](https://img.shields.io/npm/dm/winjsrocks.svg)
+Ready to get started? see the full [docs](docs/main.md)
+
+----
+
+[![Dependency Status][dependencies-shield]][dependencies] [![Build Status][travis-shield]][travis] [![Download Status][travis-sheild-2]][travis-sheild-2] [![Build Status][travis-shield-develop]][travis] [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
+
 -----
 
-
-# IN DEVELOPMENT (UNSTABLE)
-
-## Configuration
-
-```javascript
-{
-  "ui": {
-    "view": {
-      "template-uri": "./ui/views/%s/view.html"
-    },
-    "item-view": {
-      "template-uri": "./ui/items/%s/view.html"
-    }
-  },
-  "resources": {
-    "scripts": [
-      "vendor/jquery.2.1.4/jquery-2.1.4.min.js"
-    ],
-    "stylesheets": [
-      "vendor/winjs/css/ui-dark.css",
-      "vendor/winjs/css/ui-dark-intrinsics.css",
-      "css/branding.css",
-      "css/default.css"
-    ]
-  },
-  "app": {
-    "data-sync-interval": "5000"
-  }
-}
-```
 
 
 [npm]:                     https://www.npmjs.com/package/winjsrocks
 [travis]:                  https://travis-ci.org/deepelement/winjsrocks
 [travis-shield]:           https://img.shields.io/travis/DeepElement/winjsrocks.svg?branch=stable
 [travis-shield-develop]:   https://img.shields.io/travis/DeepElement/winjsrocks.svg?branch=master
+[travis-sheild-2]:         https://img.shields.io/npm/dm/winjsrocks.svg
 [dependencies]:            https://david-dm.org/deepelement/winjsrocks
 [dependencies-dev]:        https://david-dm.org/deepelement/winjsrocks#info=devDependencies
 [dependencies-shield]:     https://img.shields.io/david/deepelement/winjsrocks.svg
 [dependencies-dev-shield]: https://img.shields.io/david/dev/deepelement/winjsrocks.svg
+[logo]: docs/logos/winjsrocks_animated.gif "WinJSRocks"
+[winjsrocks-adddress]:    http://winjs.rocks

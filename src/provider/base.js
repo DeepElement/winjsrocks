@@ -1,19 +1,7 @@
-var WinJS = require('winjs');
+import Component from "../common/component";
 
-var _constructor = function(options) {
-
+export default class extends Component {
+  constructor(application) {
+    super(application);
+  }
 };
-
-var instanceMembers = {
-    _super: {
-        get: function() {
-            return Object.getPrototypeOf(this);
-        }
-    }
-};
-
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.define(_constructor, instanceMembers, staticMembers);

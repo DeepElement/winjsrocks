@@ -3,29 +3,27 @@ var path = require("path"),
 
 module.exports = {
   cache: true,
-  entry: "./dist/require-surface.js",
+  entry: "./src/entry.js",
   output: {
     filename: "dist/webpack-bundle.js",
     library: "winjsrocks",
     libraryTarget: "umd"
   },
   node: {
-    fs: "empty"
+    fs: "empty",
+    crypto: "empty"
   },
   externals: {
     "winjs": "winjs"
   },
   module: {
-    loaders: [
-      {
-        test: /\.js?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          optional: ['runtime'],
-          stage: 0
-        }
-      }
-    ]
+    loaders: [{
+      test: /\.js?$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'babel?optional[]=runtime'
+    }, {
+      test: /\.(json|resjson)$/,
+      loader: "json-loader"
+    } ]
   }
 };

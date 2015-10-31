@@ -1,42 +1,7 @@
-var WinJS = require('winjs'),
-    mixins = require('../helper/mixins');
+import LifeCycle from "../common/lifecycle"
 
-var _constructor = function(options) {
-
-};
-
-var instanceMembers = {
-    _super: {
-        get: function() {
-            return Object.getPrototypeOf(this);
-        }
-    },
-
-    start: function(options) {
-        return WinJS.Promise.as();
-    },
-
-    onApplicationReady: function() {
-        // called when all services have loaded
-    },
-
-    stop: function(options) {
-        return WinJS.Promise.as();
-    },
-    pause: function(options) {
-        return WinJS.Promise.as();
-    },
-    resume: function(options) {
-        return WinJS.Promise.as();
-    }
-};
-
-var staticMembers = {
-
-};
-
-module.exports = WinJS.Class.define(_constructor,
-    instanceMembers, staticMembers);
-WinJS.Class.mix(module.exports, WinJS.Utilities.eventMixin);
-WinJS.Class.mix(module.exports, mixins.notify);
-WinJS.Class.mix(module.exports, mixins.autoProperty);
+export default class extends LifeCycle {
+  constructor(application) {
+    super(application);
+  }
+}

@@ -1,5 +1,3 @@
-var WinJS = require('winjs');
-
 String.prototype.endsWith = function(suffix) {
   return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
@@ -47,9 +45,9 @@ String.prototype.replaceAll = function(search, replace) {
 };
 
 Math.getRandomArbitrary = function(min, max) {
-    return Math.random() * (max - min) + min;
+  return Math.random() * (max - min) + min;
 };
 
 Math.getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
