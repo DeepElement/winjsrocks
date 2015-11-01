@@ -1,5 +1,3 @@
-import "./runtime";
-
 import Application from "./application";
 import BaseViewModel from "./view-model/base";
 import ItemViewModel from "./view-model/item";

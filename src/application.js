@@ -1,4 +1,3 @@
-import "./runtime";
 import WinJS from "winjs";
 import LifeCycle from "./common/lifecycle";
 import Container from "./container";
