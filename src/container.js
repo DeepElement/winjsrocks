@@ -1,4 +1,6 @@
 import Momentr from "momentr";
+import StringHelper from "./helper/string";
+
 var _validScopes = ["request", "application"];
 var exportsConfig = [{
   type: "itemViewModel",
@@ -38,7 +40,7 @@ export default class {
     this._momentr = new Momentr();
 
     exportsConfig.forEach(function(config) {
-      var caseType = config.type.capitalizeFirstLetter();
+      var caseType = StringHelper.capitalizeFirstLetter(config.type);
       that["get" + caseType + "Keys"] = function() {
         var keys = this._momentr.getRegisteredKeys();
         return keys.filter(function(f) {

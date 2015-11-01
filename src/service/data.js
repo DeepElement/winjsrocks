@@ -1,4 +1,5 @@
 import BaseService from "./base"
+import StringHelper from "../helper/string";
 
 export default class extends BaseService {
   constructor(application) {
@@ -50,7 +51,7 @@ export default class extends BaseService {
               if (!that._db.getCollection(modelKey)) {
                 that._db.addCollection(modelKey);
               }
-              that["get" + modelKey.capitalizeFirstLetter() + "Collection"] = function() {
+              that["get" + StringHelper.capitalizeFirstLetter(modelKey) + "Collection"] = function() {
                 return that._db.getCollection(modelKey);
               };
             });

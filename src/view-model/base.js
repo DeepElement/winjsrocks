@@ -1,4 +1,5 @@
 import Component from "../common/component";
+import StringHelper from "../helper/string";
 
 export default class extends Component {
   constructor(application) {
@@ -9,7 +10,7 @@ export default class extends Component {
     this._itemViewModels = [];
 
     this.application.container.getServiceKeys().forEach(function(key) {
-      var apiKey = key.capitalizeFirstLetter() + "Service";
+      var apiKey = StringHelper.capitalizeFirstLetter(key) + "Service";
       Object.defineProperty(that, apiKey, {
         value: that.application.container.getService(key),
         writable: false,
