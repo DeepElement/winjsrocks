@@ -12,7 +12,7 @@ Getting Started
 - [Providers](#providers)
 - [Services](#services)
 - [Plugins](#plugins)
-- [Common Base Classes]
+- [Common Base Classes](#)
 
 See [Technical Documentation](technical.md) for APIs
 
