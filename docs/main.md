@@ -11,6 +11,14 @@
 - [Plugins](#plugins)
 
 ----
+## Why WinJS?
+
+WinJS is an visual framwork that really considers a few important factors that other frameworks fall short on:
+
+- _Input Modalities_ - Given a world of accelerating device fragmentation, people interact with UI's from a variety of input patterns. WinJS is built with the exectation that elements should automatically support Mouse, Keyboard, Gesture, Remote and Controller interaction patterns seamlessly. This support is not a weak accessibility-focused implementation, but one that actually attempts to provide core persona support for each input type. 
+- _Command/Property Binding_ - WinJS supports a variety of markup-driven binding styles that allows developers to avoid common pitfalls with Javascript memory management. This allows clear seperation of concerns when diagnosing memory performant creative View development.  Many frameworks don't do this and seem to encourage Views, Models and Controllers to all be directly bound to the DOM, leaving the advanced topic of [Javascript Memory Profiling](https://developer.chrome.com/devtools/docs/javascript-memory-profiling)
+- _Dynamic View Resolve_ - Views can be either packaged in the app, fetched from a CDN or remotely generated via Web API. This allows application developers to use the tools that work for creative View development while still offering the advantages of dynamic server-side generation of artifacts.
+
 ## Project Setup
 
 ### Install packages
