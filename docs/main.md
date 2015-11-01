@@ -1,4 +1,6 @@
 <img align="right" src="logos/WinJS.rocks-256x256.png">
+Getting Started
+=====
 - [Why WinJS?](#why-winjs)
 - [Project Setup](#project-setup)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
