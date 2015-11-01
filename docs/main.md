@@ -35,7 +35,7 @@ npm install winjsrocks --save
 npm install winsrocks-extras --save
 ```
 
-While the distribution is compatible with ES5, checkout the see elegance of an ES6 setup at [Win10 rocks](https://github.com/DeepElement/win10rocks).
+While the distribution is compatible with ES5, checkout the elegance of an ES6 setup at [Win10 rocks](https://github.com/DeepElement/win10rocks).
 
 ## The Holy Triad (Models, Views and ViewModels)
 
