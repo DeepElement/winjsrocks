@@ -93,7 +93,7 @@ export default class Application extends LifeCycle {
         function(cb) {
           var appConfig = options["app-config"];
           if (appConfig)
-            config.file(appConfig, cb);
+            that.configuration.file(appConfig, cb);
           else
             return cb();
         },
