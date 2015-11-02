@@ -3,6 +3,8 @@ Getting Started
 =====
 - [Why WinJS?](#why-winjs)
 - [Project Setup](#project-setup)
+  - [Install Packages](#install-packages)
+  - [Application Entry Point](#application-entry-point)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
   - [Views](#views)
