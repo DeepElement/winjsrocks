@@ -88,6 +88,7 @@ export default class extends BaseService {
 
   _onNavigating(args) {
     var that = this;
+
     var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
@@ -103,23 +104,19 @@ export default class extends BaseService {
         if (that.view && that.viewModel)
           that.viewModel.dispose();
       }
-
       if (that._element.childElementCount > 1) {
+
         var oldElement = that._element.firstElementChild;
         // Cleanup and remove previous element
         if (oldElement.winControl) {
-
-          if (oldElement.winControl.unload) {
-            oldElement.winControl.unloadComponent();
-          }
           oldElement.winControl.dispose();
         }
         oldElement.parentNode.removeChild(oldElement);
         oldElement.innerText = "";
+
         WinJS.Utilities.disposeSubTree(oldElement);
       }
     }
-
     // TODO: archive the old view/viewModel
     this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
       messageService.send("navigatingMessage", args);

@@ -1,5 +1,6 @@
 import Loadable from "../common/loadable";
 import WinJSHelper from "../helper/winjs";
+import WinJS from "winjs";
 
 export default class extends Loadable {
   constructor(element, viewModel, complete, parentedPromise) {
