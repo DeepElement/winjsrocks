@@ -13,7 +13,7 @@ export default class extends BaseProvider {
       }
       */
     };
-    log.warn("LocalStorage Provider using in-memory strategy. Override with concrete impl to persist data between app sessions");
+    application.logger.warn("LocalStorage Provider using in-memory strategy. Override with concrete impl to persist data between app sessions");
   }
 
   get(options, callback) {

@@ -1,5 +1,7 @@
 import BaseService from "./base"
 import StringHelper from "../helper/string";
+import Loki from "lokijs";
+import Async from "async";
 
 export default class extends BaseService {
   constructor(application) {
@@ -7,15 +9,15 @@ export default class extends BaseService {
     this._lokiDbName = application.instanceKey + "-loki.db";
   }
 
-  start(options, callback) {
+  loadComponent(options, callback) {
     var that = this;
-    super.start(options, function(err) {
+    super.loadComponent(options, function(err) {
       if (err)
         return callback(err);
 
       // Init the loki db
       var lokiStorageProvider = that.application.container.getProvider("lokiStorage");
-      that._db = new loki(that._lokiDbName, {
+      that._db = new Loki(that._lokiDbName, {
         adapter: lokiStorageProvider,
         autosave: true
       });
@@ -33,7 +35,7 @@ export default class extends BaseService {
       that._db.loadDatabase(creationFactoryMapping,
         function(resp) {
 
-          async.waterfall([
+          Async.waterfall([
             function(done) {
               if (resp === 'Database not found') {
                 that._db.saveDatabase(function() {
