@@ -10,24 +10,38 @@ import MathHelper from "./helper/math";
 import Package from '../package.json';
 import PluginBase from "./plugin/base";
 
-export default class extends LifeCycle {
+
+let singelton = null;
+export default class Application extends LifeCycle {
   constructor() {
     super();
-    this._application = this;
 
-    this._builder = new Builder(this);
-    this._container = new Container(this);
-    this._configuration = new Configuration(this);
-    this._isConfigured = false;
-    this._isLoaded = false;
-    this._isPaused = false;
-    this._instanceKey = MathHelper.v4;
-    this._package = Package;
+    if(!singelton)
+    {
+      singelton = this;
 
-    // TODO: make instance based
-    this._logger = Logging;
+      this._application = this;
+
+      this._builder = new Builder(this);
+      this._container = new Container(this);
+      this._configuration = new Configuration(this);
+      this._isConfigured = false;
+      this._isLoaded = false;
+      this._isPaused = false;
+      this._instanceKey = MathHelper.v4;
+      this._package = Package;
+
+      // TODO: make instance based
+      this._logger = Logging;
+    }
 
     require("./winjs.shim");
+  }
+
+  static get Instance (){
+    if(!singleton)
+      singleton = new Application();
+    return singelton;
   }
 
   get container() {
