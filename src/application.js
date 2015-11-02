@@ -80,6 +80,7 @@ export default class Application extends LifeCycle {
     var that = this;
     options = options || {};
     options.instanceKey = options.instanceKey || this.instanceKey;
+    this._instanceKey = options.instanceKey;
     async.waterfall([
         function(cb) {
           var appConfig = options["app-config"];
@@ -108,7 +109,6 @@ export default class Application extends LifeCycle {
           that.container.registerProvider("lokiStorage", require('./provider/loki-storage'));
         if (!that.container.isProviderRegistered("localStorage"))
           that.container.registerProvider("localStorage", require('./provider/local-storage'));
-
         if (!that.container.isServiceRegistered("navigation"))
           that.container.registerService("navigation", require('./service/navigation'));
         if (!that.container.isServiceRegistered("message"))

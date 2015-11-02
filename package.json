@@ -28,7 +28,7 @@
     "babel-runtime": "^6.0.14",
     "extend-object": "^1.0.0",
     "lokijs": "1.3.10",
-    "momentr": "0.0.28",
+    "momentr": "0.0.29",
     "winjs": "4.4.0"
   },
   "devDependencies": {

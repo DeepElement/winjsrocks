@@ -84,6 +84,10 @@ export default class {
     return this._momentr.getRegisteredKeys();
   };
 
+  addInstance(key, instance) {
+    return this._momentr.addInstance(key, instance);
+  };
+
   getAllInstances() {
     return this._momentr.getAllInstances();
   };
