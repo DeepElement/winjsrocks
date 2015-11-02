@@ -52,9 +52,6 @@ export default class Application extends LifeCycle {
     return this._logger;
   }
 
-  get Binding() {
-    return this._binding;
-  }
 
   get builder() {
     return this._builder;
