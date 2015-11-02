@@ -1,4 +1,6 @@
-import BaseService from "./base"
+import BaseService from "./base";
+import Async from "async";
+import StringHelper from "../helper/string";
 
 export default class extends BaseService {
   constructor(application) {
@@ -41,6 +43,37 @@ export default class extends BaseService {
     that._registery[messageType].forEach(function(delegate) {
       delegate(messageType, args);
     });
+
+    // notify all container items of message
+    this.notifyContainerInstances(messageType, [messageType, args]);
+  }
+
+  notifyContainerInstances(method, args, done) {
+    var that = this;
+
+    var components = [];
+    var serviceInstances = that.application.container.getServiceKeys().map(function(s){
+      return that.application.container.getService(s);
+    });
+    var viewModelInstances = that.application.container.getViewModelKeys().map(function(s){
+      return that.application.container.getViewModel(s);
+    });
+    components.push(...serviceInstances);
+    components.push(...viewModelInstances);
+
+    Async.each(components,
+      function(component, componentCb) {
+        if (component["on" + StringHelper.capitalizeFirstLetter(method)])
+          component["on" + StringHelper.capitalizeFirstLetter(method)].apply(component, args);
+        return componentCb();
+      },
+      function(err) {
+        if (done) {
+          if (err)
+            return done(err);
+          return done();
+        }
+      })
   }
 
   unloadComponent(options, callback) {
