@@ -44,6 +44,20 @@ npm install winsrocks-extras --save
 
 While the distribution is compatible with ES5, checkout the elegance of an ES6 setup at [Win10 rocks](https://github.com/DeepElement/win10rocks).
 
+## Application Entry Point
+Create a version of the Application object:
+
+``` javascript
+var WinJSRocks = require('winjsrocks');
+var app = new WinJSRocks.Application();
+```
+
+It's also recommended that, if you are including the library using require/ES6 Import, throw the library out on the window to access the binding details from markup:
+
+``` javascript
+window.WinJSRocks = require('winjsrocks');
+```
+
 # The Holy Triad (Models, Views and ViewModels)
 
 ## view.js
