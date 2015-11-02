@@ -9,12 +9,6 @@ Getting Started
   - [ViewModels](#viewmodels)
   - [Views](#views)
   - [Models](#models)
-- [Messages](#messages)
-- [Navigation](#navigation)
-- [Providers](#providers)
-- [Services](#services)
-- [Plugins](#plugins)
-- [Common Base Classes](#)
 
 See [Technical Documentation](technical.md) for APIs
 
