@@ -68,61 +68,88 @@ describe('Integration', function() {
       });
     });
 
-    /*  describe("Back Navigation", function() {
-        it('standard success', function(done) {
-          // arrange
-          var entry = resolver.resolve('./entry');
-          var messageService = applicationInstance.container.getService("message");
-          var navigationService = applicationInstance.container.getService("navigation");
-          var pages = [{
-            key: "viewA",
-            view: class extends entry.View.Page {
+    describe("Back Navigation", function() {
+      it('standard success', function(done) {
+        // arrange
+        var WinJS = require('winjs');
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+        var pages = [{
+          key: "viewA",
+          view: class extends entry.View.Page {},
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "harness", "template.1.html")
+        }, {
+          key: "viewB",
+          view: class extends entry.View.Page {
 
-            },
-            viewModel: class extends entry.ViewModel.Base {
+          },
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+        }, {
+          key: "viewC",
+          view: class extends entry.View.Page {
 
-            },
-            templateUri: path.join(__dirname, "..", "harness", "default.template.html")
-          }, {
-            key: "viewB",
-            view: class extends entry.View.Page {
+          },
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+        }];
 
-            },
-            viewModel: class extends entry.ViewModel.Base {
+        //act
+        async.waterfall([
+          function(cb) {
+            async.eachSeries(pages,
+              function(page, pageCb) {
+                applicationInstance.builder.registerView(page.key,
+                  page.view,
+                  page.viewModel,
+                  page.templateUri
+                );
 
-            },
-            templateUri: path.join(__dirname, "..", "harness", "default.template.html")
-          }, {
-            key: "viewC",
-            view: class extends entry.View.Page {
+                var navigateDelegate = function() {
+                  messageService.unregister("navigatedMessage",
+                    navigateDelegate);
+                  return pageCb();
+                };
 
-            },
-            viewModel: class extends entry.ViewModel.Base {
+                messageService.register("navigatedMessage",
+                  navigateDelegate);
 
-            },
-            templateUri: path.join(__dirname, "..", "harness", "default.template.html")
-          }];
+                messageService.send("navigateToMessage", {
+                  viewKey: page.key
+                });
+              }, cb);
+          },
+          function(cb) {
+            async.eachSeries([2, 1, 0],
+              function(pageIdx, pageIdxCb) {
+                var page = pages[pageIdx];
+                if (pageIdx != 0) {
+                  //var targetPage = pages[pageIdx - 1];
 
-          //act
-          pages.forEach(function(page) {
-            applicationInstance.builder.registerView(page.key,
-              page.view,
-              page.viewModel,
-              page.templateUri
-            );
+                  // Assert can go back
+                  WinJS.Navigation.canGoBack.should.be.ok();
 
-            messageService.send("navigateToMessage", {
-              viewKey: page.key
-            })
-          });
+                  var navigateDelegate = function() {
+                    messageService.unregister("navigatedMessage",
+                      navigateDelegate);
+                    return pageIdxCb();
+                  };
 
-          return done();
+                  messageService.register("navigatedMessage",
+                    navigateDelegate);
 
-          for (var i = 0; i <= pages.length - 1; i++) {
-
-            messageService.send("navigateBackMessage");
+                  messageService.send("navigateBackMessage");
+                } else {
+                  // Assert cannot go back
+                  WinJS.Navigation.canGoBack.should.not.be.ok();
+                  return pageIdxCb();
+                }
+              }, cb);
           }
-        });
-      });*/
+        ], done);
+      });
+    });
   });
 });
