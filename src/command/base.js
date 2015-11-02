@@ -1,14 +1,16 @@
 import Eventable from "../common/eventable";
 
 export default class extends Eventable {
-  constructor(payload, key) {
+  constructor(payload) {
     super();
-    this._key = key;
     this._internalExecute = payload || function() {};
   }
 
-  execute() {
-    return this._internalExecute.apply(this, arguments);
+  execute(args) {
+    if (this.canExecute) {
+      return this._internalExecute.apply(this, arguments);
+    }
+    return null;
   }
 
   get canExecute() {

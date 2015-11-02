@@ -1,5 +1,6 @@
 import Component from "../common/component";
 import StringHelper from "../helper/string";
+import CommandBase from "../command/base";
 
 export default class extends Component {
   constructor(application) {
@@ -25,7 +26,6 @@ export default class extends Component {
       that.ApplicationService.clearTimeout(that._initialLoadTimerId);
     }, 10000);
   }
-
 
   addItemViewModels(models) {
     var that = this;

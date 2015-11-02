@@ -48,6 +48,7 @@ export default class extends BaseService {
   _onNavigateBackMessage(type, args) {
     if (this.viewModel && this.viewModel.overrideBackNavigation) {
       log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
+      return;
     }
     args = args || {};
     var steps = args.steps || 1;
