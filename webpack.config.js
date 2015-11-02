@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/entry.js",
   output: {
     filename: "dist/webpack-bundle.js",
-    library: "winjsrocks",
+    library: "WinJSRocks",
     libraryTarget: "umd"
   },
   node: {
@@ -24,6 +24,6 @@ module.exports = {
     }, {
       test: /\.(json|resjson)$/,
       loader: "json-loader"
-    } ]
+    }]
   }
 };
