@@ -66,11 +66,12 @@ export default class extends Component {
   }
 
   file(path, callback) {
+    var that = this;
     this.loadFile(path,
       function(err, respObj) {
         if (err)
           return callback(err);
-        extend(this.store, respObj);
+        extend(that.store, respObj);
         return callback();
       });
   }
