@@ -3,6 +3,14 @@ export default class {
     this._application = application;
   }
 
+  registerService(key, constructor) {
+    this._application.container.registerService(key, constructor);
+  }
+
+  registerProvider(key, constructor) {
+    this._application.container.registerProvider(key, constructor);
+  }
+
   registerDomainModel(key, constructor) {
     this._application.container.registerItemModel(key, constructor);
   }
