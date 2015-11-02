@@ -124,19 +124,5 @@ describe('Integration', function() {
         });
       });
     });
-
-    // describe("resume", function() {
-    //   it('callback fired', function(done) {
-    //     var subject = require('../../src/main');
-    //     subject.resume({}, done);
-    //   });
-    // });
-    //
-    // describe("pause", function() {
-    //   it('callback fired', function(done) {
-    //     var subject = require('../../src/main');
-    //     subject.pause({}, done);
-    //   });
-    // });
   });
 });
