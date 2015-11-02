@@ -93,7 +93,7 @@ describe('Integration', function() {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+          templateUri: path.join(__dirname, "..", "harness", "template.3.html")
         }];
 
         //act
@@ -128,6 +128,105 @@ describe('Integration', function() {
                 if (pageIdx != 0) {
                   //var targetPage = pages[pageIdx - 1];
 
+                  // Assert can go back
+                  WinJS.Navigation.canGoBack.should.be.ok();
+
+                  var navigateDelegate = function() {
+                    messageService.unregister("navigatedMessage",
+                      navigateDelegate);
+                    return pageIdxCb();
+                  };
+
+                  messageService.register("navigatedMessage",
+                    navigateDelegate);
+
+                  messageService.send("navigateBackMessage");
+                } else {
+                  // Assert cannot go back
+                  WinJS.Navigation.canGoBack.should.not.be.ok();
+                  return pageIdxCb();
+                }
+              }, cb);
+          }
+        ], done);
+      });
+    });
+
+
+
+    describe("Modal Navigation", function() {
+      it('standard success', function(done) {
+        // arrange
+        var WinJS = require('winjs');
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+        var pages = [{
+          key: "view1",
+          view: class extends entry.View.Page {},
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "harness", "template.1.html")
+        }, {
+          key: "view2",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+        }, {
+          key: "view3",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "harness", "template.3.html")
+        }, {
+          key: "view4",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "harness", "template.4.html")
+        }];
+
+        //act
+        async.waterfall([
+          function(cb) {
+            async.eachSeries(pages,
+              function(page, pageCb) {
+                applicationInstance.builder.registerView(page.key,
+                  page.view,
+                  page.viewModel,
+                  page.templateUri
+                );
+
+                var navigateDelegate = function() {
+                  messageService.unregister("navigatedMessage",
+                    navigateDelegate);
+                  return pageCb();
+                };
+
+                messageService.register("navigatedMessage",
+                  navigateDelegate);
+
+                messageService.send("navigateToMessage", {
+                  viewKey: page.key
+                });
+              }, cb);
+          },
+          function(cb) {
+            async.eachSeries([1, 0],
+              function(pageIdx, pageIdxCb) {
+                var page = pages[pageIdx];
+                if (pageIdx != 0) {
                   // Assert can go back
                   WinJS.Navigation.canGoBack.should.be.ok();
 

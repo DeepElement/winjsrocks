@@ -71,6 +71,10 @@ export default class extends Component {
     this.notify("overrideBackNavigation");
   }
 
+  get isModal(){
+    return false;
+  }
+
   get key() {
     return this._key;
   }

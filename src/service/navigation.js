@@ -90,17 +90,20 @@ export default class extends BaseService {
   _onNavigating(args) {
     var that = this;
 
+
     var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
     this._lastNavigationPromise.cancel();
 
+
     function cleanup() {
       if (args.detail.delta == -1) {
         if (that.view)
           that.application.container.delViewInstance(that.view.viewModel.key, that.view);
-        if (that.viewModel)
+        if (that.viewModel) {
           that.application.container.delViewModelInstance(that.viewModel.key, that.viewModel);
+        }
 
         if (that.view && that.viewModel)
           that.viewModel.dispose();
@@ -118,6 +121,11 @@ export default class extends BaseService {
         WinJS.Utilities.disposeSubTree(oldElement);
       }
     }
+
+    if (that.viewModel && that.viewModel.isModal) {
+      WinJS.Navigation.history.backStack.pop();
+    }
+
     // TODO: archive the old view/viewModel
     this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
       messageService.send("navigatingMessage", args);
@@ -131,6 +139,7 @@ export default class extends BaseService {
   _onNavigated() {
     var messageService = this.application.container.getService("message");
     messageService.send("navigatedMessage");
+
     this.viewModel.onNavigateTo();
   }
 
