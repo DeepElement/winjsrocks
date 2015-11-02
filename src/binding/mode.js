@@ -1,7 +1,12 @@
 import WinJS from 'winjs';
+import Component from "../common/component";
 
-export default class {
-  static get Command() {
+export default class extends Component {
+  constructor(application) {
+    super(application);
+  }
+
+  get Command() {
     return WinJS.Binding.initializer(function(source, sourceProps, dest, destProps) {
       var eventSource = dest;
       var command = source;
@@ -39,7 +44,7 @@ export default class {
     });
   }
 
-  static get Property() {
+  get Property() {
     return WinJS.Binding.initializer(function(source, sourceProps, dest, destProps) {
       var eventSource = dest;
       var command = source;
@@ -48,4 +53,4 @@ export default class {
       dest[destProps[0]] = source[sourceProps[0]];
     });
   }
-};
+}

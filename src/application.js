@@ -9,15 +9,15 @@ import ApplicationException from "./exception/base";
 import MathHelper from "./helper/math";
 import Package from '../package.json';
 import PluginBase from "./plugin/base";
-
+import BindingMode from "./binding/mode";
+import BindingTemplate from "./binding/template";
 
 let singelton = null;
 export default class Application extends LifeCycle {
   constructor() {
     super();
 
-    if(!singelton)
-    {
+    if (!singelton) {
       singelton = this;
 
       this._application = this;
@@ -30,6 +30,8 @@ export default class Application extends LifeCycle {
       this._isPaused = false;
       this._instanceKey = MathHelper.v4;
       this._package = Package;
+      this._bindingMode = new BindingMode(this);
+      this._bindingTemplate = new BindingTemplate(this);
 
       // TODO: make instance based
       this._logger = Logging;
@@ -38,9 +40,7 @@ export default class Application extends LifeCycle {
     require("./winjs.shim");
   }
 
-  static get Instance (){
-    if(!singleton)
-      singleton = new Application();
+  static get Instance() {
     return singelton;
   }
 
@@ -50,6 +50,10 @@ export default class Application extends LifeCycle {
 
   get logger() {
     return this._logger;
+  }
+
+  get Binding() {
+    return this._binding;
   }
 
   get builder() {
@@ -74,6 +78,13 @@ export default class Application extends LifeCycle {
 
   get instanceKey() {
     return this._instanceKey;
+  }
+
+  get Binding() {
+    return {
+      Mode: this._bindingMode,
+      Template: this._bindingTemplate
+    }
   }
 
   configure(options, done) {

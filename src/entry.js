@@ -10,7 +10,6 @@ import BasePlugin from "./plugin/base";
 import BaseModel from "./model/base";
 import BaseCommand from "./command/base";
 import Builder from "./builder";
-import BindingMode from "./binding/mode";
 import WinJSHelper from "./helper/winjs";
 
 class EntryClass {
@@ -60,12 +59,6 @@ class EntryClass {
   static get Command() {
     return {
       Base: BaseCommand
-    }
-  }
-
-  static get Binding() {
-    return {
-      Mode: BindingMode
     }
   }
 

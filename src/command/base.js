@@ -3,14 +3,14 @@ import Eventable from "../common/eventable";
 export default class extends Eventable {
   constructor(payload) {
     super();
-    this._internalExecute = payload || function() {};
-  }
-
-  execute(args) {
-    if (this.canExecute) {
-      return this._internalExecute.apply(this, arguments);
+    var that = this;
+    this.execute = function() {
+      var executor = payload || function(){};
+      if (that.canExecute)
+        return executor.apply(that, arguments);
+      return null;
     }
-    return null;
+    this._canExecute = true;
   }
 
   get canExecute() {
