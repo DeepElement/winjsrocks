@@ -1,15 +1,9 @@
 var gulp = require('gulp'),
   mocha = require('gulp-mocha'),
-  async = require('async'),
-  source = require('vinyl-source-stream'),
   runSequence = require('gulp-run-sequence'),
-  path = require('path'),
-  glob = require("glob"),
   rimraf = require('rimraf'),
   babel = require('babel-core/register'),
-  fs = require('fs-extra'),
-  mkdirp = require('mkdirp'),
-  exec = require('child_process').exec;
+  fs = require('fs-extra');
 
 var gutil = require("gulp-util"),
   webpack = require("webpack"),
