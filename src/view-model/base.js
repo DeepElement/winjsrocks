@@ -37,14 +37,14 @@ export default class extends Component {
   }
 
   addItemViewModel(model) {
-    var itemViewModel = this.application.container.getItemViewModel(model.getContentType().toLowerCase());
+    var itemViewModel = this.application.container.getItemViewModel(model.contentType.toLowerCase());
     if (itemViewModel) {
       itemViewModel.setData(model);
       this._itemViewModels.push(itemViewModel);
       this.notify("itemViewModels");
       return itemViewModel;
     }
-    log.warn("ItemViewModel for " + model.getContentType() + " not found");
+    log.warn("ItemViewModel for " + model.contentType + " not found");
     return null;
   }
 
@@ -132,7 +132,7 @@ export default class extends Component {
     var that = this;
     this._itemViewModels.forEach(function(itemViewModel) {
       itemViewModel.onNavigateFrom();
-      that.application.container.delItemViewModelInstance(itemViewModel.getItem().getContentType().toLowerCase(), itemViewModel);
+      that.application.container.delItemViewModelInstance(itemViewModel.item.contentType.toLowerCase(), itemViewModel);
     });
 
     this.removeAllManagedEventListeners();

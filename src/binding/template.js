@@ -11,7 +11,7 @@ export default class extends Component {
     WinJS.Utilities.addClass(mediaTile, "item-template");
     var _renderCompletePromise = itemPromise.then(function(item) {
       var itemViewModel = item instanceof Array ? item[0].data : item.data;
-      var viewKey = itemViewModel.getItem().getContentType().toLowerCase();
+      var viewKey = itemViewModel.item.contenType.toLowerCase();
       var viewTemplateUri = config.get("domain:" + viewKey + ":template");
       WinJS.Utilities.addClass(mediaTile, "item-template-" + viewKey);
       var viewClassDef = ioc.getItemViewDef(viewKey);
