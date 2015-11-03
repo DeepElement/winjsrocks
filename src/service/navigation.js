@@ -120,7 +120,11 @@ export default class extends BaseService {
 
         WinJS.Utilities.disposeSubTree(oldElement);
       }
-    }
+    };
+
+    var handleRenderError = function(err) {
+      messageService.send("onErrorMessage", err);
+    };
 
     if (that.viewModel && that.viewModel.isModal) {
       WinJS.Navigation.history.backStack.pop();
@@ -131,7 +135,7 @@ export default class extends BaseService {
       messageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
-        args.detail.state);
+        args.detail.state).then(null, handleRenderError)
     });
     args.detail.setPromise(this._lastNavigationPromise);
   }
