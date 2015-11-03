@@ -5,7 +5,7 @@ export default class extends Eventable {
     super();
     var that = this;
     this.execute = function() {
-      var executor = payload || function(){};
+      var executor = payload || function() {};
       if (that.canExecute)
         return executor.apply(that, arguments);
       return null;
@@ -15,5 +15,10 @@ export default class extends Eventable {
 
   get canExecute() {
     return this._canExecute;
+  }
+
+  set canExecute(val) {
+    this._canExecute = true;
+    this.notify("canExecute");
   }
 }
