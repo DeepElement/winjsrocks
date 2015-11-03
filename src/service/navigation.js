@@ -123,7 +123,7 @@ export default class extends BaseService {
     };
 
     var handleRenderError = function(err) {
-      messageService.send("errorMessage", err);
+      messageService.send("applicationErrorMessage", err);
     };
 
     if (that.viewModel && that.viewModel.isModal) {
