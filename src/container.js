@@ -51,7 +51,10 @@ export default class {
       };
 
       that["get" + caseType] = function(key) {
-        return that._momentr.get(config.prefix + key, that._application);
+        var containerKey = config.prefix + key;
+        if(that._momentr.def(containerKey))
+          return that._momentr.get(config.prefix + key, that._application);
+        return null;
       };
 
       that["override" + caseType] = function(key, classDef) {

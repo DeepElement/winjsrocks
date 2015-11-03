@@ -60,9 +60,9 @@ export default class extends BaseService {
     var viewKey = args.viewKey;
     var state = args.state;
     var viewTemplateUri = this.application.configuration.get("pages:" + viewKey + ":template");
-    if (viewTemplateUri) {
-      var viewClassDef = that.application.container.getViewDef(viewKey);
-      var vmInstance = that.application.container.getViewModel(viewKey);
+    var viewClassDef = that.application.container.getViewDef(viewKey);
+    var vmInstance = that.application.container.getViewModel(viewKey);
+    if (viewTemplateUri && viewClassDef && vmInstance) {
       vmInstance.key = viewKey;
       vmInstance.data = args.state;
 

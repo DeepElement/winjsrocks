@@ -18,6 +18,22 @@ describe('Integration', function() {
       });
     });
 
+
+    describe("Navigate to unregistered view", function() {
+      it('standard success', function(done) {
+        // arrange
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+
+        //act
+        messageService.send("navigateToMessage", {
+          viewKey: "RandomViewKey"
+        });
+        return done();
+      });
+    });
+
     describe("Navigation Forward", function() {
       it('standard success', function(done) {
         // arrange
