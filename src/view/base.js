@@ -5,8 +5,8 @@ import WinJS from "winjs";
 export default class extends Loadable {
   constructor(element, viewModel, complete, parentedPromise) {
     super(viewModel.application);
-    this._winjsPage.apply(this, arguments);
     this._viewModel = viewModel;
+    this._winjsPage.apply(this, arguments);
   }
 
   get viewModel() {
@@ -32,13 +32,13 @@ export default class extends Loadable {
   // returns promise or nothing
   init(element, options) {
     var that = this;
-    this.addManagedEventListener(this.viewModel, "loadingState", this._onLoadingStateChanged);
     return WinJS.Promise.as(this._winjsPage.prototype.init.apply(this, arguments));
   }
 
   // returns promise or nothing
   render(element, options, loadResult) {
     var that = this;
+    this.addManagedEventListener(this.viewModel, "loadingState", this._onLoadingStateChanged);
     return WinJS.Promise.as(this._winjsPage.prototype.render.apply(this, arguments)).then(function() {
       return new WinJS.Promise(function(complete, error, progress) {
         return complete();

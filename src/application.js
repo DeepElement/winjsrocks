@@ -264,13 +264,14 @@ export default class Application extends LifeCycle {
     })
   }
 
-  WinJSPageDefine(viewKey, templateUri, baseClassDef) {
+  WinJSPageDefine(viewKey, templateUri, baseClassDef, isItem) {
     var that = this;
+    isItem = isItem || false;
     var existingBaseClass = WinJS.UI.Pages.define(templateUri);
     if (baseClassDef && existingBaseClass != baseClassDef) {
       var extendedClassDef = WinJS.UI.Pages.define(templateUri, {}, baseClassDef);
       that.application.container.overrideView(viewKey, extendedClassDef);
-      that.configuration.set("pages:" + viewKey + ":template", templateUri);
+      that.configuration.set("pages:" + (isItem ? "item-" : "") + viewKey + ":template", templateUri);
       return extendedClassDef;
     }
     return existingBaseClass;

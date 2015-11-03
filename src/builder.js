@@ -22,7 +22,7 @@ export default class {
   registerDomainModelView(key, viewConstructor, viewModelConstructor, templateUri) {
     this._application.container.registerItemView(key, viewConstructor);
     this._application.container.registerItemViewModel(key, viewModelConstructor);
-    this._application.WinJSPageDefine(key, templateUri, viewConstructor);
+    this._application.WinJSPageDefine(key, templateUri, viewConstructor, true);
   }
 
   unregisterModelView(key) {
@@ -32,7 +32,7 @@ export default class {
   registerView(key, viewConstructor, viewModelConstructor, templateUri) {
     this._application.container.registerView(key, viewConstructor);
     this._application.container.registerViewModel(key, viewModelConstructor);
-    this._application.WinJSPageDefine(key, templateUri, viewConstructor);
+    this._application.WinJSPageDefine(key, templateUri, viewConstructor, false);
   }
 
   unregisterView(key) {
