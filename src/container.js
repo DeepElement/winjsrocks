@@ -59,7 +59,10 @@ export default class {
       };
 
       that["get" + caseType + "Def"] = function(key) {
-        return that._momentr.def(config.prefix + key).type;
+        var subject = that._momentr.def(config.prefix + key);
+        if(subject)
+          return subject.type;
+        return null;
       };
 
       that["is" + caseType + "Registered"] = function(key) {
