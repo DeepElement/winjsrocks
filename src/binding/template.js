@@ -13,7 +13,7 @@ export default class extends Component {
     var _renderCompletePromise = itemPromise.then(function(item) {
       var itemViewModel = item instanceof Array ? item[0].data : item.data;
       var viewKey = itemViewModel.item.contentType.toLowerCase();
-      var viewTemplateUri = config.get("domain:" + viewKey + ":template");
+      var viewTemplateUri = that.application.configuration.get("domain:" + viewKey + ":template");
       WinJS.Utilities.addClass(mediaTile, "item-template-" + viewKey);
       var viewClassDef = that.application.container.getItemViewDef(viewKey);
       winjsHelper.pageDefine(viewKey, viewTemplateUri, viewClassDef);
