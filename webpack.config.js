@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/entry.js",
   output: {
     filename: "dist/webpack-bundle.js",
-    library: "WinJSRocks",
+    library: "winjsrocks",
     libraryTarget: "umd"
   },
   node: {
