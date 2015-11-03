@@ -6,6 +6,6 @@ export default class extends BaseViewModel {
   }
 
   get item() {
-    return this.getData();
+    return this.data;
   }
 };
