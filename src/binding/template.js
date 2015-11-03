@@ -6,7 +6,7 @@ export default class extends Component {
     super(application);
   }
 
-  get ItemTemplateSelector() {
+  ItemTemplateSelector(itemPromise) {
     var mediaTile = document.createElement("div");
     WinJS.Utilities.addClass(mediaTile, "item-template");
     var _renderCompletePromise = itemPromise.then(function(item) {

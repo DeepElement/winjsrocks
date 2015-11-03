@@ -11,6 +11,7 @@ import Package from '../package.json';
 import PluginBase from "./plugin/base";
 import BindingMode from "./binding/mode";
 import BindingTemplate from "./binding/template";
+import WinJSHelper from "./helper/winjs";
 
 let singelton = null;
 export default class Application extends LifeCycle {
@@ -38,6 +39,8 @@ export default class Application extends LifeCycle {
     }
 
     require("./winjs.shim");
+
+    WinJSHelper.markForProcessing(this);
   }
 
   static get Instance() {
