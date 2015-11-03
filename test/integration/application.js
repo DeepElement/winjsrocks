@@ -31,7 +31,7 @@ describe('Integration', function() {
           should.not.exist(err);
           subject.load({}, function(err) {
             should.not.exist(err);
-            return done();
+            subject.unload({}, done);
           });
         });
       });
@@ -80,6 +80,7 @@ describe('Integration', function() {
           should.not.exist(err);
           subject.resume({}, function(err) {
             should.exist(err);
+
             return done();
           });
         });
@@ -97,7 +98,8 @@ describe('Integration', function() {
             should.not.exist(err);
             subject.resume({}, function(err) {
               should.exist(err);
-              return done();
+
+              subject.unload({}, done);
             });
           });
         });
@@ -117,7 +119,7 @@ describe('Integration', function() {
               should.not.exist(err);
               subject.resume({}, function(err) {
                 should.not.exist(err);
-                return done();
+                subject.unload({}, done);
               });
             });
           });

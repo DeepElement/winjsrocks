@@ -183,7 +183,7 @@ export default class extends BaseService {
     return null;
   }
 
-  unloadComponent() {
+  unloadComponent(options, callback) {
     var that = this;
     super.unloadComponent(options, function(err) {
       if (err)
@@ -202,6 +202,8 @@ export default class extends BaseService {
 
       if (that._element)
         WinJS.Utilities.disposeSubTree(that._element);
+
+      return callback();
     });
   }
 }

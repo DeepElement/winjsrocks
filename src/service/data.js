@@ -70,7 +70,7 @@ export default class extends BaseService {
 
   unloadComponent(options, callback) {
     var that = this;
-    super.unloadComponent(options, function(err) {
+    return super.unloadComponent(options, function(err) {
       if (err)
         return callback(err);
 
@@ -78,7 +78,8 @@ export default class extends BaseService {
         that._db.saveDatabase(function(err) {
           if (err)
             return callback(err);
-          return callback();
+
+          that._db.close(callback);
         });
       else
         return callback();
