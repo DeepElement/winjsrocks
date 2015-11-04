@@ -60,6 +60,7 @@ export default class extends BaseService {
     });
     components.push(...serviceInstances);
     components.push(...viewModelInstances);
+    components.push(...that.application.plugins);
 
     Async.each(components,
       function(component, componentCb) {
