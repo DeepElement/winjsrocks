@@ -1,6 +1,6 @@
-import Loadable from "../common/loadable";
+import LifeCycle from "../common/lifecycle"
 
-export default class extends Loadable {
+export default class extends LifeCycle {
   constructor(application, key, type) {
     super(application);
     var validTypes = ['service', 'provider', 'runtime'];

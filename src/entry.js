@@ -11,6 +11,10 @@ import BaseModel from "./model/base";
 import BaseCommand from "./command/base";
 import Builder from "./builder";
 import WinJSHelper from "./helper/winjs";
+import CommonComponent from "./common/component";
+import CommonEventable from "./common/eventable";
+import CommonLifeCycle from "./common/lifecycle";
+import CommonLoadable from "./common/loadable";
 
 class EntryClass {
   static get Application() {
@@ -21,6 +25,15 @@ class EntryClass {
     return {
       Base: BaseViewModel,
       Item: ItemViewModel
+    }
+  }
+
+  static get Common() {
+    return {
+      Component: CommonComponent,
+      Eventable: CommonEventable,
+      LifeCycle: CommonLifeCycle,
+      Loadable: CommonLoadable
     }
   }
 
