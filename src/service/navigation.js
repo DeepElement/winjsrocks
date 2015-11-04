@@ -69,7 +69,7 @@ export default class extends BaseService {
       if (this.viewModel)
         this.viewModel.onNavigateFrom();
 
-      if (window["history"]) {
+      if (window["history"] && !vmInstance.isModal) {
         window.history.pushState({
           context: state,
           key: viewKey
