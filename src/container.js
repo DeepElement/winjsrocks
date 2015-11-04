@@ -30,6 +30,10 @@ var exportsConfig = [{
   type: "itemView",
   prefix: "itemView_",
   scope: "request"
+}, {
+  type: "plugin",
+  prefix: "plugin_",
+  scope: "application"
 }];
 
 export default class {
@@ -52,7 +56,7 @@ export default class {
 
       that["get" + caseType] = function(key) {
         var containerKey = config.prefix + key;
-        if(that._momentr.def(containerKey))
+        if (that._momentr.def(containerKey))
           return that._momentr.get(config.prefix + key, that._application);
         return null;
       };
@@ -63,7 +67,7 @@ export default class {
 
       that["get" + caseType + "Def"] = function(key) {
         var subject = that._momentr.def(config.prefix + key);
-        if(subject)
+        if (subject)
           return subject.type;
         return null;
       };

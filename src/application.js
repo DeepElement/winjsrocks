@@ -33,6 +33,7 @@ export default class Application extends LifeCycle {
       this._package = Package;
       this._bindingMode = new BindingMode(this);
       this._bindingTemplate = new BindingTemplate(this);
+      this._plugins = [];
 
       // TODO: make instance based
       this._logger = Logging;
@@ -82,6 +83,10 @@ export default class Application extends LifeCycle {
     return this._instanceKey;
   }
 
+  get plugins() {
+    return plugins;
+  }
+
   get Binding() {
     return {
       Mode: this._bindingMode,
@@ -94,6 +99,7 @@ export default class Application extends LifeCycle {
     options = options || {};
     options.instanceKey = options.instanceKey || this.instanceKey;
     this._instanceKey = options.instanceKey;
+    options.plugins = options.plugins || [];
     async.waterfall([
         function(cb) {
           var appConfig = options["app-config"];
@@ -101,27 +107,20 @@ export default class Application extends LifeCycle {
             that.configuration.file(appConfig, cb);
           else
             return cb();
-        },
-        function(cb) {
-          if (options.plugins) {
-            async.each(options.plugins,
-              function(plugin, pluginCb) {
-                plugin.loadComponent(options, pluginCb);
-              },
-              cb);
-          } else
-            return cb();
         }
       ],
       function(err) {
         if (err)
           return done(err);
 
+        that._plugins = options.plugins;
+
         // setup the framework services/providers
         if (!that.container.isProviderRegistered("lokiStorage"))
           that.container.registerProvider("lokiStorage", require('./provider/loki-storage'));
         if (!that.container.isProviderRegistered("localStorage"))
           that.container.registerProvider("localStorage", require('./provider/local-storage'));
+
         if (!that.container.isServiceRegistered("navigation"))
           that.container.registerService("navigation", require('./service/navigation'));
         if (!that.container.isServiceRegistered("message"))
@@ -166,7 +165,16 @@ export default class Application extends LifeCycle {
 
           MessageService.send("applicationReadyMessage");
 
-          return done();
+          async.each(that._plugins,
+            function(plugin, pluginCb) {
+              plugin.loadComponent(options, pluginCb);
+            },
+            function(err) {
+              if (err)
+                return done(err);
+
+              return done();
+            });
         });
     });
   }
