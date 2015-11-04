@@ -134,7 +134,5 @@ export default class extends Component {
       itemViewModel.onNavigateFrom();
       that.application.container.delItemViewModelInstance(itemViewModel.item.contentType.toLowerCase(), itemViewModel);
     });
-
-    this.removeAllManagedEventListeners();
   }
 };

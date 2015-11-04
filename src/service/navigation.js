@@ -7,11 +7,10 @@ export default class extends BaseService {
 
     this._onNavigatingBinding = this._onNavigating.bind(this);
     this._onNavigatedBinding = this._onNavigated.bind(this);
-    this._onNavigateBackMessageBinding = this._onNavigateBackMessage.bind(this);
     this._onBeforeNavigateBinding = this._onBeforeNavigate.bind(this);
+
     this._onResizedBinding = this._onResized.bind(this);
     this._onPopStateBinding = this._onPopState.bind(this);
-    this._onNavigateToMessageBinding = this._onNavigateToMessage.bind(this);
     this._lastNavigationPromise = WinJS.Promise.as();
 
     // TODO: pull the default element from the app config
@@ -24,15 +23,13 @@ export default class extends BaseService {
       if (err)
         return callback(err);
 
-      var messageService = that.application.container.getService("message");
       WinJS.Navigation.addEventListener("navigating",
         that._onNavigatingBinding);
       WinJS.Navigation.addEventListener("navigated",
         that._onNavigatedBinding);
       WinJS.Navigation.addEventListener("beforenavigate",
         that._onBeforeNavigateBinding);
-      messageService.register("navigateToMessage", that._onNavigateToMessageBinding);
-      messageService.register("navigateBackMessage", that._onNavigateBackMessageBinding);
+
       window.addEventListener("resize", that._onResizedBinding);
       window.addEventListener("popstate", that._onPopStateBinding);
 
@@ -45,7 +42,7 @@ export default class extends BaseService {
     messageService.send("navigateBackMessage");
   }
 
-  _onNavigateBackMessage(type, args) {
+  onNavigateBackMessage(type, args) {
     if (this.viewModel && this.viewModel.overrideBackNavigation) {
       log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
       return;
@@ -55,7 +52,7 @@ export default class extends BaseService {
     return WinJS.Navigation.back(steps);
   }
 
-  _onNavigateToMessage(type, args) {
+  onNavigateToMessage(type, args) {
     var that = this;
     var viewKey = args.viewKey;
     var state = args.state;
@@ -89,13 +86,10 @@ export default class extends BaseService {
 
   _onNavigating(args) {
     var that = this;
-
-
     var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
     this._lastNavigationPromise.cancel();
-
 
     function cleanup() {
       if (args.detail.delta == -1) {
@@ -106,11 +100,12 @@ export default class extends BaseService {
         }
 
         if (that.view && that.viewModel)
-          that.viewModel.dispose();
+           that.viewModel.dispose();
       }
       if (that._element.childElementCount > 1) {
 
         var oldElement = that._element.firstElementChild;
+
         // Cleanup and remove previous element
         if (oldElement.winControl) {
           oldElement.winControl.dispose();
@@ -188,15 +183,14 @@ export default class extends BaseService {
     super.unloadComponent(options, function(err) {
       if (err)
         return callback(err);
-      var messageService = that.application.container.getService("message");
+
       WinJS.Navigation.removeEventListener("navigating",
         that._onNavigatingBinding);
       WinJS.Navigation.removeEventListener("navigated",
         that._onNavigatedBinding);
       WinJS.Navigation.removeEventListener("beforenavigate",
         that._onBeforeNavigateBinding);
-      messageService.unregister("navigateToMessage", that._onNavigateToMessageBinding);
-      messageService.unregister("navigateBackMessage", that._onNavigateBackMessageBinding);
+
       window.removeEventListener("resize", that._onResizedBinding);
       window.removeEventListener("popstate", that._onPopStateBinding)
 
