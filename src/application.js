@@ -84,7 +84,7 @@ export default class Application extends LifeCycle {
   }
 
   get plugins() {
-    return plugins;
+    return this._plugins;
   }
 
   get Binding() {
