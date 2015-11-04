@@ -41,6 +41,8 @@ export default class Application extends LifeCycle {
     require("./winjs.shim");
 
     WinJSHelper.markForProcessing(this);
+    WinJSHelper.markForProcessing(this._bindingTemplate);
+    WinJSHelper.markForProcessing(this._bindingMode);
   }
 
   static get Instance() {
