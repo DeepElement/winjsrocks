@@ -54,10 +54,12 @@ export default class {
         });
       };
 
-      that["get" + caseType] = function(key) {
+      that["get" + caseType] = function(key, ...args) {
         var containerKey = config.prefix + key;
-        if (that._momentr.def(containerKey))
-          return that._momentr.get(config.prefix + key, that._application);
+        if (that._momentr.def(containerKey)) {
+          var getArgs = [that._application, ...args];
+          return that._momentr.get(config.prefix + key, ...getArgs);
+        }
         return null;
       };
 
