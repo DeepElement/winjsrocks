@@ -21,6 +21,7 @@ WinJS is a visual framwork that really considers a few important factors that ot
 - **Input Modalities** - Given a world of accelerating device fragmentation, people interact with UI's from a variety of input patterns. WinJS is built with the exectation that elements should automatically support Mouse, Keyboard, Gesture, Remote and Controller interaction patterns seamlessly. This support is not a weak accessibility-focused implementation, but one that actually attempts to provide core persona support for each input type.
 - **Command/Property Binding** - WinJS supports a variety of markup-driven binding styles that allows developers to avoid common pitfalls with Javascript memory management. This allows clear seperation of concerns when diagnosing memory performant creative View development.  Many frameworks don't do this and seem to encourage Views, Models and Controllers to all be directly bound to the DOM, leaving the advanced topic of [Javascript Memory Profiling](https://developer.chrome.com/devtools/docs/javascript-memory-profiling)
 - **Dynamic View Resolve** - Views can be either packaged in the app, fetched from a CDN or remotely generated via Web API. This allows application developers to use the tools that work for creative View development while still offering the advantages of dynamic server-side generation of artifacts.
+- **Localization** - Views can use localized strings to bind declaratively and developers can support a wide range of localization sets
 
 WinJS is a future-facing UI Framework that really is designed to allow your Information Architecture to adapt to Desktop, Console, Mobile and Web without having to frankenstein your development architecture.
 
@@ -33,17 +34,16 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 ## Install packages
 
-Install the framework, winjs and plugin packages.
+Install the framework and the current WinJS bits:
 
 ```
 npm install winjs --save
 npm install winjsrocks --save
-npm install winsrocks-extras --save
 ```
 
 > Note: Though WinJSRocks is tested against a [specific version](../package.json) (latest verified) of the [WinJS library](https://github.com/winjs/winjs), the distribution does not package these bits. So, "Bring your own WinJS" and "Millage may vary" if not the same version tested with WinJSRocks.
 
-Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Plugins and shows really good examples of how to write your own application plugins.
+Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Adapters and shows really good examples of how to write your own application plugins.
 
 ```
 npm install winsrocks-extras --save
