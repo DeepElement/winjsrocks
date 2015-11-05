@@ -5,7 +5,7 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
 
 [![Dependency Status][dependencies-shield]][dependencies] [![Build Status][travis-shield]][travis] [![Download Status][travis-sheild-2]][travis-sheild-2] [![Build Status][travis-shield-develop]][travis] [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
 
------
+---
 
 Built to support amazing app developers targetting:
   - Windows 10
