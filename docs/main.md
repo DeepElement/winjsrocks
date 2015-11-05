@@ -52,6 +52,12 @@ It's also recommended that, if you are including the library using require/ES6 I
 window.WinJSRocks = require('winjsrocks');
 ```
 
+Once the application is instatiated, access is available as a singleton:
+
+``` javascript
+var myAppInstance = window.WinJSRocks.Application.Instance;
+```
+
 # The Holy Triad (Models, Views and ViewModels)
 
 ## view.js
