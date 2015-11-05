@@ -2,6 +2,7 @@
 Getting Started
 =====
 - [Why WinJS?](#why-winjs)
+- [Sample Apps](#sample-apps)
 - [Project Setup](#project-setup)
   - [Install Packages](#install-packages)
   - [Application Entry Point](#application-entry-point)
@@ -23,20 +24,30 @@ WinJS is a visual framwork that really considers a few important factors that ot
 
 WinJS is a future-facing UI Framework that really is designed to allow your Information Architecture to adapt to Desktop, Console, Mobile and Web without having to frankenstein your development architecture.
 
+# Sample Apps
+
+- (In Development) [Win10 rocks](https://github.com/DeepElement/win10rocks) - ES6 cross-platform
+- (In Development) WinJSRocks Starter - ES6 Shallow template
+
 # Project Setup
 
 ## Install packages
 
 Install the framework, winjs and plugin packages.
 
-NPM:
 ```
 npm install winjs --save
 npm install winjsrocks --save
 npm install winsrocks-extras --save
 ```
 
-While the distribution is compatible with ES5, checkout the elegance of an ES6 setup at [Win10 rocks](https://github.com/DeepElement/win10rocks).
+> Note: Though WinJSRocks is tested against [a specific version (as latests as possible)](../package.json) of the [WinJS library](https://github.com/winjs/winjs), the distribution does not package. So, "Bring your own WinJS" and "Millage may vary" if not the same version tested with WinJSRocks version
+
+Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Plugins and shows really good examples of how to write your own application plugins.
+
+```
+npm install winsrocks-extras --save
+```
 
 ## Application Entry Point
 Create a version of the Application object:
