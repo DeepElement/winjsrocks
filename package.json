@@ -19,9 +19,9 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/DeepElement/winjsrocks",
-  "main": "./dist/winjsrocks-0.5.2.debug.js",
+  "main": "./dist/latest.js",
   "bin": {
-    "winjsrocks": "./dist/winjsrocks-0.5.2.debug.js"
+    "winjsrocks": "./dist/latest.js"
   },
   "dependencies": {
     "async": "1.5.0",
