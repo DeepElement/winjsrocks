@@ -34,12 +34,11 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 ## Install packages
 
-Install the framework, winjs and plugin packages.
+Install the framework and the current WinJS bits:
 
 ```
 npm install winjs --save
 npm install winjsrocks --save
-npm install winsrocks-extras --save
 ```
 
 > Note: Though WinJSRocks is tested against a [specific version](../package.json) (latest verified) of the [WinJS library](https://github.com/winjs/winjs), the distribution does not package these bits. So, "Bring your own WinJS" and "Millage may vary" if not the same version tested with WinJSRocks.
