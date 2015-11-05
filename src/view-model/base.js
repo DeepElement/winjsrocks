@@ -19,12 +19,6 @@ export default class extends Component {
         enumerable: false
       });
     });
-
-    this._initialLoadTimerId = this.ApplicationService.setTimeout(function() {
-      if (that._loadingState != "loaded")
-        that.MessageService.send("viewLoadTimeoutMessage", that.key);
-      that.ApplicationService.clearTimeout(that._initialLoadTimerId);
-    }, 10000);
   }
 
   addItemViewModels(models) {
