@@ -31,7 +31,7 @@ export default class extends Component {
   }
 
   addItemViewModel(model) {
-    var itemViewModel = this.application.container.getItemViewModel(model.contentType.toLowerCase());
+    var itemViewModel = this.application.container.getItemViewModel(model.contentType.toLowerCase(), this);
     if (itemViewModel) {
       itemViewModel.data = model;
       this._itemViewModels.push(itemViewModel);
