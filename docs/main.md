@@ -43,7 +43,7 @@ npm install winjsrocks --save
 
 > Note: Though WinJSRocks is tested against a [specific version](../package.json) (latest verified) of the [WinJS library](https://github.com/winjs/winjs), the distribution does not package these bits. So, "Bring your own WinJS" and "Millage may vary" if not the same version tested with WinJSRocks.
 
-Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Plugins and shows really good examples of how to write your own application plugins.
+Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Adapters and shows really good examples of how to write your own application plugins.
 
 ```
 npm install winsrocks-extras --save
