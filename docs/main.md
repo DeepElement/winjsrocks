@@ -5,6 +5,7 @@ Getting Started
 - [Sample Apps](#sample-apps)
 - [Project Setup](#project-setup)
   - [Install Packages](#install-packages)
+  - [Loading](#loading)
   - [Application Entry Point](#application-entry-point)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
@@ -50,6 +51,40 @@ Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://g
 ```
 npm install winsrocks-extras --save
 ```
+
+## Loading
+Application developers are required to pre-load `WinJS` before attempting run of the library. 
+
+ES5/HTML:
+
+``` html
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.0/js/base.js"></script>
+</head>
+<body>
+  <script>
+    window.onload = function() {
+      console.log('WinJS:', window.WinJS);
+
+      var scriptElem = document.createElement('script');
+      scriptElem.src = "node_modules/winjsrocks/dist/winjsrocks-0.4.6.js";
+      scriptElem.onload = function() {
+        console.log("WinJSRocks:", window.WinJSRocks);
+      }
+    }
+  </script>
+</body>
+</html>
+```
+
+Modules:
+
+``` javascript
+var WinJS = require('winjs');
+var WinJSRocks = require('winjsrocks');
+```
+
 
 ## Application Entry Point
 Create a version of the Application object:
