@@ -114,8 +114,8 @@ export default class Application extends LifeCycle {
           return done(err);
 
         // Filter down invalid stuffs
-        that._plugins = options.plugins.filter(function(p){
-          return p instanceof PluginBase;
+        that._plugins = options.plugins.filter(function(p) {
+          return p.prototype instanceof PluginBase;
         });
 
         // setup the framework services/providers
@@ -170,7 +170,7 @@ export default class Application extends LifeCycle {
 
           async.each(that._plugins,
             function(pluginDef, pluginCb) {
-              var plugin = Reflect.construct(pluginDef);
+              var plugin = Reflect.construct(pluginDef, that);
               plugin.loadComponent(options, pluginCb);
             },
             function(err) {
