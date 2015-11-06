@@ -1,4 +1,4 @@
-<img align="right" src="logos/WinJS.rocks-256x256.png">
+<img align="right" width="250px" src="logos/winjsrocks_animated.gif">
 Technical Documentation
 =====
 
