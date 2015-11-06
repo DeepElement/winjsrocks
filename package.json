@@ -53,7 +53,8 @@
   },
   "scripts": {
     "test": "NODE_ENV=test node --expose-gc node_modules/gulp/bin/gulp test",
-    "build": "gulp dist"
+    "build": "gulp dist",
+    "prepublish": "gulp npm:pre-publish"
   },
   "engines": {
     "node": ">= 0.12.7",

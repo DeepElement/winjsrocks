@@ -8,7 +8,7 @@ var gulp = require('gulp'),
   webpack = require("webpack"),
   webpackConfig = require("./webpack.config.js"),
   packageConfig = require('./package.json'),
-  gulpReplace = require('gulp-replace');
+  replace = require('gulp-replace');
 
 gulp.task("dist", function(cb) {
   runSequence(
@@ -20,9 +20,9 @@ gulp.task("dist", function(cb) {
 
 
 gulp.task("npm:pre-publish", function(cb) {
-  return gulp.src(['package.json'])
+  return gulp.src('./package.json')
     .pipe(replace(/latest.js/g, "winjsrocks-" + packageConfig.version + ".js"))
-    .pipe(gulp.dest('package.json'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task("dist:package:release", function(cb) {
