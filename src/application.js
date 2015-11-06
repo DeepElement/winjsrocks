@@ -113,7 +113,10 @@ export default class Application extends LifeCycle {
         if (err)
           return done(err);
 
-        that._plugins = options.plugins;
+        // Filter down invalid stuffs
+        that._plugins = options.plugins.filter(function(p){
+          return p instanceof PluginBase;
+        });
 
         // setup the framework services/providers
         if (!that.container.isProviderRegistered("lokiStorage"))
@@ -166,7 +169,8 @@ export default class Application extends LifeCycle {
           MessageService.send("applicationReadyMessage");
 
           async.each(that._plugins,
-            function(plugin, pluginCb) {
+            function(pluginDef, pluginCb) {
+              var plugin = Reflect.construct(pluginDef);
               plugin.loadComponent(options, pluginCb);
             },
             function(err) {
