@@ -40,7 +40,7 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 Install the framework and the current WinJS bits:
 
-```
+``` bash
 npm install winjs --save
 npm install winjsrocks --save
 ```
@@ -49,7 +49,7 @@ npm install winjsrocks --save
 
 Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Adapters and shows really good examples of how to write your own application plugins.
 
-```
+``` bash
 npm install winsrocks-extras --save
 ```
 
