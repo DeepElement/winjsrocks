@@ -183,12 +183,13 @@ Plugins are the recommended way of bolting on features into the WinJSRocks appli
 These types of components are loaded *after* the core framework has loaded and enables access to all of the goodies (Services/Providers) without any load order mishaps. They are loaded in series, so make sure you provide them in the order of dependence.
 
 To activate, register the class plugin class definition in the `WinJSRocks.Application.Instance.configure` options as a `plugins` array:
+
 ``` javascript
 var WinJSRocks = require('winjsrocks');
 var app = new WinJSRocks.Application();
 app.configure({
     plugins:[
-      new MyAwesomePlugin(app)
+      MyAwesomePlugin // Provide the Class Definition of the Plugin
     ]
   },
   function(err){
