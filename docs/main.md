@@ -134,6 +134,24 @@ app.unload({},
 # Building Views
 
 ## ViewKey Registration
+The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations.
+
+Examples of registering views:
+
+```javascript
+var app = new WinJSRocks.Application();
+var viewKeys = ['splash', 'landing', 'items', 'article', 'contributor'];
+viewKeys.forEach(function(viewKey) {
+  app.builder.registerView(
+    viewKey,
+    require('./views/' + viewKey + '/view'),
+    require('./views/' + viewKey + '/view-model'),
+    'views/' + viewKey + '/view.html');
+});
+```
+
+> Note: View registration should occur before calling `load` on the Application object
+
 ## View
 Building a view is a combination of a *Template* and a *Component*. Both will be associated to a *ViewKey* and will be joined together at runtime upon navigation to a view.
 
