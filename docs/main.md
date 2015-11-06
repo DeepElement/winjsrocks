@@ -185,7 +185,6 @@ These types of components are loaded *after* the core framework has loaded and e
 To activate, register the class plugin class definition in the `WinJSRocks.Application.Instance.configure` options as a `plugins` array:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
-var WinJSRocksExtras = require('winjsrocks-extras');
 var app = new WinJSRocks.Application();
 app.configure({
     plugins:[
@@ -230,7 +229,6 @@ export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
 To activate a provider, register using the `WinJSRocks.Application.Instance.builder` before calling `configure`:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
-var WinJSRocksExtras = require('winjsrocks-extras');
 var app = new WinJSRocks.Application();
 app.builder.registerProvider("localStorage", KeyboardCatProvider);
 ``` 
