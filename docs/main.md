@@ -12,7 +12,6 @@ Getting Started
   - [Models](#models)
 - [Working with Plugins](#working-with-plugins)
 - [Building Providers](#building-providers)
-- [Building Services](#building-services}
 
 See [Technical Documentation](technical.md) for APIs
 
