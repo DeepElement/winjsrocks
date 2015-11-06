@@ -134,16 +134,15 @@ app.unload({},
 # Building Views
 
 ## ViewKey Registration
-The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations.
+The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations around a single `ViewKey`.
 
 Example of registering views:
-
 ```javascript
 var app = new WinJSRocks.Application();
 var viewKeys = ['splash', 'landing', 'items', 'article', 'contributor'];
 viewKeys.forEach(function(viewKey) {
   app.builder.registerView(
-    viewKey,
+    viewKey, // framework ViewKey
     require('./views/' + viewKey + '/view'),
     require('./views/' + viewKey + '/view-model'),
     'views/' + viewKey + '/view.html');
@@ -153,7 +152,7 @@ viewKeys.forEach(function(viewKey) {
 > Note: View registration should occur before calling `load` on the Application object
 
 ## View
-Building a view is a combination of a *Template* and a *Component*. Both will be associated to a *ViewKey* and will be joined together at runtime upon navigation to a view.
+Building a view is a combination of a *Template*, *Component* and *ViewKey*. The Template/Component will be associated with a *ViewKey* and will be joined together at runtime upon navigation to a view.
 
 ### Template
 Templates are expected to be compliant HTML mark-up files and their defintion is based on the [WinJS](https://github.com/winjs/winjs) navigation framework's formal definition of an [WinJS.UI.Pages.PageControl](https://msdn.microsoft.com/en-us/library/windows/apps/jj126158.aspx)
