@@ -7,19 +7,22 @@ var gulp = require('gulp'),
   gutil = require("gulp-util"),
   webpack = require("webpack"),
   webpackConfig = require("./webpack.config.js"),
-  packageConfig = require('./package.json');
+  packageConfig = require('./package.json'),
+  gulpReplace = require('gulp-replace');
 
 gulp.task("dist", function(cb) {
   runSequence(
     'dist:clean',
     'dist:package:debug',
     'dist:package:release',
-    'dist:package:latest-entry',
     cb);
 });
 
-gulp.task("dist:package:latest-entry", function(cb) {
-  fs.copy("dist/winjsrocks-" + packageConfig.version + ".js", "dist/latest.js", cb);
+
+gulp.task("npm:pre-publish", function(cb) {
+  return gulp.src(['package.json'])
+    .pipe(replace(/latest.js/g, "winjsrocks-" + packageConfig.version + ".js"))
+    .pipe(gulp.dest('package.json'));
 });
 
 gulp.task("dist:package:release", function(cb) {
