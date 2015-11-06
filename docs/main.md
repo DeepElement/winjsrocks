@@ -204,7 +204,7 @@ In the WinJSRocks framework, providers have the following expecations:
 - Use a self reference to `application` to manage their stateful needs 
 - Does all build-up in the Constructor (no load/unload cycle)
 
-To build a provider, just inherit from the `WinJSRocks.Provider.Base` class:
+To build a provider, inherit from the `WinJSRocks.Provider.Base` class:
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -223,7 +223,7 @@ export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
 };
 ```
 
-To activate a provider, just register using the `WinJSRocks.Application.Instance.builder` before calling `configure`:
+To activate a provider, register using the `WinJSRocks.Application.Instance.builder` before calling `configure`:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
 var WinJSRocksExtras = require('winjsrocks-extras');
