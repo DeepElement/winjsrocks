@@ -5,7 +5,7 @@ Getting Started
 - [Sample Apps](#sample-apps)
 - [Project Setup](#project-setup)
   - [Install Packages](#install-packages)
-  - [Loading](#loading)
+  - [Loading Things Up](#loading-things-up)
   - [Application Entry Point](#application-entry-point)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
@@ -52,7 +52,7 @@ Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://g
 npm install winsrocks-extras --save
 ```
 
-## Loading
+## Loading Things Up
 Application developers are required to pre-load `WinJS` before attempting run of the library. 
 
 ``` javascript
