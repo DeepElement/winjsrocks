@@ -5,8 +5,9 @@ Getting Started
 - [Sample Apps](#sample-apps)
 - [Project Setup](#project-setup)
   - [Install Packages](#install-packages)
-  - [Loading Things Up](#loading-things-up)
-  - [Application Entry Point](#application-entry-point)
+  - [Load WinJS](#load-winjs)
+  - [Create Application Instance](#create-application-instance)
+- [The Application Object](#the-application-object)
 - [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
   - [ViewModels](#viewmodels)
   - [Views](#views)
@@ -35,7 +36,7 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 # Project Setup
 
-## Install packages
+## Install Packages
 
 Install the framework and the current WinJS bits:
 
@@ -52,7 +53,7 @@ Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://g
 npm install winsrocks-extras --save
 ```
 
-## Loading Things Up
+## Load WinJS
 Application developers are required to pre-load `WinJS` before attempting run of the library. 
 
 ``` javascript
@@ -61,7 +62,7 @@ var WinJSRocks = require('winjsrocks');
 ```
 
 
-## Application Entry Point
+## Create Application Instance
 Create a version of the Application object:
 
 ``` javascript
@@ -74,6 +75,8 @@ Once the application is instatiated, access is available as a singleton:
 ``` javascript
 var app = WinJSRocks.Application.Instance;
 ```
+
+# The Application Object
 
 # The Holy Triad (Models, Views and ViewModels)
 
