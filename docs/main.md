@@ -136,7 +136,7 @@ app.unload({},
 ## ViewKey Registration
 The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations.
 
-Examples of registering views:
+Example of registering views:
 
 ```javascript
 var app = new WinJSRocks.Application();
