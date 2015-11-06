@@ -80,7 +80,7 @@ var app = WinJSRocks.Application.Instance;
 # The Application Object
 The Application object has three important phases that need to be implemented for an application:
 
-1. `configure` - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
+1. **configure** - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
 
 ``` javascript
 var app = new WinJSRocks.Application();
@@ -100,7 +100,7 @@ app.configure({
   });
 ```
 
-2. `load` - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
+2. **load** - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
 
 ``` javascript
 app.load({}, 
@@ -119,16 +119,29 @@ app.load({},
   });
 ```
 
-3. `unload`
+3. **unload** - Stops [Services](#building-services) and unloads all known components.
+
+``` javascript
+app.unload({}, 
+  function(err){
+    if(err)
+      console.error(err);
+      
+    // All components have been notified of the shutdown
+  });
+```
 
 # Building Views
 
 ## ViewKey Registration
-
-  TODO: docs
-
 ## View
-### Template 
+Building a view is a combination of a *Template* and a *Component*. Both will be associated to a *ViewKey* and will be joined together at runtime upon navigation to a view.
+
+### Template
+Templates are expected to be compliant HTML mark-up files and their defintion is based on the [WinJS](https://github.com/winjs/winjs) navigation framework's formal definition of an [WinJS.UI.Pages.PageControl](https://msdn.microsoft.com/en-us/library/windows/apps/jj126158.aspx)
+
+Generally, anything goes here and this is where most teams will match the UI creative pattern to each target User-Experience.
+
 ``` html
 <!DOCTYPE html>
 <html>
@@ -159,7 +172,7 @@ app.load({},
 </html>
 ```
 
-### Component Code
+### Component
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
