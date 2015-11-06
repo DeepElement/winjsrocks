@@ -55,31 +55,6 @@ npm install winsrocks-extras --save
 ## Loading
 Application developers are required to pre-load `WinJS` before attempting run of the library. 
 
-*ES5/HTML:*
-
-``` html
-<html>
-<head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.0/js/base.js"></script>
-</head>
-<body>
-  <script>
-    window.onload = function() {
-      console.log('WinJS:', window.WinJS);
-
-      var scriptElem = document.createElement('script');
-      scriptElem.src = "node_modules/winjsrocks/dist/winjsrocks-0.4.6.js";
-      scriptElem.onload = function() {
-        console.log("WinJSRocks:", window.WinJSRocks);
-      }
-    }
-  </script>
-</body>
-</html>
-```
-
-*Modules:*
-
 ``` javascript
 var WinJS = require('winjs');
 var WinJSRocks = require('winjsrocks');
@@ -89,15 +64,8 @@ var WinJSRocks = require('winjsrocks');
 ## Application Entry Point
 Create a version of the Application object:
 
-*Transpiled:*
 ``` javascript
 var WinJSRocks = require('winjsrocks');
-var app = new WinJSRocks.Application();
-```
-
-*ES5:*
-``` javascript
-// window.WinJSRocks is the auto registered handle
 var app = new WinJSRocks.Application();
 ```
 
