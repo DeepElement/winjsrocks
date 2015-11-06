@@ -1,4 +1,4 @@
-<img align="right" src="logos/WinJS.rocks-256x256.png">
+<img align="right" width="250px" src="logos/winjsrocks_animated.gif">
 Getting Started
 =====
 - [Why WinJS?](#why-winjs)
@@ -11,6 +11,7 @@ Getting Started
   - [Views](#views)
   - [Models](#models)
 - [Working with Plugins](#working-with-plugins)
+- [Building Providers](#building-providers)
 
 See [Technical Documentation](technical.md) for APIs
 
@@ -177,7 +178,7 @@ Plugins are the recommended way of bolting on features into the WinJSRocks appli
 
 These types of components are loaded *after* the core framework has loaded and enables access to all of the goodies (Services/Providers) without any load order mishaps. They are loaded in series, so make sure you provide them in the order of dependence.
 
-To activate, just register your plugin in the `application.configure` plugins collection:
+To activate, register the class plugin class definition in the `WinJSRocks.Application.Instance.configure` options as a `plugins` array:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
 var WinJSRocksExtras = require('winjsrocks-extras');
@@ -191,6 +192,46 @@ app.configure({
   });
 ``` 
 
+# Building Providers
+
+Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations. 
+
+As an example, a common use-case is selecting a provider type to fullfill a need within a service Service at runtime based on measured conditions within application state.
+
+In the WinJSRocks framework, providers have the following expecations:
+
+- remain __Stateless__ (don't expect the same instance to be used in all places)
+- Use a self reference to `application` to manage their stateful needs 
+- Does all build-up in the Constructor (no load/unload cycle)
+
+To build a provider, inherit from the `WinJSRocks.Provider.Base` class:
+``` javascript
+import WinJSRocks from "winjsrocks";
+
+export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
+  constructor(application) {
+    super(application);
+  }
+  
+  methodA: function(args){
+    return this.methodB(args);
+  }
+  
+  methodB: function(args){
+    return "Keyboard cat";
+  }
+};
+```
+
+To activate a provider, register using the `WinJSRocks.Application.Instance.builder` before calling `configure`:
+``` javascript
+var WinJSRocks = require('winjsrocks');
+var WinJSRocksExtras = require('winjsrocks-extras');
+var app = new WinJSRocks.Application();
+app.builder.registerProvider("localStorage", KeyboardCatProvider);
+``` 
+
+> Providers are registered in the `WinJSRocks.Application.Instance.container` before the `load` method is called on the application instance to assure custom Services and Providers are first-class citizens during application start-up.
 
 [logo]: logos/WinJS.rocks-256x256.png "WinJSRocks"
 [winjsrocks-adddress]:    http://winjs.rocks
