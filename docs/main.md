@@ -8,7 +8,8 @@ Getting Started
   - [Load WinJS](#load-winjs)
   - [Create Application Instance](#create-application-instance)
 - [The Application Object](#the-application-object)
-- [The Holy Triad](#the-holy-triad-models-views-and-viewmodels)
+- [Building Views](#building-views)
+  - [ViewKey Registration](#viewkey-registration)
   - [ViewModels](#viewmodels)
   - [Views](#views)
   - [Models](#models)
@@ -77,10 +78,88 @@ var app = WinJSRocks.Application.Instance;
 ```
 
 # The Application Object
+The Application object has three important phases that need to be implemented for an application:
 
-# The Holy Triad (Models, Views and ViewModels)
+1. `configure` - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
 
-## view.js
+``` javascript
+var app = new WinJSRocks.Application();
+var CustomProvider = require('providers/customProvider');
+var CustomService = require('services/customService');
+var CustomPlugin = require('plugins/customPlugin');
+app.configure({
+    plugins: [
+      CustomPlugin
+    ]
+  }, function(err){
+    if(err)
+      console.error(err);
+    // Load up the container with goodies
+    app.container.registerProvider("customProvider", CustomProvider);
+    app.container.registerService("customService", CustomService);
+  });
+```
+
+2. `load` - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
+
+``` javascript
+app.load({}, 
+  function(err){
+    if(err)
+      console.error(err);
+    
+    // Application has loaded and ready for use
+    
+    // Suggestion: Inject the Message Service and navigate to a view
+    // see [Building Views](#building-views)
+    var MessageService = app.container.getService('message');
+    MessageService.send("navigateToMessage", {
+      viewKey: "landing"
+    });
+  });
+```
+
+3. `unload`
+
+# Building Views
+
+## ViewKey Registration
+
+  TODO: docs
+
+## View
+### Template 
+``` html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Landing Screen</title>
+</head>
+
+<body>
+  <h1>Landing Screen</h1>
+  <!-- Bind directly to the ViewModel using ES6 property compatible Binding Helpers  -->
+  <div data-win-bind="innerHTML: sampleData WinJSRocks.Binding.Mode.Property"></div>
+
+  <!-- Execute ViewModel Commands directly from markup -->
+  <button data-win-bind="onclick: navigateToListPageCommand WinJSRocks.Binding.Mode.Command">Navigate To List Page</button>
+
+  <div id="landingPivot" data-win-control="WinJS.UI.Pivot">
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem1'}">
+      PivotItem1 Content
+    </div>
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem2'}">
+      PivotItem2 Content
+    </div>
+  </div>
+</body>
+
+</html>
+```
+
+### Component Code
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -111,7 +190,7 @@ export default class extends WinJSRocks.View.Page {
 }
 ```
 
-## view-model.js
+## ViewModel
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -149,36 +228,7 @@ export default class extends WinJSRocks.ViewModel.Base {
 }
 ```
 
-## view.html
-``` html
-<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Landing Screen</title>
-</head>
-
-<body>
-  <h1>Landing Screen</h1>
-  <!-- Bind directly to the ViewModel using ES6 property compatible Binding Helpers  -->
-  <div data-win-bind="innerHTML: sampleData WinJSRocks.Binding.Mode.Property"></div>
-
-  <!-- Execute ViewModel Commands directly from markup -->
-  <button data-win-bind="onclick: navigateToListPageCommand WinJSRocks.Binding.Mode.Command">Navigate To List Page</button>
-
-  <div id="landingPivot" data-win-control="WinJS.UI.Pivot">
-    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem1'}">
-      PivotItem1 Content
-    </div>
-    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem2'}">
-      PivotItem2 Content
-    </div>
-  </div>
-</body>
-
-</html>
-```
 
 #Working with Plugins
 Plugins are the recommended way of bolting on features into the WinJSRocks application life-cycle.
