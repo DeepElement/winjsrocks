@@ -196,7 +196,7 @@ app.configure({
 
 Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations. 
 
-As an example, a common use-case is selecting a provider type to fullfill a need wihtin a service Service at runtime based on measured conditions within application state.
+As an example, a common use-case is selecting a provider type to fullfill a need within a service Service at runtime based on measured conditions within application state.
 
 In the WinJSRocks framework, providers have the following expecations:
 
