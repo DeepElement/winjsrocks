@@ -28,7 +28,7 @@ Featuring the Commandments of great code:
   - Plugins
   - Domain model indexing with [Lokijs](https://github.com/techfort/LokiJS)
 
-Ready to get started? see the full [docs](docs/main.md)
+Ready to get started? see the [docs](docs/main.md)
 
 
 [npm]:                     https://www.npmjs.com/package/winjsrocks
