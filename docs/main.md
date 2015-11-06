@@ -10,6 +10,7 @@ Getting Started
   - [ViewModels](#viewmodels)
   - [Views](#views)
   - [Models](#models)
+- [Working with Plugins](#working-with-plugins)
 
 See [Technical Documentation](technical.md) for APIs
 
@@ -170,6 +171,25 @@ export default class extends WinJSRocks.ViewModel.Base {
 
 </html>
 ```
+
+#Working with Plugins
+Plugins are the recommended way of bolting on features into the WinJSRocks application life-cycle.
+
+These types of components are loaded *after* the core framework has loaded and enables access to all of the goodies (Services/Providers) without any load order mishaps. They are loaded in series, so make sure you provide them in the order of dependence.
+
+To activate, just register your plugin in the `application.configure` plugins collection:
+``` javascript
+var WinJSRocks = require('winjsrocks');
+var WinJSRocksExtras = require('winjsrocks-extras');
+var app = new WinJSRocks.Application();
+app.configure({
+    plugins:[
+      new MyAwesomePlugin(app)
+    ]
+  },
+  function(err){
+  });
+``` 
 
 
 [logo]: logos/WinJS.rocks-256x256.png "WinJSRocks"
