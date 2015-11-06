@@ -54,21 +54,22 @@ npm install winsrocks-extras --save
 ## Application Entry Point
 Create a version of the Application object:
 
+Transpiled:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
 var app = new WinJSRocks.Application();
 ```
 
-It's also recommended that, if you are including the library using require/ES6 Import, throw the library out on the window to access the binding details from markup:
-
+ES5:
 ``` javascript
-window.WinJSRocks = require('winjsrocks');
+// window.WinJSRocks is the auto registered handle
+var app = new WinJSRocks.Application();
 ```
 
 Once the application is instatiated, access is available as a singleton:
 
 ``` javascript
-var myAppInstance = window.WinJSRocks.Application.Instance;
+var app = WinJSRocks.Application.Instance;
 ```
 
 # The Holy Triad (Models, Views and ViewModels)
