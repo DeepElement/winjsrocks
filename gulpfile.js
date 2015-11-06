@@ -1,11 +1,10 @@
 var gulp = require('gulp'),
   mocha = require('gulp-mocha'),
-  runSequence = require('gulp-run-sequence'),
+  runSequence = require('run-sequence'),
   rimraf = require('rimraf'),
   babel = require('babel-core/register'),
-  fs = require('fs-extra');
-
-var gutil = require("gulp-util"),
+  fs = require('fs-extra'),
+  gutil = require("gulp-util"),
   webpack = require("webpack"),
   webpackConfig = require("./webpack.config.js"),
   packageConfig = require('./package.json');
