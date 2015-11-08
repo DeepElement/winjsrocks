@@ -80,7 +80,7 @@ var app = WinJSRocks.Application.Instance;
 # The Application Object
 The Application object has three important phases that need to be implemented for an application:
 
-1. **configure** - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
+- **configure** - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
 
 ``` javascript
 var app = new WinJSRocks.Application();
@@ -99,9 +99,7 @@ app.configure({
     app.container.registerService("customService", CustomService);
   });
 ```
-
-2. **load** - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
-
+- **load** - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
 ``` javascript
 app.load({}, 
   function(err){
@@ -118,9 +116,7 @@ app.load({},
     });
   });
 ```
-
-3. **unload** - Stops [Services](#building-services) and unloads all known components.
-
+- **unload** - Stops [Services](#building-services) and unloads all known components.
 ``` javascript
 app.unload({}, 
   function(err){
