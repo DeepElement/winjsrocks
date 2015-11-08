@@ -52,6 +52,40 @@ describe('Integration', function() {
           return done();
         });
       });
+
+      it('plugin - verify load', function(done) {
+        // arrange
+        var Application = resolver.resolve('./application');
+        var PluginBase = resolver.resolve('./plugin/base');
+        var subject = new Application();
+        var pluginLoaded = false;
+        var plugin = class extends PluginBase {
+          constructor(application) {
+            super(application, "myPlugin");
+            pluginLoaded = true;
+          }
+        }
+
+        // act
+        subject.configure({
+          plugins: [
+            plugin
+          ]
+        }, function(err) {
+          if (err)
+            return done(err);
+
+          subject.load({}, function(err) {
+            if (err)
+              return done(err);
+
+            // assert
+            pluginLoaded.should.be.ok();
+
+            return done();
+          });
+        });
+      });
     });
 
     describe("resume", function() {

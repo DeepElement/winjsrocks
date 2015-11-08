@@ -1,5 +1,6 @@
 var jsdom = require('jsdom'),
-  path = require('path');
+  path = require('path'),
+  resolver = require('./resolver');
 
 var winJSShim = function() {
   global = global || {};
@@ -39,5 +40,12 @@ beforeEach(function(done) {
 });
 
 afterEach(function(done) {
-  return done();
+  var Application = resolver.resolve('./application');
+  if (Application.Instance) {
+    Application.Instance.unload({}, function(err) {
+      // ignore error
+      return done();
+    })
+  } else
+    return done();
 });

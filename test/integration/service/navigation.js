@@ -18,10 +18,6 @@ describe('Integration', function() {
       });
     });
 
-    afterEach(function(done) {
-      applicationInstance.unload({}, done);
-    });
-
 
     describe("Navigate to unregistered view", function() {
       it('standard success', function(done) {

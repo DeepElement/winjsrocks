@@ -1,26 +1,28 @@
 var gulp = require('gulp'),
   mocha = require('gulp-mocha'),
-  runSequence = require('gulp-run-sequence'),
+  runSequence = require('run-sequence'),
   rimraf = require('rimraf'),
   babel = require('babel-core/register'),
-  fs = require('fs-extra');
-
-var gutil = require("gulp-util"),
+  fs = require('fs-extra'),
+  gutil = require("gulp-util"),
   webpack = require("webpack"),
   webpackConfig = require("./webpack.config.js"),
-  packageConfig = require('./package.json');
+  packageConfig = require('./package.json'),
+  replace = require('gulp-replace');
 
 gulp.task("dist", function(cb) {
   runSequence(
     'dist:clean',
     'dist:package:debug',
     'dist:package:release',
-    'dist:package:latest-entry',
     cb);
 });
 
-gulp.task("dist:package:latest-entry", function(cb) {
-  fs.copy("dist/winjsrocks-" + packageConfig.version + ".js", "dist/latest.js", cb);
+
+gulp.task("npm:pre-publish", function(cb) {
+  return gulp.src('./package.json')
+    .pipe(replace(/latest.js/g, "winjsrocks-" + packageConfig.version + ".js"))
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task("dist:package:release", function(cb) {
