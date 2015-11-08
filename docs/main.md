@@ -55,7 +55,7 @@ npm install winsrocks-extras --save
 ```
 
 ## Load WinJS
-Application developers are required to pre-load `WinJS` before attempting run of the library. 
+Application developers are required to pre-load `WinJS` before attempting run of the library.
 
 ``` javascript
 var WinJS = require('winjs');
@@ -101,13 +101,13 @@ app.configure({
 ```
 - **load** - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
 ``` javascript
-app.load({}, 
+app.load({},
   function(err){
     if(err)
       console.error(err);
-    
+
     // Application has loaded and ready for use
-    
+
     // Suggestion: Inject the Message Service and navigate to a view
     // see [Building Views](#building-views)
     var MessageService = app.container.getService('message');
@@ -118,16 +118,20 @@ app.load({},
 ```
 - **unload** - Stops [Services](#building-services) and unloads all known components.
 ``` javascript
-app.unload({}, 
+app.unload({},
   function(err){
     if(err)
       console.error(err);
-      
+
     // All components have been notified of the shutdown
   });
 ```
 
 # Building Views
+The MVVM setup allows for ViewModel async loading ASAP in the WinJS view life-cycle.
+
+![sequence-navigation](uml/sequence-navigation.png)
+
 
 ## ViewKey Registration
 The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations around a single `ViewKey`.
@@ -273,18 +277,18 @@ app.configure({
   },
   function(err){
   });
-``` 
+```
 
 # Building Providers
 
-Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations. 
+Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations.
 
 As an example, a common use-case is selecting a provider type to fullfill a need within a service Service at runtime based on measured conditions within application state.
 
 In the WinJSRocks framework, providers have the following expecations:
 
 - remain __Stateless__ (don't expect the same instance to be used in all places)
-- Use a self reference to `application` to manage their stateful needs 
+- Use a self reference to `application` to manage their stateful needs
 - Does all build-up in the Constructor (no load/unload cycle)
 
 To build a provider, inherit from the `WinJSRocks.Provider.Base` class:
@@ -295,11 +299,11 @@ export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
   constructor(application) {
     super(application);
   }
-  
+
   methodA: function(args){
     return this.methodB(args);
   }
-  
+
   methodB: function(args){
     return "Keyboard cat";
   }
@@ -311,7 +315,7 @@ To activate a provider, register using the `WinJSRocks.Application.Instance.buil
 var WinJSRocks = require('winjsrocks');
 var app = new WinJSRocks.Application();
 app.builder.registerProvider("localStorage", KeyboardCatProvider);
-``` 
+```
 
 > Providers are registered in the `WinJSRocks.Application.Instance.container` before the `load` method is called on the application instance to assure custom Services and Providers are first-class citizens during application start-up.
 
