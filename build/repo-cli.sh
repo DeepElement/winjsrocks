@@ -17,7 +17,7 @@ if [ "${TRAVIS_BRANCH}" = "integration" ]; then
 
     # Tag for Release
     git checkout --track -b integration origin/integration > /dev/null;
-    npm version patch;
+    npm version patch -m "Travis CI auto-version from build ${TRAVIS_BUILD_NUMBER} - [ci skip]";
     git push origin --tags;
 
     # Reverse Integrate
