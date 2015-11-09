@@ -39,10 +39,22 @@ export default class extends BaseService {
 
   _onPopState(event) {
     var messageService = this.application.container.getService("message");
-    messageService.send("navigateBackMessage");
+
+    // Manage backstack
+    var steps = 0;
+    for (var i = WinJS.Navigation.history.backStack.length - 1; i >= 0; i--) {
+      var item = WinJS.Navigation.history.backStack[i];
+      if (item && item.state && item.state.isModal)
+        steps++;
+    }
+
+    messageService.send("navigateBackMessage", {
+      steps: steps
+    });
   }
 
   onNavigateBackMessage(type, args) {
+    var that = this;
     if (this.viewModel && this.viewModel.overrideBackNavigation) {
       log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
       return;
@@ -54,6 +66,7 @@ export default class extends BaseService {
 
   onNavigateToMessage(type, args) {
     var that = this;
+
     var viewKey = args.viewKey;
     var state = args.state;
     var viewTemplateUri = this.application.configuration.get("pages:" + viewKey + ":template");
@@ -66,13 +79,6 @@ export default class extends BaseService {
       if (this.viewModel)
         this.viewModel.onNavigateFrom();
 
-      if (window["history"] && !vmInstance.isModal) {
-        window.history.pushState({
-          context: state,
-          key: viewKey
-        }, viewKey, "#" + viewKey);
-      }
-
       WinJS.Navigation.navigate(viewTemplateUri, vmInstance);
     }
   }
@@ -84,15 +90,19 @@ export default class extends BaseService {
     }
   }
 
+  /*
+    Called on both Forward and Back navigation
+  */
   _onNavigating(args) {
     var that = this;
+    args.detail.delta = args.detail.delta || 0;
     var messageService = this.application.container.getService("message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
-      if (args.detail.delta == -1) {
+      if (args.detail.delta < 0) {
         if (that.view)
           that.application.container.delViewInstance(that.view.viewModel.key, that.view);
         if (that.viewModel) {
@@ -100,7 +110,7 @@ export default class extends BaseService {
         }
 
         if (that.view && that.viewModel)
-           that.viewModel.dispose();
+          that.viewModel.dispose();
       }
       if (that._element.childElementCount > 1) {
 
@@ -121,24 +131,35 @@ export default class extends BaseService {
       messageService.send("applicationErrorMessage", err);
     };
 
-    if (that.viewModel && that.viewModel.isModal) {
-      WinJS.Navigation.history.backStack.pop();
-    }
-
     // TODO: archive the old view/viewModel
     this._lastNavigationPromise = WinJS.Promise.as().then(cleanup, cleanup).then(function() {
       messageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
-        args.detail.state).then(null, handleRenderError)
+        args.detail.state).then(function() {
+
+        if (args.detail.delta >= 0) {
+
+          // Push the new view on state if last view is not modal
+          var lastNavigationItem = WinJS.Navigation.history.backStack[WinJS.Navigation.history.backStack.length - 1];
+          if (lastNavigationItem && lastNavigationItem.state && !lastNavigationItem.state.isModal) {
+            window.history.pushState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
+          }
+          else{
+            // Update most recent history entry
+            window.history.replaceState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
+          }
+        }
+
+      }, handleRenderError)
     });
     args.detail.setPromise(this._lastNavigationPromise);
   }
 
-  _onNavigated() {
+  _onNavigated(args) {
+    var that = this;
     var messageService = this.application.container.getService("message");
     messageService.send("navigatedMessage");
-
     this.viewModel.onNavigateTo();
   }
 
