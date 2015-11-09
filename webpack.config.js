@@ -14,7 +14,7 @@ module.exports = {
     crypto: "empty"
   },
   externals: {
-    "winjs": "WinJS"
+    "winjs": "winjs"
   },
   module: {
     loaders: [{
