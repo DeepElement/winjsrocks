@@ -8,7 +8,7 @@ if [ "${TRAVIS_BRANCH}" = "master" ]; then
   git checkout --track -b integration origin/integration > /dev/null;
   git merge --squash origin/master --no-commit  > /dev/null;
   git commit -m "Travis CI auto-merge of master from build ${TRAVIS_BUILD_NUMBER} - [ci skip]";
-  npm version patch -m "Travis CI auto-version from build ${TRAVIS_BUILD_NUMBER} - [ci skip]";
+  npm version patch -m "Travis CI auto-version from build ${TRAVIS_BUILD_NUMBER}";
   git push -q origin integration > /dev/null;
   git push origin --tags;
 
