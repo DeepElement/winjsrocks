@@ -37,11 +37,11 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 # Project Setup
 
-## Install packages
+## Install Packages
 
 Install the framework and the current WinJS bits:
 
-```
+``` bash
 npm install winjs --save
 npm install winjsrocks --save
 ```
@@ -50,11 +50,20 @@ npm install winjsrocks --save
 
 Optionally, install the maintained pluglin library [WinJSRocks-Extras](https://github.com/DeepElement/winjsrocks-extras). This project includes cool plugins like IndexDB Storage, JQuery Adapters and shows really good examples of how to write your own application plugins.
 
-```
+``` bash
 npm install winsrocks-extras --save
 ```
 
-## Application Entry Point
+## Load WinJS
+Application developers are required to pre-load `WinJS` before attempting run of the library.
+
+``` javascript
+var WinJS = require('winjs');
+var WinJSRocks = require('winjsrocks');
+```
+
+
+## Create Application Instance
 Create a version of the Application object:
 
 ``` javascript
@@ -62,21 +71,131 @@ var WinJSRocks = require('winjsrocks');
 var app = new WinJSRocks.Application();
 ```
 
-It's also recommended that, if you are including the library using require/ES6 Import, throw the library out on the window to access the binding details from markup:
-
-``` javascript
-window.WinJSRocks = require('winjsrocks');
-```
-
 Once the application is instatiated, access is available as a singleton:
 
 ``` javascript
-var myAppInstance = window.WinJSRocks.Application.Instance;
+var app = WinJSRocks.Application.Instance;
 ```
 
-# The Holy Triad (Models, Views and ViewModels)
+# The Application Object
+The Application object has three important phases that need to be implemented for an application:
 
-## view.js
+- **configure** - Allows plugin registration and generally is the best place to build up the container with [Services](#building-services) and [Providers](#building-providers).
+
+``` javascript
+var app = new WinJSRocks.Application();
+var CustomProvider = require('providers/customProvider');
+var CustomService = require('services/customService');
+var CustomPlugin = require('plugins/customPlugin');
+app.configure({
+    plugins: [
+      CustomPlugin
+    ]
+  }, function(err){
+    if(err)
+      console.error(err);
+    // Load up the container with goodies
+    app.container.registerProvider("customProvider", CustomProvider);
+    app.container.registerService("customService", CustomService);
+  });
+```
+- **load** - Starts [Services](#building-services) and loads [Plugins](#working-with-plugins) (in that order)
+``` javascript
+app.load({},
+  function(err){
+    if(err)
+      console.error(err);
+
+    // Application has loaded and ready for use
+
+    // Suggestion: Inject the Message Service and navigate to a view
+    // see [Building Views](#building-views)
+    var MessageService = app.container.getService('message');
+    MessageService.send("navigateToMessage", {
+      viewKey: "landing"
+    });
+  });
+```
+- **unload** - Stops [Services](#building-services) and unloads all known components.
+``` javascript
+app.unload({},
+  function(err){
+    if(err)
+      console.error(err);
+
+    // All components have been notified of the shutdown
+  });
+```
+
+# Building Views
+The WinJSRocks MVVM framework provides the View/ViewModel sequencing to enable the fastest possible asynchronous load behavior for application developers. 
+
+This is achieved by using a `NavigationService` to instantiate ViewModels at the same time as their respective View, kicking off the ViewModel's load life-cycle before WinJS starts up the native page life-cycle. 
+
+Then, the View is allowed to render while the native WinJS Page `ready` method is suspended until the ViewModel has fully loaded initially. 
+
+In result, application developers can rely on the native WinJS Page `ready` method to fire after the View Template is fully rendered, the View Model has loaded up principle Models and the initial `*.processAll()` phases have completed on the visual tree.
+
+![sequence-navigation](uml/sequence-navigation.png)
+
+
+## ViewKey Registration
+The framework provides the `WinJSRocks.Application.Instance.builder` API to aid in view/item registrations around a single `ViewKey`.
+
+Example of registering views:
+```javascript
+var app = new WinJSRocks.Application();
+var viewKeys = ['splash', 'landing', 'items', 'article', 'contributor'];
+viewKeys.forEach(function(viewKey) {
+  app.builder.registerView(
+    viewKey, // framework ViewKey
+    require('./views/' + viewKey + '/view'),
+    require('./views/' + viewKey + '/view-model'),
+    'views/' + viewKey + '/view.html');
+});
+```
+
+> Note: View registration should occur before calling `load` on the Application object
+
+## View
+Building a view is a combination of a *Template*, *Component* and *ViewKey*. The Template/Component will be associated with a *ViewKey* and will be joined together at runtime upon navigation to a view.
+
+### Template
+Templates are expected to be compliant HTML mark-up files and their defintion is based on the [WinJS](https://github.com/winjs/winjs) navigation framework's formal definition of an [WinJS.UI.Pages.PageControl](https://msdn.microsoft.com/en-us/library/windows/apps/jj126158.aspx)
+
+Generally, anything goes here and this is where most teams will match the UI creative pattern to each target User-Experience.
+
+``` html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Landing Screen</title>
+</head>
+
+<body>
+  <h1>Landing Screen</h1>
+  <!-- Bind directly to the ViewModel using ES6 property compatible Binding Helpers  -->
+  <div data-win-bind="innerHTML: sampleData WinJSRocks.Binding.Mode.Property"></div>
+
+  <!-- Execute ViewModel Commands directly from markup -->
+  <button data-win-bind="onclick: navigateToListPageCommand WinJSRocks.Binding.Mode.Command">Navigate To List Page</button>
+
+  <div id="landingPivot" data-win-control="WinJS.UI.Pivot">
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem1'}">
+      PivotItem1 Content
+    </div>
+    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem2'}">
+      PivotItem2 Content
+    </div>
+  </div>
+</body>
+
+</html>
+```
+
+### Component
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -107,7 +226,7 @@ export default class extends WinJSRocks.View.Page {
 }
 ```
 
-## view-model.js
+## ViewModel
 ``` javascript
 import WinJSRocks from "winjsrocks";
 
@@ -145,36 +264,7 @@ export default class extends WinJSRocks.ViewModel.Base {
 }
 ```
 
-## view.html
-``` html
-<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Landing Screen</title>
-</head>
-
-<body>
-  <h1>Landing Screen</h1>
-  <!-- Bind directly to the ViewModel using ES6 property compatible Binding Helpers  -->
-  <div data-win-bind="innerHTML: sampleData WinJSRocks.Binding.Mode.Property"></div>
-
-  <!-- Execute ViewModel Commands directly from markup -->
-  <button data-win-bind="onclick: navigateToListPageCommand WinJSRocks.Binding.Mode.Command">Navigate To List Page</button>
-
-  <div id="landingPivot" data-win-control="WinJS.UI.Pivot">
-    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem1'}">
-      PivotItem1 Content
-    </div>
-    <div data-win-control="WinJS.UI.PivotItem" data-win-options="{'header': 'PivotItem2'}">
-      PivotItem2 Content
-    </div>
-  </div>
-</body>
-
-</html>
-```
 
 #Working with Plugins
 Plugins are the recommended way of bolting on features into the WinJSRocks application life-cycle.
@@ -182,29 +272,29 @@ Plugins are the recommended way of bolting on features into the WinJSRocks appli
 These types of components are loaded *after* the core framework has loaded and enables access to all of the goodies (Services/Providers) without any load order mishaps. They are loaded in series, so make sure you provide them in the order of dependence.
 
 To activate, register the class plugin class definition in the `WinJSRocks.Application.Instance.configure` options as a `plugins` array:
+
 ``` javascript
 var WinJSRocks = require('winjsrocks');
-var WinJSRocksExtras = require('winjsrocks-extras');
 var app = new WinJSRocks.Application();
 app.configure({
     plugins:[
-      new MyAwesomePlugin(app)
+      MyAwesomePlugin // Provide the Class Definition of the Plugin
     ]
   },
   function(err){
   });
-``` 
+```
 
 # Building Providers
 
-Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations. 
+Providers are an elegant design pattern for decoupling application behavior into implementation strategies that might vary in different situations.
 
 As an example, a common use-case is selecting a provider type to fullfill a need within a service Service at runtime based on measured conditions within application state.
 
 In the WinJSRocks framework, providers have the following expecations:
 
 - remain __Stateless__ (don't expect the same instance to be used in all places)
-- Use a self reference to `application` to manage their stateful needs 
+- Use a self reference to `application` to manage their stateful needs
 - Does all build-up in the Constructor (no load/unload cycle)
 
 To build a provider, inherit from the `WinJSRocks.Provider.Base` class:
@@ -215,11 +305,11 @@ export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
   constructor(application) {
     super(application);
   }
-  
+
   methodA: function(args){
     return this.methodB(args);
   }
-  
+
   methodB: function(args){
     return "Keyboard cat";
   }
@@ -229,10 +319,9 @@ export default class KeyboardCatProvider extends WinJSRocks.Provider.Base {
 To activate a provider, register using the `WinJSRocks.Application.Instance.builder` before calling `configure`:
 ``` javascript
 var WinJSRocks = require('winjsrocks');
-var WinJSRocksExtras = require('winjsrocks-extras');
 var app = new WinJSRocks.Application();
 app.builder.registerProvider("localStorage", KeyboardCatProvider);
-``` 
+```
 
 > Providers are registered in the `WinJSRocks.Application.Instance.container` before the `load` method is called on the application instance to assure custom Services and Providers are first-class citizens during application start-up.
 
