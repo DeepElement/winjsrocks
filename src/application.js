@@ -170,7 +170,7 @@ export default class Application extends LifeCycle {
 
           async.each(that._plugins,
             function(pluginDef, pluginCb) {
-              var plugin = new pluginDef(pluginDef, that);
+              var plugin = new pluginDef(that);
               plugin.loadComponent(options, pluginCb);
             },
             function(err) {
