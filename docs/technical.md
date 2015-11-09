@@ -19,3 +19,6 @@ Methods:
   - `unload(config,callback)`
 
 Properties:
+
+-   `container`
+-   `configuration`
