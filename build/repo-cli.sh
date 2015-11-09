@@ -35,7 +35,7 @@ if [ "${TRAVIS_BRANCH}" = "stable" ]; then
 
     # Tag for Release
     git checkout --track -b stable origin/stable > /dev/null;
-    npm version minor -m "Travis CI auto-version from build ${TRAVIS_BUILD_NUMBER} - [ci skip]";;
+    npm version minor -m "Travis CI auto-version from build ${TRAVIS_BUILD_NUMBER} - [ci skip]";
     git push origin stable;
     git push origin --tags;
 
