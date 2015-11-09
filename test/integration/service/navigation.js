@@ -239,7 +239,7 @@ describe('Integration', function() {
               }, cb);
           },
           function(cb) {
-            async.eachSeries([1, 0],
+            async.eachSeries([1],
               function(pageIdx, pageIdxCb) {
                 var page = pages[pageIdx];
                 if (pageIdx != 0) {
