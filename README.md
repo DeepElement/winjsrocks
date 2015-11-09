@@ -8,6 +8,7 @@ An [ES6](http://www.ecma-international.org/ecma-262/6.0/) MVVM framework optimiz
 
 Built to support amazing app developers targetting:
   - Windows 10
+  - Windows 8/8.1
   - XboxOne
   - Windows Phone 10
   - Android
