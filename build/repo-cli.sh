@@ -24,6 +24,7 @@ fi
 
 if [ "${TRAVIS_BRANCH}" = "stable" ]; then
 
+  # Create tag on staging branch
   git checkout --track -b stable origin/stable > /dev/null;
   version=`git diff HEAD^..HEAD -- "$(git rev-parse --show-toplevel)"/package.json | grep '^\+.*version' | sed -s 's/[^0-9\.]//g'`
   if [ "$version" != "" ]; then
