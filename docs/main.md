@@ -128,13 +128,13 @@ app.unload({},
 ```
 
 # Building Views
-The WinJSRocks MVVM framework provides the View/ViewModel sequencing to enable the fastest possible asynchronous load behavior for application developers. 
+The WinJSRocks MVVM framework provides the [View](#view)/[ViewModel](#viewmodel) sequencing to enable the fastest possible asynchronous load behavior for application developers. 
 
-This is achieved by using a `NavigationService` to instantiate ViewModels at the same time as their respective View, kicking off the ViewModel's load life-cycle before WinJS starts up the native page life-cycle. 
+This is achieved by using a `NavigationService` to instantiate [ViewModels](#viewmodel) at the same time as their respective [View](#view), kicking off the [ViewModel's](#viewmodel) load life-cycle before WinJS starts up the native page life-cycle. 
 
-Then, the View is allowed to render while the native WinJS Page `ready` method is suspended until the ViewModel has fully loaded initially. 
+Then, the [View](#view) is allowed to render while the native WinJS Page `ready` method is suspended until the ViewModel has fully loaded initially. 
 
-In result, application developers can rely on the native WinJS Page `ready` method to fire after the View Template is fully rendered, the View Model has loaded up principle Models and the initial `*.processAll()` phases have completed on the visual tree.
+In result, application developers can rely on the native WinJS Page `ready` method to fire after the View Template is fully rendered, the [ViewModel](#viewmodel) has loaded up principle Models and the initial `*.processAll()` phases have completed on the visual tree.
 
 ![sequence-navigation](uml/sequence-navigation.png)
 
