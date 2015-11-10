@@ -34,6 +34,7 @@ export default class Application extends LifeCycle {
       this._bindingMode = new BindingMode(this);
       this._bindingTemplate = new BindingTemplate(this);
       this._plugins = [];
+      this._pluginDefs = [];
 
       // TODO: make instance based
       this._logger = Logging;
@@ -116,6 +117,8 @@ export default class Application extends LifeCycle {
         // Filter down invalid stuffs
         that._plugins = options.plugins.filter(function(p) {
           return p.prototype instanceof PluginBase;
+        }).map(function(pluginDef){
+          return new pluginDef(that);
         });
 
         // setup the framework services/providers
@@ -169,8 +172,7 @@ export default class Application extends LifeCycle {
           MessageService.send("applicationReadyMessage");
 
           async.each(that._plugins,
-            function(pluginDef, pluginCb) {
-              var plugin = new pluginDef(that);
+            function(plugin, pluginCb) {
               plugin.loadComponent(options, pluginCb);
             },
             function(err) {
