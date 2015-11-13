@@ -26,10 +26,15 @@ if [ "${TRAVIS_BRANCH}" = "stable" ]; then
 
   # Create tag on staging branch
   git checkout --track -b stable origin/stable > /dev/null;
-  version=`git diff HEAD^..HEAD -- "$(git rev-parse --show-toplevel)"/package.json | grep '^\+.*version' | sed -s 's/[^0-9\.]//g'`
-  if [ "$version" != "" ]; then
-      git tag -a "v$version" -m "`git log -1 --format=%s`"
-      echo "Created a new tag, v$version"
+  PACKAGE_VERSION=$(cat package.json \
+      | grep version \
+      | head -1 \
+      | awk -F: '{ print $2 }' \
+      | sed 's/[",]//g')
+
+  if [ "$PACKAGE_VERSION" != "" ]; then
+      git tag -a "v$PACKAGE_VERSION" -m "`git log -1 --format=%s`"
+      echo "Created a new tag, v$PACKAGE_VERSION"
   fi
   git push origin --tags > /dev/null;
 
