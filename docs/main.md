@@ -32,8 +32,8 @@ WinJS is a future-facing UI Framework that really is designed to allow your Info
 
 # Sample Apps
 
-- (In Development) [Win10 rocks](https://github.com/DeepElement/win10rocks) - ES6 cross-platform
-- (In Development) WinJSRocks Starter - ES6 Shallow template
+- (In Development) [WinJSRocks-Kaneda](https://github.com/DeepElement/winjsrocks-kaneda) - ES6 cross-platform
+- (In Development) [WinJSrocks-Skywarp](https://github.com/DeepElement/winjsrocks-skywarp) - ES6 Shallow template
 
 # Project Setup
 
