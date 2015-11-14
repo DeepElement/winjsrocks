@@ -1,5 +1,5 @@
 gitignore: false
 filters:
- - extension:
+ extension:
   - md
   - markdown
