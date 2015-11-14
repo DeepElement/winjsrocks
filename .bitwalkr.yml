@@ -1,4 +1,5 @@
 title: "An ES6 MVVM framework optimized for WinJS"
+gitignore: true
 extensions:
  - md
  - markdown
