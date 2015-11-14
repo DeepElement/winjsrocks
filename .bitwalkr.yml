@@ -1,6 +1,5 @@
 filters:
  extensions:
-  - md
-  - markdown
+  - png
  blobs:
   - *.js
