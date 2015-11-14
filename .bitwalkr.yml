@@ -3,4 +3,4 @@ filters:
   - md
   - markdown
  globs: 
-  - *.js
+  - '*.js'
