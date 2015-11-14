@@ -2,3 +2,5 @@ filters:
  extensions:
   - md
   - markdown
+ blobs:
+  - *.js
