@@ -1,6 +1,6 @@
 filters:
 # extensions:
 #  - png
- blobs:
+ globs:
   - '*.js'
   - '*.md'
