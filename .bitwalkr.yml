@@ -1,4 +1,6 @@
 filters:
  extensions:
-  - md
+  - md
   - markdown
+ globs: 
+  - *.js
