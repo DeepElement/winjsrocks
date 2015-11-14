@@ -2,5 +2,5 @@ filters:
 # extensions:
 #  - png
  globs:
-  - '*.js'
-  - '*.md'
+  - '**/*.js'
+  - '**/*.md'
