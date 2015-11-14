@@ -2,4 +2,4 @@ filters:
  extensions:
   - png
  blobs:
-  - *.js
+  - '*.js'
