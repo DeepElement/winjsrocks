@@ -5,7 +5,7 @@ var common = require('../../common'),
   async = require('async'),
   resolver = require('../../resolver');
 
-/*
+
 var Helpers = {
   navigateForward: function(application, viewKeys, callback) {
     var WinJS = require('winjs');
@@ -144,10 +144,11 @@ describe('Integration', function() {
         }];
 
         pages.forEach(function(page) {
+          console.log(__dirname, page.templateUri);
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            "file://" + page.templateUri
+            page.templateUri
           );
         });
 
@@ -164,7 +165,7 @@ describe('Integration', function() {
         ], done);
       });
     });
-
+/*
     describe("Navigation Forward", function() {
       it('standard success', function(done) {
         // arrange
@@ -375,5 +376,7 @@ describe('Integration', function() {
         ], done);
       });
     });
+
+*/
   });
-});*/
+});
