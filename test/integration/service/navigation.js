@@ -5,7 +5,7 @@ var common = require('../../common'),
   async = require('async'),
   resolver = require('../../resolver');
 
-
+/*
 var Helpers = {
   navigateForward: function(application, viewKeys, callback) {
     var WinJS = require('winjs');
@@ -376,4 +376,4 @@ describe('Integration', function() {
       });
     });
   });
-});
+});*/
