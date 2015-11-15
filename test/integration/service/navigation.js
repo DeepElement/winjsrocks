@@ -5,9 +5,10 @@ var common = require('../../common'),
   async = require('async'),
   resolver = require('../../resolver');
 
-
+/*
 var Helpers = {
   navigateForward: function(application, viewKeys, callback) {
+    var WinJS = require('winjs');
     var MessageService = application.container.getService('message');
     var NavigationService = application.container.getService('navigation');
     async.eachSeries(viewKeys,
@@ -26,15 +27,51 @@ var Helpers = {
         });
       },
       function(err) {
+        // TODO: verify WINJS backstack
+        // TODO: verify browser history
         return callback(err);
       });
   },
-  navigateBackwards: function(application,
+  navigateBackward: function(application,
     expectedViewKeys,
     callback) {
+    var WinJS = require('winjs');
+    var MessageService = application.container.getService('message');
+    var NavigationService = application.container.getService('navigation');
+    var idx = 0;
+    var forceFail = false;
+    async.whilst(
+      function() {
+        return WinJS.Navigation.canGoBack;
+      },
+      function(stepCb) {
+        var currentExpectedKey = expectedViewKeys[idx];
+        if (!currentExpectedKey) {
+          return stepCb('key-out-of-bounds');
+        }
 
+        var navigateDelegate = function() {
+          MessageService.unregister("navigatedMessage",
+            navigateDelegate);
 
-    return callback();
+          NavigationService.viewModel.key.should.equal(currentExpectedKey);
+
+          // TODO: verify WINJS backstack
+          // TODO: verify browser history
+
+          idx++;
+
+          return stepCb();
+        };
+
+        MessageService.register("navigatedMessage",
+          navigateDelegate);
+
+        MessageService.send("navigateBackMessage");
+      },
+      function(err) {
+        return callback(err);
+      });
   }
 }
 
@@ -67,6 +104,67 @@ describe('Integration', function() {
       });
     });
 
+
+    describe("BackStack - View Error", function() {
+      it('standard success', function(done) {
+        // arrange
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+        var pages = [{
+          key: "splash",
+          view: class extends entry.View.Page {},
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+        }, {
+          key: "landing",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {},
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+        }, {
+          key: "player",
+          view: class extends entry.View.Page {
+            render(element, options, loadResult) {
+              throw new Error();
+              return super.render(element, options, loadResult);
+            }
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+        }];
+
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            "file://" + page.templateUri
+          );
+        });
+
+        //act
+        async.waterfall([
+          function(cb) {
+            Helpers.navigateForward(applicationInstance, ['splash', 'landing', 'player', 'player'],
+              cb);
+          },
+          function(cb) {
+            Helpers.navigateBackward(applicationInstance, ['landing'],
+              cb);
+          }
+        ], done);
+      });
+    });
+
     describe("Navigation Forward", function() {
       it('standard success', function(done) {
         // arrange
@@ -77,20 +175,20 @@ describe('Integration', function() {
           key: "viewA",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.1.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
         }, {
           key: "viewB",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
         }];
         pages.forEach(function(page) {
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            page.templateUri
+            "file://" + page.templateUri
           );
         });
 
@@ -114,28 +212,28 @@ describe('Integration', function() {
           key: "viewA",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.1.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
         }, {
           key: "viewB",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
         }, {
           key: "viewC",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.3.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
         }];
 
         pages.forEach(function(page) {
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            page.templateUri
+            "file://" + page.templateUri
           );
         });
 
@@ -146,37 +244,12 @@ describe('Integration', function() {
               cb);
           },
           function(cb) {
-            async.eachSeries([2, 1, 0],
-              function(pageIdx, pageIdxCb) {
-                var page = pages[pageIdx];
-                if (pageIdx != 0) {
-                  //var targetPage = pages[pageIdx - 1];
-
-                  // Assert can go back
-                  WinJS.Navigation.canGoBack.should.be.ok();
-
-                  var navigateDelegate = function() {
-                    messageService.unregister("navigatedMessage",
-                      navigateDelegate);
-                    return pageIdxCb();
-                  };
-
-                  messageService.register("navigatedMessage",
-                    navigateDelegate);
-
-                  messageService.send("navigateBackMessage");
-                } else {
-                  // Assert cannot go back
-                  WinJS.Navigation.canGoBack.should.not.be.ok();
-                  return pageIdxCb();
-                }
-              }, cb);
+            Helpers.navigateBackward(applicationInstance, ['viewB', 'viewA'],
+              cb);
           }
         ], done);
       });
     });
-
-
 
     describe("Modal Navigation", function() {
       it('standard success', function(done) {
@@ -189,7 +262,7 @@ describe('Integration', function() {
           key: "view1",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.1.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
         }, {
           key: "view2",
           view: class extends entry.View.Page {
@@ -200,7 +273,7 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "harness", "template.2.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
         }, {
           key: "view3",
           view: class extends entry.View.Page {
@@ -211,58 +284,96 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "harness", "template.3.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
         }, {
           key: "view4",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "harness", "template.4.html")
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.4.html")
         }];
 
         pages.forEach(function(page) {
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            page.templateUri
+            "file://" + page.templateUri
           );
         });
 
         //act
         async.waterfall([
           function(cb) {
-            Helpers.navigateForward(applicationInstance,
-              ['view1', 'view2', 'view3', 'view4'],
+            Helpers.navigateForward(applicationInstance, ['view1', 'view2', 'view3', 'view4'],
               cb);
           },
           function(cb) {
-            async.eachSeries([1],
-              function(pageIdx, pageIdxCb) {
-                var page = pages[pageIdx];
-                if (pageIdx != 0) {
-                  // Assert can go back
-                  WinJS.Navigation.canGoBack.should.be.ok();
+            Helpers.navigateBackward(applicationInstance, ['view1'],
+              cb);
+          }
+        ], done);
+      });
 
-                  var navigateDelegate = function() {
-                    messageService.unregister("navigatedMessage",
-                      navigateDelegate);
-                    return pageIdxCb();
-                  };
+      it('splash - landing - player use-case', function(done) {
+        // arrange
+        var WinJS = require('winjs');
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+        var pages = [{
+          key: "splash",
+          view: class extends entry.View.Page {},
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+        }, {
+          key: "landing",
+          view: class extends entry.View.Page {
 
-                  messageService.register("navigatedMessage",
-                    navigateDelegate);
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return false;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+        }, {
+          key: "player",
+          view: class extends entry.View.Page {
 
-                  messageService.send("navigateBackMessage");
-                } else {
-                  // Assert cannot go back
-                  WinJS.Navigation.canGoBack.should.not.be.ok();
-                  return pageIdxCb();
-                }
-              }, cb);
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+        }];
+
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            "file://" + page.templateUri
+          );
+        });
+
+        //act
+        async.waterfall([
+          function(cb) {
+            Helpers.navigateForward(applicationInstance, ['splash', 'landing', 'player', 'player'],
+              cb);
+          },
+          function(cb) {
+            Helpers.navigateBackward(applicationInstance, ['landing'],
+              cb);
           }
         ], done);
       });
     });
   });
-});
+});*/
