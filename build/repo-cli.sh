@@ -31,6 +31,8 @@ if [ "${TRAVIS_BRANCH}" = "stable" ]; then
       | head -1 \
       | awk -F: '{ print $2 }' \
       | sed 's/[",]//g')
+  # Trim spaces leading
+  PACKAGE_VERSION=`echo $PACKAGE_VERSION`
 
   if [ "$PACKAGE_VERSION" != "" ]; then
       git tag -a "v$PACKAGE_VERSION" -m "`git log -1 --format=%s`"
