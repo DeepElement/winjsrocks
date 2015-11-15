@@ -127,8 +127,24 @@ export default class extends BaseService {
       }
     };
 
-    var handleRenderError = function(err) {
-      messageService.send("applicationErrorMessage", err);
+    var afterRender = function(err) {
+
+      if (args.detail.delta >= 0) {
+
+        // Push the new view on state if last view is not modal
+        var lastNavigationItem = WinJS.Navigation.history.backStack[WinJS.Navigation.history.backStack.length - 1];
+        if (lastNavigationItem && lastNavigationItem.state && !lastNavigationItem.state.isModal) {
+          window.history.pushState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
+        } else {
+          // Update most recent history entry
+          window.history.replaceState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
+          WinJS.Navigation.history.backStack.splice(-1, 1);
+        }
+      }
+
+      //console.log(err);
+      if (err)
+        messageService.send("applicationErrorMessage", err);
     };
 
     // TODO: archive the old view/viewModel
@@ -136,23 +152,7 @@ export default class extends BaseService {
       messageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
-        args.detail.state).then(function() {
-
-        if (args.detail.delta >= 0) {
-
-          // Push the new view on state if last view is not modal
-          var lastNavigationItem = WinJS.Navigation.history.backStack[WinJS.Navigation.history.backStack.length - 1];
-          if (lastNavigationItem && lastNavigationItem.state && !lastNavigationItem.state.isModal) {
-            window.history.pushState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
-          }
-          else{
-            // Update most recent history entry
-            window.history.replaceState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
-            WinJS.Navigation.history.backStack.splice(-1, 1);
-          }
-        }
-
-      }, handleRenderError)
+        args.detail.state).then(afterRender, afterRender)
     });
     args.detail.setPromise(this._lastNavigationPromise);
   }
