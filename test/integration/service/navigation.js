@@ -5,6 +5,39 @@ var common = require('../../common'),
   async = require('async'),
   resolver = require('../../resolver');
 
+
+var Helpers = {
+  navigateForward: function(application, viewKeys, callback) {
+    var MessageService = application.container.getService('message');
+    var NavigationService = application.container.getService('navigation');
+    async.eachSeries(viewKeys,
+      function(viewKey, viewKeyCb) {
+        var navigateDelegate = function() {
+          MessageService.unregister("navigatedMessage",
+            navigateDelegate);
+          NavigationService.viewModel.key.should.equal(viewKey);
+          return viewKeyCb();
+        };
+
+        MessageService.register("navigatedMessage",
+          navigateDelegate);
+        MessageService.send("navigateToMessage", {
+          viewKey: viewKey
+        });
+      },
+      function(err) {
+        return callback(err);
+      });
+  },
+  navigateBackwards: function(application,
+    expectedViewKeys,
+    callback) {
+
+
+    return callback();
+  }
+}
+
 describe('Integration', function() {
   describe('Navigation Service', function() {
     var applicationInstance;
@@ -53,34 +86,20 @@ describe('Integration', function() {
           viewModel: class extends entry.ViewModel.Base {},
           templateUri: path.join(__dirname, "..", "harness", "template.2.html")
         }];
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            page.templateUri
+          );
+        });
 
         //act
-        async.eachSeries(pages,
-          function(page, pageCb) {
-            applicationInstance.builder.registerView(page.key,
-              page.view,
-              page.viewModel,
-              page.templateUri
-            );
-
-            var navigateDelegate = function() {
-              messageService.unregister("navigatedMessage",
-                navigateDelegate);
-
-              navigationService.view.should.be.an.instanceOf(page.view);
-              navigationService.viewModel.should.be.an.instanceOf(page.viewModel);
-
-              return pageCb();
-            };
-
-            messageService.register("navigatedMessage",
-              navigateDelegate);
-
-            messageService.send("navigateToMessage", {
-              viewKey: page.key
-            });
-
-          }, done);
+        Helpers.navigateForward(applicationInstance, ['viewA', 'viewB'],
+          function(err) {
+            should.not.exist(err);
+            return done();
+          });
       });
     });
 
@@ -112,30 +131,19 @@ describe('Integration', function() {
           templateUri: path.join(__dirname, "..", "harness", "template.3.html")
         }];
 
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            page.templateUri
+          );
+        });
+
         //act
         async.waterfall([
           function(cb) {
-            async.eachSeries(pages,
-              function(page, pageCb) {
-                applicationInstance.builder.registerView(page.key,
-                  page.view,
-                  page.viewModel,
-                  page.templateUri
-                );
-
-                var navigateDelegate = function() {
-                  messageService.unregister("navigatedMessage",
-                    navigateDelegate);
-                  return pageCb();
-                };
-
-                messageService.register("navigatedMessage",
-                  navigateDelegate);
-
-                messageService.send("navigateToMessage", {
-                  viewKey: page.key
-                });
-              }, cb);
+            Helpers.navigateForward(applicationInstance, ['viewA', 'viewB', 'viewC'],
+              cb);
           },
           function(cb) {
             async.eachSeries([2, 1, 0],
@@ -213,30 +221,20 @@ describe('Integration', function() {
           templateUri: path.join(__dirname, "..", "harness", "template.4.html")
         }];
 
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            page.templateUri
+          );
+        });
+
         //act
         async.waterfall([
           function(cb) {
-            async.eachSeries(pages,
-              function(page, pageCb) {
-                applicationInstance.builder.registerView(page.key,
-                  page.view,
-                  page.viewModel,
-                  page.templateUri
-                );
-
-                var navigateDelegate = function() {
-                  messageService.unregister("navigatedMessage",
-                    navigateDelegate);
-                  return pageCb();
-                };
-
-                messageService.register("navigatedMessage",
-                  navigateDelegate);
-
-                messageService.send("navigateToMessage", {
-                  viewKey: page.key
-                });
-              }, cb);
+            Helpers.navigateForward(applicationInstance,
+              ['view1', 'view2', 'view3', 'view4'],
+              cb);
           },
           function(cb) {
             async.eachSeries([1],
