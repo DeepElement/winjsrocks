@@ -148,6 +148,7 @@ export default class extends BaseService {
           else{
             // Update most recent history entry
             window.history.replaceState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
+            WinJS.Navigation.history.backStack.splice(-1, 1);
           }
         }
 
