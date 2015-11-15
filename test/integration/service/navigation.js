@@ -8,6 +8,7 @@ var common = require('../../common'),
 
 var Helpers = {
   navigateForward: function(application, viewKeys, callback) {
+    var WinJS = require('winjs');
     var MessageService = application.container.getService('message');
     var NavigationService = application.container.getService('navigation');
     async.eachSeries(viewKeys,
@@ -26,6 +27,8 @@ var Helpers = {
         });
       },
       function(err) {
+        // TODO: verify WINJS backstack
+        // TODO: verify browser history
         return callback(err);
       });
   },
@@ -52,6 +55,10 @@ var Helpers = {
             navigateDelegate);
 
           NavigationService.viewModel.key.should.equal(currentExpectedKey);
+
+          // TODO: verify WINJS backstack
+          // TODO: verify browser history
+
           idx++;
 
           return stepCb();
