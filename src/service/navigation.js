@@ -128,6 +128,7 @@ export default class extends BaseService {
     };
 
     var handleRenderError = function(err) {
+      //console.log(err);
       messageService.send("applicationErrorMessage", err);
     };
 
@@ -144,8 +145,7 @@ export default class extends BaseService {
           var lastNavigationItem = WinJS.Navigation.history.backStack[WinJS.Navigation.history.backStack.length - 1];
           if (lastNavigationItem && lastNavigationItem.state && !lastNavigationItem.state.isModal) {
             window.history.pushState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
-          }
-          else{
+          } else {
             // Update most recent history entry
             window.history.replaceState(args.detail.state.key, args.detail.state.key, "#" + args.detail.state.key)
             WinJS.Navigation.history.backStack.splice(-1, 1);
