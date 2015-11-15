@@ -127,8 +127,7 @@ export default class extends BaseService {
       }
     };
 
-    var afterRender = function(err) {
-
+    var cleanHistory = function() {
       if (args.detail.delta >= 0) {
 
         // Push the new view on state if last view is not modal
@@ -142,7 +141,10 @@ export default class extends BaseService {
         }
       }
 
-      //console.log(err);
+    }
+
+    var afterRender = function(err) {
+      cleanHistory();
       if (err)
         messageService.send("applicationErrorMessage", err);
     };
@@ -152,7 +154,7 @@ export default class extends BaseService {
       messageService.send("navigatingMessage", args);
       return WinJS.UI.Pages.render(args.detail.location,
         newElement,
-        args.detail.state).then(afterRender, afterRender)
+        args.detail.state).then(cleanHistory, afterRender)
     });
     args.detail.setPromise(this._lastNavigationPromise);
   }
