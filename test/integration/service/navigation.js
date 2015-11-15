@@ -144,11 +144,10 @@ describe('Integration', function() {
         }];
 
         pages.forEach(function(page) {
-          console.log(__dirname, page.templateUri);
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            page.templateUri
+            "file://" + page.templateUri
           );
         });
 
@@ -165,7 +164,7 @@ describe('Integration', function() {
         ], done);
       });
     });
-/*
+
     describe("Navigation Forward", function() {
       it('standard success', function(done) {
         // arrange
@@ -189,7 +188,7 @@ describe('Integration', function() {
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            "file://" + page.templateUri
+            page.templateUri
           );
         });
 
@@ -201,7 +200,7 @@ describe('Integration', function() {
           });
       });
     });
-
+/*
     describe("Back Navigation", function() {
       it('standard success', function(done) {
         // arrange
