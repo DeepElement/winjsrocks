@@ -246,6 +246,66 @@ describe('Integration', function() {
           }
         ], done);
       });
+
+      it('splash - landing - player use-case', function(done) {
+        // arrange
+        var WinJS = require('winjs');
+        var entry = resolver.resolve('./entry');
+        var messageService = applicationInstance.container.getService("message");
+        var navigationService = applicationInstance.container.getService("navigation");
+        var pages = [{
+          key: "splash",
+          view: class extends entry.View.Page {},
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+        }, {
+          key: "landing",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return false;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+        }, {
+          key: "player",
+          view: class extends entry.View.Page {
+
+          },
+          viewModel: class extends entry.ViewModel.Base {
+            get isModal() {
+              return true;
+            }
+          },
+          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+        }];
+
+        pages.forEach(function(page) {
+          applicationInstance.builder.registerView(page.key,
+            page.view,
+            page.viewModel,
+            "file://" + page.templateUri
+          );
+        });
+
+        //act
+        async.waterfall([
+          function(cb) {
+            Helpers.navigateForward(applicationInstance, ['splash', 'landing', 'player', 'player'],
+              cb);
+          },
+          function(cb) {
+            Helpers.navigateBackward(applicationInstance, ['landing'],
+              cb);
+          }
+        ], done);
+      });
     });
   });
 });
