@@ -200,7 +200,7 @@ describe('Integration', function() {
           });
       });
     });
-/*
+
     describe("Back Navigation", function() {
       it('standard success', function(done) {
         // arrange
@@ -233,7 +233,7 @@ describe('Integration', function() {
           applicationInstance.builder.registerView(page.key,
             page.view,
             page.viewModel,
-            "file://" + page.templateUri
+            page.templateUri
           );
         });
 
@@ -250,7 +250,7 @@ describe('Integration', function() {
         ], done);
       });
     });
-
+/*
     describe("Modal Navigation", function() {
       it('standard success', function(done) {
         // arrange
