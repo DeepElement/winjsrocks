@@ -1,3 +1,7 @@
+---
+title: "Technical Docs"
+---
+
 <img align="right" width="250px" src="logos/winjsrocks_animated.gif">
 Technical Documentation
 =====
