@@ -9,7 +9,7 @@ install:
 - npm install
 script:
 - npm run-script build
-- npm test
+- pwd && npm test
 after_success:
 - "./build/repo-cli.sh"
 deploy:
