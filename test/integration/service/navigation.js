@@ -119,14 +119,14 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+          templateUri: "http://www.google.com?q=a"
         }, {
           key: "landing",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+          templateUri: "http://www.google.com?q=b"
         }, {
           key: "player",
           view: class extends entry.View.Page {
@@ -140,7 +140,7 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+          templateUri: "http://www.google.com?q=c"
         }];
 
         pages.forEach(function(page) {
@@ -175,14 +175,14 @@ describe('Integration', function() {
           key: "viewA",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+          templateUri: "http://www.google.com?q=a"
         }, {
           key: "viewB",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+          templateUri: "http://www.google.com?q=b"
         }];
         pages.forEach(function(page) {
           applicationInstance.builder.registerView(page.key,
@@ -212,21 +212,21 @@ describe('Integration', function() {
           key: "viewA",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+          templateUri: "http://www.google.com?q=a"
         }, {
           key: "viewB",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+          templateUri: "http://www.google.com?q=b"
         }, {
           key: "viewC",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+          templateUri: "http://www.google.com?q=c"
         }];
 
         pages.forEach(function(page) {
@@ -250,7 +250,7 @@ describe('Integration', function() {
         ], done);
       });
     });
-/*
+
     describe("Modal Navigation", function() {
       it('standard success', function(done) {
         // arrange
@@ -262,7 +262,7 @@ describe('Integration', function() {
           key: "view1",
           view: class extends entry.View.Page {},
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+          templateUri: "http://www.google.com?q=a"
         }, {
           key: "view2",
           view: class extends entry.View.Page {
@@ -273,7 +273,7 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+          templateUri: "http://www.google.com?q=b"
         }, {
           key: "view3",
           view: class extends entry.View.Page {
@@ -284,14 +284,14 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+          templateUri: "http://www.google.com?q=c"
         }, {
           key: "view4",
           view: class extends entry.View.Page {
 
           },
           viewModel: class extends entry.ViewModel.Base {},
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.4.html")
+          templateUri: "http://www.google.com?q=d"
         }];
 
         pages.forEach(function(page) {
@@ -329,7 +329,7 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.1.html")
+          templateUri: "http://www.google.com?q=a"
         }, {
           key: "landing",
           view: class extends entry.View.Page {
@@ -340,7 +340,7 @@ describe('Integration', function() {
               return false;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.2.html")
+          templateUri: "http://www.google.com?q=b"
         }, {
           key: "player",
           view: class extends entry.View.Page {
@@ -351,7 +351,7 @@ describe('Integration', function() {
               return true;
             }
           },
-          templateUri: path.join(__dirname, "..", "..", "harness", "template.3.html")
+          templateUri: "http://www.google.com?q=c"
         }];
 
         pages.forEach(function(page) {
@@ -376,6 +376,5 @@ describe('Integration', function() {
       });
     });
 
-*/
   });
 });
