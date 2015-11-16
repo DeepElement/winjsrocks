@@ -1,3 +1,7 @@
+mode:
+ - zen
+theme:
+ - stridr
 filters:
 # extensions:
 #  - png
