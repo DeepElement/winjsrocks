@@ -3,7 +3,8 @@ mode:
 theme:
  - stridr
 filters:
-# extensions:
-#  - png
  globs:
   - '**/*.md'
+# Note: You can also filter by extension
+# extensions:
+#  - png
