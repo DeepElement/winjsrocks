@@ -102,7 +102,7 @@ export default class extends BaseService {
     this._lastNavigationPromise.cancel();
 
     function cleanup() {
-      if (args.detail.delta < 0) {
+      if (args.detail.delta < 0 || (that.viewModel && that.viewModel.isModal)) {
         if (that.view)
           that.application.container.delViewInstance(that.view.viewModel.key, that.view);
         if (that.viewModel) {
