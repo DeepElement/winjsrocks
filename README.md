@@ -45,7 +45,7 @@ Featuring the Commandments of great code:
 - [Working with Plugins](#working-with-plugins)
 - [Building Providers](#building-providers)
 
-See [Technical Documentation](technical.md) for APIs
+See [Technical Documentation](docs/technical.md) for APIs
 
 ----
 # Why WinJS?
@@ -165,7 +165,7 @@ Then, the [View](#view) is allowed to render while the native WinJS Page `ready`
 
 In result, application developers can rely on the native WinJS Page `ready` method to fire after the View Template is fully rendered, the [ViewModel](#viewmodel) has loaded up principle Models and the initial `*.processAll()` phases have completed on the visual tree.
 
-![sequence-navigation](uml/sequence-navigation.png)
+![sequence-navigation](docs/uml/sequence-navigation.png)
 
 
 ## ViewKey Registration
