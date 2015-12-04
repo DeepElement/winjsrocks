@@ -29,7 +29,8 @@ Featuring the Commandments of great code:
   - Plugins
   - Domain model indexing with [Lokijs](https://github.com/techfort/LokiJS)
 
-=====
+-----
+
 - [Why WinJS?](#why-winjs)
 - [Sample Apps](#sample-apps)
 - [Project Setup](#project-setup)
