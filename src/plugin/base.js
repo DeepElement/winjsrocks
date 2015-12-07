@@ -12,6 +12,12 @@ export default class extends LifeCycle {
     return this._key;
   }
 
+  setup(options, callback) {
+    if (callback)
+      return callback();
+  }
+
+
   loadComponent(options, callback) {
     return super.loadComponent(options, callback);
   }
