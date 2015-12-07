@@ -38,7 +38,7 @@ export default class extends BaseService {
   }
 
   _onPopState(event) {
-    var messageService = this.application.container.getService("message");
+    var messageService = this.application.container.getService("winjsrocks-message");
 
     // Manage backstack
     var steps = 0;
@@ -96,7 +96,7 @@ export default class extends BaseService {
   _onNavigating(args) {
     var that = this;
     args.detail.delta = args.detail.delta || 0;
-    var messageService = this.application.container.getService("message");
+    var messageService = this.application.container.getService("winjsrocks-message");
     var newElement = this.createDefaultPageElement();
     this._element.appendChild(newElement);
     this._lastNavigationPromise.cancel();
@@ -161,7 +161,7 @@ export default class extends BaseService {
 
   _onNavigated(args) {
     var that = this;
-    var messageService = this.application.container.getService("message");
+    var messageService = this.application.container.getService("winjsrocks-message");
     messageService.send("navigatedMessage");
     this.viewModel.onNavigateTo();
   }

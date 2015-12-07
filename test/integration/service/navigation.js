@@ -9,8 +9,8 @@ var common = require('../../common'),
 var Helpers = {
   navigateForward: function(application, viewKeys, callback) {
     var WinJS = require('winjs');
-    var MessageService = application.container.getService('message');
-    var NavigationService = application.container.getService('navigation');
+    var MessageService = application.container.getService('winjsrocks-message');
+    var NavigationService = application.container.getService('winjsrocks-navigation');
     async.eachSeries(viewKeys,
       function(viewKey, viewKeyCb) {
         var navigateDelegate = function() {
@@ -36,8 +36,8 @@ var Helpers = {
     expectedViewKeys,
     callback) {
     var WinJS = require('winjs');
-    var MessageService = application.container.getService('message');
-    var NavigationService = application.container.getService('navigation');
+    var MessageService = application.container.getService('winjsrocks-message');
+    var NavigationService = application.container.getService('winjsrocks-navigation');
     var idx = 0;
     var forceFail = false;
     async.whilst(
@@ -93,8 +93,8 @@ describe('Integration', function() {
       it('standard success', function(done) {
         // arrange
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
 
         //act
         messageService.send("navigateToMessage", {
@@ -109,8 +109,8 @@ describe('Integration', function() {
       it('standard success', function(done) {
         // arrange
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
         var pages = [{
           key: "splash",
           view: class extends entry.View.Page {},
@@ -169,8 +169,8 @@ describe('Integration', function() {
       it('standard success', function(done) {
         // arrange
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
         var pages = [{
           key: "viewA",
           view: class extends entry.View.Page {},
@@ -206,8 +206,8 @@ describe('Integration', function() {
         // arrange
         var WinJS = require('winjs');
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
         var pages = [{
           key: "viewA",
           view: class extends entry.View.Page {},
@@ -256,8 +256,8 @@ describe('Integration', function() {
         // arrange
         var WinJS = require('winjs');
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
         var pages = [{
           key: "view1",
           view: class extends entry.View.Page {},
@@ -319,8 +319,8 @@ describe('Integration', function() {
         // arrange
         var WinJS = require('winjs');
         var entry = resolver.resolve('./entry');
-        var messageService = applicationInstance.container.getService("message");
-        var navigationService = applicationInstance.container.getService("navigation");
+        var messageService = applicationInstance.container.getService("winjsrocks-message");
+        var navigationService = applicationInstance.container.getService("winjsrocks-navigation");
         var pages = [{
           key: "splash",
           view: class extends entry.View.Page {},
