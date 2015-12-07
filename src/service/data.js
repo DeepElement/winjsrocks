@@ -16,7 +16,7 @@ export default class extends BaseService {
         return callback(err);
 
       // Init the loki db
-      var lokiStorageProvider = that.application.container.getProvider("lokiStorage");
+      var lokiStorageProvider = that.application.container.getProvider("winjsrocks-loki-storage");
       that._db = new Loki(that._lokiDbName, {
         adapter: lokiStorageProvider,
         autosave: true
