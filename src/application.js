@@ -117,28 +117,40 @@ export default class Application extends LifeCycle {
         // Filter down invalid stuffs
         that._plugins = options.plugins.filter(function(p) {
           return p.prototype instanceof PluginBase;
-        }).map(function(pluginDef){
+        }).map(function(pluginDef) {
           return new pluginDef(that);
         });
 
-        // setup the framework services/providers
-        if (!that.container.isProviderRegistered("winjsrocks-loki-storage"))
-          that.container.registerProvider("winjsrocks-loki-storage", require('./provider/loki-storage'));
-        if (!that.container.isProviderRegistered("winjsrocks-local-storage"))
-          that.container.registerProvider("winjsrocks-local-storage", require('./provider/local-storage'));
+        async.each(that._plugins,
+          function(plugin, pluginCb) {
+            if(plugin["setup"])
+              plugin.setup(options, pluginCb);
+            else
+              return pluginCb();
+          },
+          function(err) {
+            if (err)
+              return done(err);
 
-        if (!that.container.isServiceRegistered("winjsrocks-navigation"))
-          that.container.registerService("winjsrocks-navigation", require('./service/navigation'));
-        if (!that.container.isServiceRegistered("winjsrocks-message"))
-          that.container.registerService("winjsrocks-message", require('./service/message'));
-        if (!that.container.isServiceRegistered("winjsrocks-application"))
-          that.container.registerService("winjsrocks-application", require('./service/application'));
-        if (!that.container.isServiceRegistered("winjsrocks-data"))
-          that.container.registerService("winjsrocks-data", require('./service/data'));
+              // setup the framework services/providers
+              if (!that.container.isProviderRegistered("winjsrocks-loki-storage"))
+                that.container.registerProvider("winjsrocks-loki-storage", require('./provider/loki-storage'));
+              if (!that.container.isProviderRegistered("winjsrocks-local-storage"))
+                that.container.registerProvider("winjsrocks-local-storage", require('./provider/local-storage'));
 
-        that._isConfigured = true;
+              if (!that.container.isServiceRegistered("winjsrocks-navigation"))
+                that.container.registerService("winjsrocks-navigation", require('./service/navigation'));
+              if (!that.container.isServiceRegistered("winjsrocks-message"))
+                that.container.registerService("winjsrocks-message", require('./service/message'));
+              if (!that.container.isServiceRegistered("winjsrocks-application"))
+                that.container.registerService("winjsrocks-application", require('./service/application'));
+              if (!that.container.isServiceRegistered("winjsrocks-data"))
+                that.container.registerService("winjsrocks-data", require('./service/data'));
 
-        return done();
+              that._isConfigured = true;
+
+              return done();
+          });
       });
   }
 
