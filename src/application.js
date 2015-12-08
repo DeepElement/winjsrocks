@@ -123,29 +123,26 @@ export default class Application extends LifeCycle {
 
         async.each(that._plugins,
           function(plugin, pluginCb) {
-            if(plugin["setup"])
-              plugin.setup(options, pluginCb);
-            else
-              return pluginCb();
+            plugin.setup(options, pluginCb);
           },
           function(err) {
             if (err)
               return done(err);
 
               // setup the framework services/providers
-              if (!that.container.isProviderRegistered("winjsrocks-loki-storage"))
-                that.container.registerProvider("winjsrocks-loki-storage", require('./provider/loki-storage'));
-              if (!that.container.isProviderRegistered("winjsrocks-local-storage"))
-                that.container.registerProvider("winjsrocks-local-storage", require('./provider/local-storage'));
+              if (!that.container.isProviderRegistered("coreLokiStorage"))
+                that.container.registerProvider("coreLokiStorage", require('./provider/loki-storage'));
+              if (!that.container.isProviderRegistered("coreLocalStorage"))
+                that.container.registerProvider("coreLocalStorage", require('./provider/local-storage'));
 
-              if (!that.container.isServiceRegistered("winjsrocks-navigation"))
-                that.container.registerService("winjsrocks-navigation", require('./service/navigation'));
-              if (!that.container.isServiceRegistered("winjsrocks-message"))
-                that.container.registerService("winjsrocks-message", require('./service/message'));
-              if (!that.container.isServiceRegistered("winjsrocks-application"))
-                that.container.registerService("winjsrocks-application", require('./service/application'));
-              if (!that.container.isServiceRegistered("winjsrocks-data"))
-                that.container.registerService("winjsrocks-data", require('./service/data'));
+              if (!that.container.isServiceRegistered("coreNavigation"))
+                that.container.registerService("coreNavigation", require('./service/navigation'));
+              if (!that.container.isServiceRegistered("coreMessage"))
+                that.container.registerService("coreMessage", require('./service/message'));
+              if (!that.container.isServiceRegistered("coreApplication"))
+                that.container.registerService("coreApplication", require('./service/application'));
+              if (!that.container.isServiceRegistered("coreData"))
+                that.container.registerService("coreData", require('./service/data'));
 
               that._isConfigured = true;
 
@@ -174,7 +171,7 @@ export default class Application extends LifeCycle {
           if (err)
             return done(err);
 
-          var MessageService = that.container.getService("winjsrocks-message");
+          var MessageService = that.container.getService("coreMessage");
           for (var handler in messageHooks)
             MessageService.register(handler, messageHooks[handler]);
 
