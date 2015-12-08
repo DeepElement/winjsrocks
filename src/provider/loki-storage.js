@@ -7,7 +7,7 @@ export default class extends BaseProvider {
   }
 
   loadDatabase(dbname, callback) {
-    var storageProvider = this.application.container.getProvider("winjsrocks-local-storage");
+    var storageProvider = this.application.container.getProvider("coreLocalStorage");
     var dbStorageKey = dbname + this._lokiStorageKey;
     storageProvider.get({
         fileName: dbStorageKey
@@ -29,7 +29,7 @@ export default class extends BaseProvider {
   }
 
   saveDatabase(dbname, dbstring, callback) {
-    var storageProvider = this.application.container.getProvider("winjsrocks-local-storage");
+    var storageProvider = this.application.container.getProvider("coreLocalStorage");
     var dbStorageKey = dbname + this._lokiStorageKey;
     var storageStr = "";
 

@@ -95,7 +95,7 @@ export default class extends Loadable {
     // TODO: replace with viewModel.onViewErrorCommand
     return WinJS.Promise.as(this._winjsPage.prototype.error.apply(this, arguments)).then(function() {
       return new WinJS.Promise(function(completed, error) {
-        var messageService = that.application.container.getService("winjsrocks-message");
+        var messageService = that.application.container.getService("coreMessage");
         messageService.send("viewErrorMessage", err);
 
         return completed();
@@ -109,7 +109,7 @@ export default class extends Loadable {
 
   update() {
     var that = this;
-    var appService = this.application.container.getService("winjsrocks-application");
+    var appService = this.application.container.getService("coreApplication");
     WinJSHelper.markForProcessing(that.viewModel);
     return WinJS.UI.processAll(that.element).then(function() {
       return WinJS.Binding.processAll(that.element, that.viewModel).then(function() {
