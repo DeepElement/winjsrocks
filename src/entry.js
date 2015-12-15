@@ -4,6 +4,7 @@ import ItemViewModel from "./view-model/item";
 import BaseView from "./view/base";
 import ControlView from "./view/control";
 import PageView from "./view/page";
+import PackageInfo from '../package.json';
 import BaseService from "./service/base";
 import BaseProvider from "./provider/base";
 import BasePlugin from "./plugin/base";
@@ -26,6 +27,10 @@ class EntryClass {
       Base: BaseViewModel,
       Item: ItemViewModel
     }
+  }
+
+  static get Package(){
+    return PackageInfo
   }
 
   static get Common() {
