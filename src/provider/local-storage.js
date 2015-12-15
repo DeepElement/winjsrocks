@@ -19,7 +19,8 @@ export default class extends BaseProvider {
   get(options, callback) {
     if (this._repo[options.fileName])
       return callback(null, this._repo[options.fileName]);
-    return callback('does-not-exist');
+    if (callback)
+      return callback('does-not-exist');
   }
 
   createOrUpdate(options, callback) {
@@ -33,7 +34,8 @@ export default class extends BaseProvider {
     }
     subject.data = options.data;
     subject.lastModified = new Date();
-    return callback(null, subject);
+    if (callback)
+      return callback(null, subject);
   }
 
   del(options, callback) {
@@ -41,6 +43,13 @@ export default class extends BaseProvider {
       delete this._repo[options.fileName];
       this._repo[options.fileName] = null;
     }
-    return callback(null, true);
+    if (callback)
+      return callback(null, true);
+  }
+
+  clear(options, callback) {
+    this._repo = {};
+    if (callback)
+      return callback(null, true);
   }
 };

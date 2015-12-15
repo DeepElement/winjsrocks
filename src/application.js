@@ -7,7 +7,6 @@ import Configuration from "./configuration";
 import Builder from "./builder";
 import ApplicationException from "./exception/base";
 import MathHelper from "./helper/math";
-import Package from '../package.json';
 import PluginBase from "./plugin/base";
 import BindingMode from "./binding/mode";
 import BindingTemplate from "./binding/template";
@@ -30,7 +29,6 @@ export default class Application extends LifeCycle {
       this._isLoaded = false;
       this._isPaused = false;
       this._instanceKey = MathHelper.v4;
-      this._package = Package;
       this._bindingMode = new BindingMode(this);
       this._bindingTemplate = new BindingTemplate(this);
       this._plugins = [];
@@ -58,7 +56,6 @@ export default class Application extends LifeCycle {
   get logger() {
     return this._logger;
   }
-
 
   get builder() {
     return this._builder;

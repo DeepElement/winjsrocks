@@ -56,7 +56,7 @@ export default class extends BaseService {
   onNavigateBackMessage(type, args) {
     var that = this;
     if (this.viewModel && this.viewModel.overrideBackNavigation) {
-      log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
+      console.log("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
       return;
     }
     args = args || {};
@@ -85,7 +85,7 @@ export default class extends BaseService {
 
   _onBeforeNavigate(args) {
     if (this.viewModel && this.viewModel.overrideBackNavigation) {
-      log.info("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
+      console.log("NavigationService: back navigation cancelled based on current vm getBackNavigationDisabled value");
       args.preventDefault();
     }
   }
